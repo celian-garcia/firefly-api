@@ -7,6 +7,12 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
+//======================================================================================
+// Minor Modifications
+// Copyright 2017 <Célian Garcia>
+//
+// Contains the reply structure definition.
+// reply structure is used to store the reply of an http request.
 
 #include "request_handler/reply.hpp"
 #include <string>
@@ -49,10 +55,8 @@ const std::string bad_gateway =
 const std::string service_unavailable =
   "HTTP/1.0 503 Service Unavailable\r\n";
 
-boost::asio::const_buffer to_buffer(reply::status_type status)
-{
-  switch (status)
-  {
+boost::asio::const_buffer to_buffer(reply::status_type status) {
+  switch (status) {
   case reply::ok:
     return boost::asio::buffer(ok);
   case reply::created:
@@ -90,21 +94,19 @@ boost::asio::const_buffer to_buffer(reply::status_type status)
   }
 }
 
-} // namespace status_strings
+}  // namespace status_strings
 
 namespace misc_strings {
 
 const char name_value_separator[] = { ':', ' ' };
 const char crlf[] = { '\r', '\n' };
 
-} // namespace misc_strings
+}  // namespace misc_strings
 
-std::vector<boost::asio::const_buffer> reply::to_buffers()
-{
+std::vector<boost::asio::const_buffer> reply::to_buffers() {
   std::vector<boost::asio::const_buffer> buffers;
   buffers.push_back(status_strings::to_buffer(status));
-  for (std::size_t i = 0; i < headers.size(); ++i)
-  {
+  for (std::size_t i = 0; i < headers.size(); ++i) {
     header& h = headers[i];
     buffers.push_back(boost::asio::buffer(h.name));
     buffers.push_back(boost::asio::buffer(misc_strings::name_value_separator));
@@ -195,10 +197,8 @@ const char service_unavailable[] =
   "<body><h1>503 Service Unavailable</h1></body>"
   "</html>";
 
-std::string to_string(reply::status_type status)
-{
-  switch (status)
-  {
+std::string to_string(reply::status_type status) {
+  switch (status) {
   case reply::ok:
     return ok;
   case reply::created:
@@ -236,10 +236,9 @@ std::string to_string(reply::status_type status)
   }
 }
 
-} // namespace stock_replies
+}  // namespace stock_replies
 
-reply reply::stock_reply(reply::status_type status)
-{
+reply reply::stock_reply(reply::status_type status) {
   reply rep;
   rep.status = status;
   rep.content = stock_replies::to_string(status);
@@ -251,5 +250,5 @@ reply reply::stock_reply(reply::status_type status)
   return rep;
 }
 
-} // namespace server
-} // namespace http
+}  // namespace server
+}  // namespace http

@@ -8,18 +8,15 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include <./fly.h>
 #include <iostream>
-#include <boost/asio.hpp>
-#include <fly.h>
+// #include <boost/asio.hpp>
 #include "request_handler/server.hpp"
 
-int main(int argc, char* argv[])
-{
-    try
-    {
+int main(int argc, char* argv[]) {
+    try {
         // Check command line arguments.
-        if (argc != 4)
-        {
+        if (argc != 4) {
             std::cerr << "Usage: http_server <address> <port> <doc_root>\n";
             std::cerr << "  For IPv4, try:\n";
             std::cerr << "    receiver 0.0.0.0 80 .\n";
@@ -34,8 +31,7 @@ int main(int argc, char* argv[])
         // Run the server until stopped.
         s.run();
     }
-    catch (std::exception& e)
-    {
+    catch (std::exception& e) {
         std::cerr << "exception: " << e.what() << "\n";
     }
 

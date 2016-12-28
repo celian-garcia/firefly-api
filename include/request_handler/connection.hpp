@@ -7,13 +7,21 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
+//======================================================================================
+// Minor Modifications
+// Copyright 2017 <Célian Garcia>
+//
+// Contains the connection and connection_manager classes declarations.
+// connection_manager class is used to ***
+// connection class is used to initiate a single connection with a client.
 
-#ifndef HTTP_CONNECTION_HPP
-#define HTTP_CONNECTION_HPP
+
+#ifndef INCLUDE_REQUEST_HANDLER_CONNECTION_HPP_
+#define INCLUDE_REQUEST_HANDLER_CONNECTION_HPP_
 
 #include <array>
 #include <memory>
-#include <boost/asio.hpp>
+// #include <boost/asio.hpp>
 #include "reply.hpp"
 #include "request.hpp"
 #include "request_handler.hpp"
@@ -26,9 +34,8 @@ class connection_manager;
 
 /// Represents a single connection from a client.
 class connection
-  : public std::enable_shared_from_this<connection>
-{
-public:
+  : public std::enable_shared_from_this<connection> {
+ public:
   connection(const connection&) = delete;
   connection& operator=(const connection&) = delete;
 
@@ -42,7 +49,7 @@ public:
   /// Stop all asynchronous operations associated with the connection.
   void stop();
 
-private:
+ private:
   /// Perform an asynchronous read operation.
   void do_read();
 
@@ -73,7 +80,7 @@ private:
 
 typedef std::shared_ptr<connection> connection_ptr;
 
-} // namespace server
-} // namespace http
+}  // namespace server
+}  // namespace http
 
-#endif // HTTP_CONNECTION_HPP
+#endif   // INCLUDE_REQUEST_HANDLER_CONNECTION_HPP_

@@ -7,9 +7,15 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
+//======================================================================================
+// Minor Modifications
+// Copyright 2017 <Célian Garcia>
+//
+// Contains the reply structure declaration.
+// reply structure is used to store the reply of an http request.
 
-#ifndef HTTP_REPLY_HPP
-#define HTTP_REPLY_HPP
+#ifndef INCLUDE_REQUEST_HANDLER_REPLY_HPP_
+#define INCLUDE_REQUEST_HANDLER_REPLY_HPP_
 
 #include <string>
 #include <vector>
@@ -20,11 +26,9 @@ namespace http {
 namespace server {
 
 /// A reply to be sent to a client.
-struct reply
-{
+struct reply {
   /// The status of the reply.
-  enum status_type
-  {
+  enum status_type {
     ok = 200,
     created = 201,
     accepted = 202,
@@ -58,7 +62,7 @@ struct reply
   static reply stock_reply(status_type status);
 };
 
-} // namespace server
-} // namespace http
+}  // namespace server
+}  // namespace http
 
-#endif // HTTP_REPLY_HPP
+#endif  // INCLUDE_REQUEST_HANDLER_REPLY_HPP_
