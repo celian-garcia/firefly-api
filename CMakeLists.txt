@@ -23,7 +23,6 @@ file(GLOB_RECURSE FIREFLY_HEADERS include/*)
 
 # Firefly executable definition
 link_directories(${Fly_LIB_DIRS})
-message(STATUS ${Fly_INCLUDE_DIRS})
 include_directories(include
         ${Boost_INCLUDE_DIRS}  # Necessary because we use asio which is include-only project
         ${Fly_INCLUDE_DIRS})
