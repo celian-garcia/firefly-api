@@ -4,6 +4,9 @@
 #include <vector>
 #include <algorithm>
 #include "./server_http.hpp"
+#include "./firefly/thread_pool.hpp"
+#include "./firefly/controller.hpp"
+#include "./firefly/ff_exception.hpp"
 
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/property_tree/ptree.hpp>
@@ -21,26 +24,32 @@ void default_resource_send(const HttpServer &server, const shared_ptr<HttpServer
                            const shared_ptr<ifstream> &ifs);
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cerr << "Usage: Firefly.exe <port> <web_root>\n";
+    if (argc != 4) {
+        std::cerr << "Usage: Firefly.exe <port> <web_root> <nb_thread>\n";
         return 1;
     }
 
     int port = atoi(argv[1]);
     auto web_root_path = boost::filesystem::canonical(argv[2]);
+    auto nb_threads = atoi(argv[3]);
 
+    firefly::thread_pool pool(nb_threads);
+
+    // HTTP-server at port 8080 using 1 thread
+    // Unless you do more heavy non-threaded processing in the resources,
+    // 1 thread is usually faster than several threads
+    HttpServer server(port, 1);
     std::cout
-        << "Server started successfully on port "
+        << "Server started successfully !"
+        << ". \n=== Port: \""
         << port
         << ". \n=== Web root path: \""
         << web_root_path
+        << ". \n=== Number of threads: \""
+        << nb_threads
         << "\""
         << std::endl;
 
-    //HTTP-server at port 8080 using 1 thread
-    //Unless you do more heavy non-threaded processing in the resources,
-    //1 thread is usually faster than several threads
-    HttpServer server(port, 1);
 
     //Add resources using path-regex and method-string, and an anonymous function
     //POST-example for the path /string, responds the posted string
@@ -121,6 +130,22 @@ int main(int argc, char* argv[]) {
                   << "Content-Type: application/json\r\n"
                   << "Content-Length: " << hello.length() << "\r\n\r\n"
                   << hello;
+    };
+
+    server.resource["^/start_module/(\\w+)$"]["GET"]=[&pool](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+        std::string module_name = request->path_match[1];
+        try {
+            string module_id = firefly::controller::start_module(&pool, module_name);
+            *response << "HTTP/1.1 200 OK\r\n"
+                  << "Content-Type: application/json\r\n"
+                  << "Content-Length: " << module_id.length() << "\r\n\r\n"
+                  << module_id;
+        }
+        catch (const firefly::ff_exception &e) {
+            string content = e.what();
+            *response << "HTTP/1.1 500 Internal Server Error\r\nContent-Length: " << content.length() << "\r\n\r\n" << content;
+        }
+
     };
 
     //Default GET-example. If no other matches, this anonymous function will be called.
