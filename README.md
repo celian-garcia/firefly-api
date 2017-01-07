@@ -6,3 +6,6 @@ Fly library
 Boost
 
 # Install
+
+
+![FIREFLYWORKER](./docs/images/firefly_worker.png)
