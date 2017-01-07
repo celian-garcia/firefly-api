@@ -1,11 +1,12 @@
 # firefly
 C++ Web Application to have remote access to Fly library functionalities.
 
+<img src="./docs/images/firefly_worker.png" width="200" />
+
 # Dependencies
-Fly library
-Boost
+In progress
 
 # Install
+In progress
 
 
-![FIREFLYWORKER](./docs/images/firefly_worker.png)
