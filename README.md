@@ -1,4 +1,4 @@
-# firefly
+# Firefly
 C++ and Angular2 Web Application to have remote access to Fly library functionalities.
 Larger purpose would be to have access to high level OpenCV features.
 
