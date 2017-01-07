@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 project(FIREFLY)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -DUSE_BOOST_REGEX")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -DUSE_BOOST_REGEX -DWIN32_LEAN_AND_MEAN")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
@@ -10,6 +10,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 find_package( OpenCV REQUIRED )
 set(BOOST_COMPONENTS system thread filesystem date_time regex)
 find_package(Boost 1.53.0 COMPONENTS ${BOOST_COMPONENTS} REQUIRED)
+find_package(PostgreSQL REQUIRED)
+
 
 # Fly Library initialization
 set(Fly_INCLUDE_DIRS "${Fly_DIR}/include")
@@ -22,15 +24,17 @@ file(GLOB_RECURSE FIREFLY_SOURCES src/* )
 file(GLOB_RECURSE FIREFLY_HEADERS include/*)
 
 # Firefly executable definition
-link_directories(${Fly_LIB_DIRS})
+link_directories(${Fly_LIB_DIRS} ${PostgreSQL_LIBRARY_DIRS})
 include_directories(include
         ${Boost_INCLUDE_DIRS}  # Necessary because we use asio which is include-only project
-        ${Fly_INCLUDE_DIRS})
+        ${Fly_INCLUDE_DIRS}
+        ${PostgreSQL_INCLUDE_DIRS})
 add_executable(${FIREFLY_EXEC_NAME} ${FIREFLY_SOURCES} ${FIREFLY_HEADERS})
 target_link_libraries (${FIREFLY_EXEC_NAME}
         ${OpenCV_LIBS}
         ${Boost_LIBRARIES}
-        ${Fly_LIBRARY})
+        ${Fly_LIBRARY}
+        ${PostgreSQL_LIBRARIES})
 
 # Fix socket issues in windows
 if(MINGW)
