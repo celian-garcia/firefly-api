@@ -1,11 +1,13 @@
-# firefly
-C++ Web Application to have remote access to Fly library functionalities.
+# Firefly
+C++ and Angular2 Web Application to have remote access to Fly library functionalities.
+Larger purpose would be to have access to high level OpenCV features.
+
+<img src="./docs/images/firefly_worker.png" width="200" />
 
 # Dependencies
-Fly library
-Boost
+In progress
 
 # Install
+In progress
 
 
-![FIREFLYWORKER](./docs/images/firefly_worker.png)
