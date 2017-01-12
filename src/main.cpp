@@ -135,11 +135,11 @@ int main(int argc, char* argv[]) {
     server.resource["^/start_module/(\\w+)$"]["GET"]=[&pool](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         std::string module_name = request->path_match[1];
         try {
-            string module_id = firefly::controller::start_module(&pool, module_name);
+            std::string cloud_id = std::to_string(firefly::controller::start_module(&pool, module_name));
             *response << "HTTP/1.1 200 OK\r\n"
                   << "Content-Type: application/json\r\n"
-                  << "Content-Length: " << module_id.length() << "\r\n\r\n"
-                  << module_id;
+                  << "Content-Length: " << cloud_id.length() << "\r\n\r\n"
+                  << cloud_id;
         }
         catch (const firefly::ff_exception &e) {
             string content = e.what();
