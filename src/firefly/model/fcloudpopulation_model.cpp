@@ -20,7 +20,8 @@ FCloud3DModel::getCloudById(int id) {
 int
 FCloud3DModel::insertCloud(const FCloud3D& cloud) {
     std::string insert_query =
-        "INSERT INTO fcloud3d (state) VALUES ('" + cloud.getState() + "')";
+        "INSERT INTO fcloud3d (state) VALUES (" +
+        this->m_dbmanager->format(cloud.getState()) + ")";
     std::string select_query =
         "SELECT max(id) FROM fcloud3d";
 
@@ -36,16 +37,60 @@ FCloud3DModel::insertCloud(const FCloud3D& cloud) {
 
 void
 FCloud3DModel::updateCloud(const FCloud3D& cloud) {
-    // TODO(Célian)
+    std::string update_query =
+        "UPDATE fcloud3d SET state = " +
+        this->m_dbmanager->format(cloud.getState()) +
+        " where id = " +
+        this->m_dbmanager->format(cloud.getId());
+
+    this->m_dbmanager->execUpdateQuery(update_query.c_str());
 }
 
-// class FPoint3DModel : public BaseModel {
-//  public:
-//     std::vector<FPoint3D> getPointsByCloudId(int cloud_id);
-//     FPoint3D getPointByXYZ(double x, double y, double z);
-//     void insertPoint(FPoint3D point);
-//     void updatePoint(FPoint3D point);
-// }
+FPoint3D
+FPoint3DModel::getPointByValueAndCloudId(cv::Vec3f value, int cloud_id) {
+    std::string select_query =
+        "SELECT * FROM fpoint3d WHERE value <-> point " +
+        this->m_dbmanager->format(value)+ " < " +
+        this->m_dbmanager->format(this->INTERSECT_MIN_DISTANCE) +
+        " AND cloud_id = " +
+        this->m_dbmanager->format(cloud_id);
+
+    PGresult* res = this->m_dbmanager->execSelectQuery(select_query.c_str());
+
+    if (PQntuples(res) == 0) {
+        throw ObjectNotFound();
+    }
+
+    // TODO(Célian) : get correctly the point from the database
+    // int id_fnum = PQfnumber(res, "id");
+    // int cloud_id_fnum = PQfnumber(res, "cloud_id");
+    // int value_fnum = PQfnumber(res, "value");
+    // int operations_fnum = PQfnumber(res, "operations");
+    // int point_id = atoi(PQgetvalue(res, 0, id_fnum));
+    // std::cout << PQntuples(res) << std::endl;
+    // std::string value = PQgetvalue(res, 0, value_fnum);
+    // // std::cout << value << std::endl;
+    // std::string operations = PQgetvalue(res, 0, operations_fnum);
+    // // std::cout << operations << std::endl;
+    // m_dbmanager->clearResult(res);
+    return FPoint3D(value, cloud_id, {0});
+}
+
+void
+FPoint3DModel::insertPoint(FPoint3D point) {
+    std::string insert_query =
+        "INSERT INTO fpoint3d (cloud_id, value, operations) VALUES (" +
+        this->m_dbmanager->format(point.getCloudId()) + ", " +
+        this->m_dbmanager->format(point.getValue()) + ", " +
+        this->m_dbmanager->format(point.getOperations()) + ")";
+
+    this->m_dbmanager->execInsertQuery(insert_query.c_str());
+}
+
+void
+FPoint3DModel::updatePointOperations(FPoint3D point) {
+    std::cout << "Point update" << std::endl;
+}
 
 }  // namespace model
 }  // namespace firefly

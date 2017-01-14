@@ -3,6 +3,9 @@
 #ifndef INCLUDE_FIREFLY_MODEL_DATABASEMANAGER_HPP_
 #define INCLUDE_FIREFLY_MODEL_DATABASEMANAGER_HPP_
 #include <string>
+#include <vector>
+#include <iostream>
+#include <opencv2/core.hpp>
 #include "./libpq-fe.h"
 
 namespace firefly {
@@ -22,8 +25,13 @@ class DatabaseManager {
     explicit DatabaseManager(const std::string& db_name);
     ~DatabaseManager();
     void execInsertQuery(const std::string& query);
+    void execUpdateQuery(const std::string& query);
     PGresult* execSelectQuery(const std::string& query);
     void clearResult(PGresult* result);
+    std::string format(const int&);
+    std::string format(const cv::Vec3f&);
+    std::string format(const std::vector<int>&);
+    std::string format(const std::string&);
  protected:
     PGconn* m_connection;
     // TODO(Célian): put it in configuration file

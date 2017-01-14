@@ -8,27 +8,15 @@ enum class OperationType {ADD, REMOVE, END};
 
 class Operation  {
  public:
-    Operation(
-        OperationType type,
-        double x, double y, double z)
-        : m_type(type), m_x(x), m_y(y), m_z(z)
-    {}
-    Operation(
-        OperationType type,
-        cv::Vec3f vec)
-        : m_type(type), m_x(vec[0]), m_y(vec[1]), m_z(vec[2])
-    {}
+    Operation(OperationType type, cv::Vec3f value)
+        : m_type(type), m_value(value) {}
 
-    double getX() const {return this->m_x;}
-    double getY() const {return this->m_y;}
-    double getZ() const {return this->m_z;}
+    cv::Vec3f getValue() const {return this->m_value;}
     OperationType getType() const {return this->m_type;}
 
  private:
     OperationType m_type;
-    double m_x;
-    double m_y;
-    double m_z;
+    cv::Vec3f m_value;
 };
 }  // end namespace firefly
 #endif  // INCLUDE_FIREFLY_OPERATION_HPP_

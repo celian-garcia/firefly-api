@@ -5,6 +5,7 @@ namespace firefly {
 namespace controller {
 
     using model::DatabaseManager;
+    using model::ObjectNotFound;
     using model::FCloud3DModel;
     using model::FPoint3DModel;
     using model::FCloud3D;
@@ -54,27 +55,49 @@ namespace controller {
             DatabaseManager db_manager("fcloudpopulation");
             FCloud3DModel cloud_model(&db_manager);
             FPoint3DModel point_model(&db_manager);
+            FCloud3D cloud = cloud_model.getCloudById(cloud_id);
 
             // Update the cloud state to populate
-            FCloud3D cloud = cloud_model.getCloudById(cloud_id);
             cloud.setState("POPULATE");
             cloud_model.updateCloud(cloud);
 
             // Listen the operation queue and populate the database
             bool end_operation_found = false;
+            int operation_index = 0;
             while (!end_operation_found) {
                 Operation op = operations->dequeue();
-                end_operation_found = op.getType() == OperationType::END;
-                std::cout << "Dequeue operation " << op.getX() << std::endl;
+                cv::Vec3f op_value = op.getValue();
+                OperationType op_type = op.getType();
+                end_operation_found = op_type == OperationType::END;
+                if (end_operation_found)
+                    break;
 
                 // TODO(Célian): insert the operation into the database
                 // using the point model.
+                try {
+                    FPoint3D point = point_model.getPointByValueAndCloudId(
+                        op_value, cloud_id);
+
+                    // If the size of operations indices is even, the next operation should be an add
+                    // If the size of operations indices is odd , the next operation should be a remove
+                    // With this type of storing, we don't need to store the ADD or REMOVE flag.
+                    // So we can store another thing in place: the total index of the operation,
+                    // which is much more usefull in the listen part.
+                    std::vector<int> op_indices = point.getOperations();
+                    if ((op_indices.size() % 2 == 0 && op_type == OperationType::ADD) ||
+                        (op_indices.size() % 2 == 1 && op_type == OperationType::REMOVE) ) {
+                        point.addOperation(operation_index++);
+                        point_model.updatePointOperations(point);
+                    }
+                } catch (ObjectNotFound e) {
+                    FPoint3D new_point(op_value, cloud_id, {operation_index++});
+                    point_model.insertPoint(new_point);
+                }
             }
 
             // Update the cloud state to finished
-            // FCloud3D cloud = cloud_model.getCloudById(cloud_id);
-            // cloud.setState("FINISHED");
-            // cloud_model.updateCloud(cloud)
+            cloud.setState("FINISHED");
+            cloud_model.updateCloud(cloud);
 
             std::cout
                 << "Thread have finished the work for the cloud_id : " << cloud_id

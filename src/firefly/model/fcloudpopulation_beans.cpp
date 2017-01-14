@@ -4,38 +4,64 @@
 namespace firefly {
 namespace model {
 
-// class FPoint3D {
-//  public:
-//     explicit FPoint3D(
-//         int id, double x, double y, double z, std::vector<int> op_indices);
-//     explicit FPoint3D(
-//         double x, double y, double z, std::vector<int> op_indices);
+FPoint3D::FPoint3D(int id, cv::Vec3f value,
+    int cloud_id, std::vector<int> operations)
+    : m_id(id), m_value(value),
+    m_cloud_id(cloud_id), m_operations(operations) {}
 
-//     int getId();
-//     double getX();
-//     double getY();
-//     double getZ();
-//     std::vector<int> getOperationsIndices();
-//     void setX(double x);
-//     void setY(double y);
-//     void setZ(double z);
-//     void setOperationsIndices(std::vector<int> op_indices);
+FPoint3D::FPoint3D(cv::Vec3f value,
+    int cloud_id, std::vector<int> operations)
+    : m_value(value),
+    m_cloud_id(cloud_id), m_operations(operations) {}
 
-//  private:
-//     int m_id;
-//     double m_x;
-//     double m_y;
-//     double m_z;
-//     std::vector<int> m_op_indices;
-// };
+int const&
+FPoint3D::getId() const {
+    return this->m_id;
+}
+
+cv::Vec3f const&
+FPoint3D::getValue() const {
+    return this->m_value;
+}
+
+int const&
+FPoint3D::getCloudId() const {
+    return this->m_cloud_id;
+}
+
+void
+FPoint3D::setValue(const cv::Vec3f& value) {
+    this->m_value = value;
+}
+
+void
+FPoint3D::setOperations(const std::vector<int>& operations) {
+    this->m_operations = operations;
+}
+
+void
+FPoint3D::setCloudId(const int& cloud_id) {
+    this->m_cloud_id = cloud_id;
+}
+
+void
+FPoint3D::addOperation(const int& operation) {
+    this->m_operations.push_back(operation);
+}
+
+std::vector<int> const &
+FPoint3D::getOperations() const {
+    return this->m_operations;
+}
 
 FCloud3D::FCloud3D(int id, std::string state)
     : m_id(id), m_state(state) {}
+
 FCloud3D::FCloud3D(std::string state)
     : m_state(state) {}
 
-int
-FCloud3D::getId() {
+int const&
+FCloud3D::getId() const {
     return this->m_id;
 }
 

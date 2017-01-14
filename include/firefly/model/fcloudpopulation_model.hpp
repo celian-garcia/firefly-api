@@ -10,6 +10,7 @@
 namespace firefly {
 namespace model {
 
+class ObjectNotFound : public std::exception {};
 class FCloud3DModel : public BaseModel {
  public:
     using BaseModel::BaseModel;
@@ -20,11 +21,12 @@ class FCloud3DModel : public BaseModel {
 
 class FPoint3DModel : public BaseModel {
     using BaseModel::BaseModel;
-//  public:
-//     std::vector<FPoint3D> getPointsByCloudId(int cloud_id);
-//     FPoint3D getPointByXYZ(double x, double y, double z);
-//     void insertPoint(FPoint3D point);
-//     void updatePoint(FPoint3D point);
+ public:
+    FPoint3D getPointByValueAndCloudId(cv::Vec3f value, int cloud_id);
+    void insertPoint(FPoint3D point);
+    void updatePointOperations(FPoint3D point);
+
+    static constexpr double INTERSECT_MIN_DISTANCE = 0.00001;
 };
 
 }  // namespace model

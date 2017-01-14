@@ -45,6 +45,11 @@ DatabaseManager::execInsertQuery(const std::string& query) {
     PQclear(res);
 }
 
+void
+DatabaseManager::execUpdateQuery(const std::string& query) {
+    this->execInsertQuery(query);
+}
+
 PGresult*
 DatabaseManager::execSelectQuery(const std::string& query) {
     PGresult *res = PQexec(this->m_connection, query.c_str());
@@ -61,6 +66,30 @@ DatabaseManager::execSelectQuery(const std::string& query) {
 void
 DatabaseManager::clearResult(PGresult* result) {
     PQclear(result);
+}
+
+std::string
+DatabaseManager::format(const int& elt) {
+    return std::to_string(elt);
+}
+std::string
+DatabaseManager::format(const cv::Vec3f& elt) {
+    return std::string(
+        "\'(" + std::to_string(elt[0]) + ", " + std::to_string(elt[1]) + ")\'");
+}
+std::string
+DatabaseManager::format(const std::vector<int>& elts) {
+    int size = elts.size();
+    std::string result = "\'{";
+    for (int i= 0; i < size - 1; i++) {
+        result += std::to_string(elts[i]) + ", ";
+    }
+    result += std::to_string(elts[size - 1]) + "}\'";
+    return result;
+}
+std::string
+DatabaseManager::format(const std::string& elt) {
+    return '\'' + elt + '\'';
 }
 
 }  // namespace model
