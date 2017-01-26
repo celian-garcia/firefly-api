@@ -76,6 +76,39 @@ FPoint3DModel::getPointByValueAndCloudId(cv::Vec3f value, int cloud_id) {
     return FPoint3D(value, cloud_id, {0});
 }
 
+std::vector<FPoint3D>
+FPoint3DModel::getPointListByCloudId(int cloud_id) {
+    std::string select_query =
+        "SELECT * FROM fpoint3d WHERE cloud_id = " +
+        this->m_dbmanager->format(cloud_id);
+
+    PGresult* res = this->m_dbmanager->execSelectQuery(select_query.c_str());
+
+    int rows_number = PQntuples(res);
+    if (rows_number == 0) {
+        throw ObjectNotFound();
+    }
+
+    int id_fnum = PQfnumber(res, "id");
+    int cloud_id_fnum = PQfnumber(res, "cloud_id");
+    int value_fnum = PQfnumber(res, "value");
+    int operations_fnum = PQfnumber(res, "operations");
+
+    for (int row; row < rows_number; row++) {
+        char* id = PQgetvalue(res, row, id_fnum);
+        char* cloud_id = PQgetvalue(res, row, cloud_id_fnum);
+        char* value = PQgetvalue(res, row, value_fnum);
+        char* operations = PQgetvalue(res, row, operations_fnum);
+        std::cout << std::string(id) << std::endl;
+        std::cout << std::string(cloud_id) << std::endl;
+        std::cout << std::string(value) << std::endl;
+        std::cout << std::string(operations) << std::endl;
+    }
+
+    return std::vector<FPoint3D>();
+
+}
+
 void
 FPoint3DModel::insertPoint(FPoint3D point) {
     std::string insert_query =

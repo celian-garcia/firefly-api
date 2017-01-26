@@ -23,6 +23,7 @@ class FPoint3DModel : public BaseModel {
     using BaseModel::BaseModel;
  public:
     FPoint3D getPointByValueAndCloudId(cv::Vec3f value, int cloud_id);
+    std::vector<FPoint3D> getPointListByCloudId(int cloud_id);
     void insertPoint(FPoint3D point);
     void updatePointOperations(FPoint3D point);
 

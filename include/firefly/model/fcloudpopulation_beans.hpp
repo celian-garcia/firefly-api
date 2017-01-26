@@ -12,25 +12,25 @@ namespace model {
 class FPoint3D {
  public:
     explicit FPoint3D(int id, cv::Vec3f value,
-        int cloud_id, std::vector<int> operations);
+        int cloud_id, std::vector<int> operations_ids);
 
     explicit FPoint3D(cv::Vec3f value,
-        int cloud_id, std::vector<int> operations);
+        int cloud_id, std::vector<int> operations_ids);
 
     int const& getId() const;
     cv::Vec3f const& getValue() const;
     int const& getCloudId() const;
-    std::vector<int> const& getOperations() const;
+    std::vector<int> const& getOperationsIds() const;
     void setValue(const cv::Vec3f& value);
-    void setOperations(const std::vector<int>& operations);
+    void setOperationsIds(const std::vector<int>& operations_ids);
     void setCloudId(const int& cloud_id);
-    void addOperation(const int& operation);
+    void addOperationId(const int& operation_id);
 
  private:
     int m_id = 0;
     cv::Vec3f m_value;
     int m_cloud_id;
-    std::vector<int> m_operations;
+    std::vector<int> m_operations_ids;
 };
 
 class FCloud3D {

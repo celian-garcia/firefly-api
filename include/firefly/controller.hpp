@@ -16,9 +16,9 @@
 namespace firefly {
 namespace controller {
 
-    int start_module(thread_pool*, const std::string&);
+    int start_module(thread_pool*, const std::string& name);
 
-    void listen_module();
+    std::vector<Operation> harvest_module(const std::string& module_name, const int& cloud_id, const int& client_last_op);
 }  // end namespace controller
 }  // end namespace firefly
 #endif  // INCLUDE_FIREFLY_CONTROLLER_HPP_

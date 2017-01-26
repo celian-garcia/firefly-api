@@ -5,14 +5,14 @@ namespace firefly {
 namespace model {
 
 FPoint3D::FPoint3D(int id, cv::Vec3f value,
-    int cloud_id, std::vector<int> operations)
+    int cloud_id, std::vector<int> operations_ids)
     : m_id(id), m_value(value),
-    m_cloud_id(cloud_id), m_operations(operations) {}
+    m_cloud_id(cloud_id), m_operations_ids(operations_ids) {}
 
 FPoint3D::FPoint3D(cv::Vec3f value,
-    int cloud_id, std::vector<int> operations)
+    int cloud_id, std::vector<int> operations_ids)
     : m_value(value),
-    m_cloud_id(cloud_id), m_operations(operations) {}
+    m_cloud_id(cloud_id), m_operations_ids(operations_ids) {}
 
 int const&
 FPoint3D::getId() const {
@@ -29,14 +29,19 @@ FPoint3D::getCloudId() const {
     return this->m_cloud_id;
 }
 
+std::vector<int> const &
+FPoint3D::getOperationsIds() const {
+    return this->m_operations_ids;
+}
+
 void
 FPoint3D::setValue(const cv::Vec3f& value) {
     this->m_value = value;
 }
 
 void
-FPoint3D::setOperations(const std::vector<int>& operations) {
-    this->m_operations = operations;
+FPoint3D::setOperations_ids(const std::vector<int>& operations_ids) {
+    this->m_operations_ids = operations_ids;
 }
 
 void
@@ -45,14 +50,11 @@ FPoint3D::setCloudId(const int& cloud_id) {
 }
 
 void
-FPoint3D::addOperation(const int& operation) {
-    this->m_operations.push_back(operation);
+FPoint3D::addOperationId(const int& operation_id) {
+    this->m_operations_ids.push_back(operation_id);
 }
 
-std::vector<int> const &
-FPoint3D::getOperations() const {
-    return this->m_operations;
-}
+
 
 FCloud3D::FCloud3D(int id, std::string state)
     : m_id(id), m_state(state) {}
