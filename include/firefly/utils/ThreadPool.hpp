@@ -6,10 +6,10 @@
 #include <boost/thread.hpp>
 
 namespace firefly {
-struct thread_pool {
+struct ThreadPool {
   typedef std::unique_ptr<boost::asio::io_service::work> asio_worker;
 
-  explicit thread_pool(int threads)
+  explicit ThreadPool(int threads)
     :service(), service_worker(new asio_worker::element_type(service)) {
     for (int i = 0; i < threads; ++i) {
       auto worker = [this] { return service.run(); };
@@ -22,7 +22,7 @@ struct thread_pool {
     service.post(f);
   }
 
-  ~thread_pool() {
+  ~ThreadPool() {
     service_worker.reset();
     grp.join_all();
     service.stop();

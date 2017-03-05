@@ -79,7 +79,7 @@ DatabaseManager::format(const cv::Vec3f& elt) {
 }
 std::string
 DatabaseManager::format(const std::vector<int>& elts) {
-    int size = elts.size();
+    unsigned long long int size = elts.size();
     std::string result = "\'{";
     for (int i= 0; i < size - 1; i++) {
         result += std::to_string(elts[i]) + ", ";
@@ -89,7 +89,7 @@ DatabaseManager::format(const std::vector<int>& elts) {
 }
 std::string
 DatabaseManager::format(const std::string& elt) {
-    return '\'' + elt + '\'';
+    return "\'" + elt + "\'";
 }
 
 }  // namespace model

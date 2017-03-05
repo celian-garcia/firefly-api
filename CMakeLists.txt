@@ -22,6 +22,17 @@ set(Fly_LIBRARY Fly)
 set(FIREFLY_EXEC_NAME Firefly)
 file(GLOB_RECURSE FIREFLY_SOURCES src/* )
 file(GLOB_RECURSE FIREFLY_HEADERS include/*)
+file(GLOB_RECURSE sources_to_discard src/model )
+
+# Exclude temporary unused files
+list(FILTER FIREFLY_SOURCES EXCLUDE REGEX .+controller.+)
+list(FILTER FIREFLY_SOURCES EXCLUDE REGEX .+model.+)
+list(FILTER FIREFLY_SOURCES EXCLUDE REGEX .+operation.+)
+list(FILTER FIREFLY_SOURCES EXCLUDE REGEX .+modules/opencv.+)
+list(FILTER FIREFLY_HEADERS EXCLUDE REGEX .+controller.+)
+list(FILTER FIREFLY_HEADERS EXCLUDE REGEX .+model.+)
+list(FILTER FIREFLY_HEADERS EXCLUDE REGEX .+operation.+)
+list(FILTER FIREFLY_HEADERS EXCLUDE REGEX .+modules/opencv.+)
 
 # Firefly executable definition
 link_directories(${Fly_LIB_DIRS} ${PostgreSQL_LIBRARY_DIRS})
