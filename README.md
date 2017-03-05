@@ -2,6 +2,8 @@
 C++ and Angular2 Web Application to have remote access to Fly library functionalities.
 Larger purpose would be to have access to high level OpenCV features.
 
+<img src="./docs/images/firefly_worker.png" width="200" />
+
 #### Contributors
 - Célian Garcia 
 [![Github Célian Garcia](./docs/images/github.png)](https://github.com/celian-garcia)
@@ -13,6 +15,7 @@ Larger purpose would be to have access to high level OpenCV features.
 - [OpenCV](https://github.com/opencv/opencv)
 - [C++ Fly Library](https://github.com/celian-garcia/fly)
 - [C++ Boost Library](https://github.com/boostorg/boost)
+- [PostgreSQL](http://www.postgresqlfr.org/)
 
 #### Documentation
 - [Architecture](../../wiki/Architecture)
