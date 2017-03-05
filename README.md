@@ -5,7 +5,9 @@ Larger purpose would be to have access to high level OpenCV features.
 <img src="./docs/images/firefly_worker.png" width="200" />
 
 #### Contributors
-- Célian Garcia [<img src="./docs/images/Github-Mark-32px.png" />](https://github.com/celian-garcia) [<img src="./docs/images/ln-2C-34px-R.png" />](https://www.linkedin.com/in/celiangarcia/)
+- Célian Garcia
+[![Github Célian Garcia](./docs/images/Github-Mark-32px.png)](https://github.com/celian-garcia)
+[![Linkedin Célian Garcia](./docs/images/ln-2C-34px-R.png)](https://www.linkedin.com/in/celiangarcia/)
 
 #### Used technologies
 - [Cmake](https://github.com/Kitware/CMake)
