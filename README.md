@@ -6,8 +6,8 @@ Larger purpose would be to have access to high level OpenCV features.
 
 #### Contributors
 - Célian Garcia
-[![Github Célian Garcia](./docs/images/Github_Mark_32px.png)](https://github.com/celian-garcia)
-[![Linkedin Célian Garcia](./docs/images/ln_2C_34px_R.png)](https://www.linkedin.com/in/celiangarcia/)
+[![Github Célian Garcia](./docs/images/github.png)](https://github.com/celian-garcia)
+[![Linkedin Célian Garcia](./docs/images/linkedin.png)](https://www.linkedin.com/in/celiangarcia/)
 
 #### Used technologies
 - [Cmake](https://github.com/Kitware/CMake)
