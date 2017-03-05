@@ -15,6 +15,7 @@ Larger purpose would be to have access to high level OpenCV features.
 - [OpenCV](https://github.com/opencv/opencv)
 - [C++ Fly Library](https://github.com/celian-garcia/fly)
 - [C++ Boost Library](https://github.com/boostorg/boost)
+- [PostgreSQL](http://www.postgresqlfr.org/)
 
 #### Documentation
 - [Architecture](../../wiki/Architecture)
