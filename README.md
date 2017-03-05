@@ -5,7 +5,7 @@ Larger purpose would be to have access to high level OpenCV features.
 <img src="./docs/images/firefly_worker.png" width="200" />
 
 #### Contributors
-- Célian Garcia
+- Célian Garcia 
 [![Github Célian Garcia](./docs/images/github.png)](https://github.com/celian-garcia)
 [![Linkedin Célian Garcia](./docs/images/linkedin.png)](https://www.linkedin.com/in/celiangarcia/)
 
