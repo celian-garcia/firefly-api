@@ -4,20 +4,22 @@
 #define FIREFLY_FLYCLOUDPOPULATION_HPP
 
 #include <firefly/utils/FireflyException.hpp>
+#include <vector>
 
 namespace firefly {
     namespace module_fly {
-        class FlyCloudPopulation{
-            FlyCloudPopulation();
-            void start();
-            void stop();
-            void collect();
+        class FlyCloudPopulation {
+        public:
+
+            static int start();
+
+            static void stop();
+
+            static void collect();
+
         private:
-//            const std::vector capabilities = {
-//                    ModuleCapability::START,
-//                    ModuleCapability::STOP,
-//                    ModuleCapability::COLLECT
-//            };
+            static const std::vector<ProcessActionType> VALID_ACTION_TYPES;
+
         };
     }
 }

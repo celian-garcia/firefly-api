@@ -1,7 +1,7 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <firefly/utils/ModuleAction.hpp>
-#include <firefly/utils/ModuleName.hpp>
+#include <firefly/utils/ProcessAction.hpp>
+#include <firefly/utils/Process.hpp>
 #include "firefly/api/MainHandler.hpp"
 
 namespace firefly {
@@ -16,27 +16,24 @@ namespace firefly {
 
     void
     MainHandler::initModulesResources() {
-        this->m_server->resource["^/api/module/(\\w+)/(\\w+)$"]["GET"] = [this](std::shared_ptr<HttpResponse> response,
+        this->m_server->resource["^/api/(\\w+)\\?name=(\\w+)$"]["GET"] = [this](std::shared_ptr<HttpResponse> response,
                                                                                 std::shared_ptr<HttpRequest> request) {
             try {
-                std::string raw_module_name = request->path_match[1];
-                std::string raw_module_action = request->path_match[2];
-                ModuleName module_name(raw_module_name);
-                ModuleAction module_action(raw_module_action);
+                std::string action_input = request->path_match[1];
+                std::string process_input = request->path_match[2];
+                Process process(process_input);
+                ProcessAction processAction(action_input);
+
                 IModuleHandler *handler;
-                switch (module_name.getType()) {
-                    case ModuleType::RECONSTRUCTION3D:
-                        handler = new module_fly::FlyHandler(module_fly::FlyRequestType::RECONSTRUCT_3D, module_action);
-                    case ModuleType::CLOUDPOPULATION3D:
-                        handler = new module_fly::FlyHandler(module_fly::FlyRequestType::POPULATE_3D, module_action);
-                    case ModuleType::CVFILTERGAUSSIAN:
-                        throw FireflyException(HtmlStatusCode::NOT_IMPLEMENTED, "Not yet implemented");
-                    case ModuleType::OPOPOLOP:
-                        throw FireflyException(HtmlStatusCode::NOT_IMPLEMENTED,
-                                               "Not yet implemented (probably never)");
-                    default:
-                        throw FireflyException(HtmlStatusCode::BAD_REQUEST,
-                                               module_name.getValue() + " module does not exist.");
+                switch (process.getModuleType()) {
+                    case ModuleType::FLY: {
+                        handler = new module_fly::FlyHandler(process, processAction);
+                        break;
+                    }
+                    case ModuleType::CV: {
+                        handler = new module_fly::FlyHandler(process, processAction);
+                        break;
+                    }
                 }
                 handler->handleRequest(response, request);
             }
