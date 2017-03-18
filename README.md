@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/celian-garcia/firefly.svg?branch=master)](https://travis-ci.org/celian-garcia/firefly)
 [![Documentation](https://codedocs.xyz/celian-garcia/firefly.svg)](https://codedocs.xyz/celian-garcia/firefly/)
 
 ## Firefly
