@@ -1,0 +1,20 @@
+language: cpp
+
+compiler:
+  - gcc
+
+before_install:
+  - sudo apt-get update
+
+install:
+  - sudo apt-get install libopencv-dev libcv-dev
+
+before_script:
+  - git clone https://github.com/celian-garcia/fly.git && cd fly
+  - mkdir build && cd build
+  - cmake .. && make
+  - cd ../..
+  - mkdir build && cd build
+  - cmake ..
+
+script: make
