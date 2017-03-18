@@ -18,8 +18,8 @@ addons:
       - libopencv-dev
       - libcv-dev
       - libboost-all-dev
-
-  postgresql: "9.5"
+      - libpq-dev
+      - postgresql-server-dev-all
 
 before_install:
   - psql --version
