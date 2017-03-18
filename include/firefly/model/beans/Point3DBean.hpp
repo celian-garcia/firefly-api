@@ -3,7 +3,7 @@
 #ifndef INCLUDE_FIREFLY_MODEL_BEANS_POINT3DBEAN_HPP_
 #define INCLUDE_FIREFLY_MODEL_BEANS_POINT3DBEAN_HPP_
 #include <vector>
-#include <opencv2/core.hpp>
+#include <opencv2/opencv.hpp>
 
 namespace firefly {
 namespace model {

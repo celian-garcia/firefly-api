@@ -2,7 +2,7 @@
 #ifndef INCLUDE_FIREFLY_OPERATION_HPP_
 #define INCLUDE_FIREFLY_OPERATION_HPP_
 #include <queue>
-#include <opencv2/core.hpp>
+#include <opencv2/opencv.hpp>
 #include <boost/thread.hpp>
 
 namespace firefly {
