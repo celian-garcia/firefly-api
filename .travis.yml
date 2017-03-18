@@ -24,7 +24,7 @@ before_install:
   - tar xf cmake-3.7.2.tar.gz
   - cd cmake-3.7.2
   - ./configure
-  - make && make install && cd ..
+  - make && sudo make install && cd ..
   - cmake --version
   - psql --version
 
