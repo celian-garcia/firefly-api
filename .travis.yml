@@ -17,6 +17,7 @@ addons:
         - cmake-data
         - libopencv-dev
         - libcv-dev
+        - libboost-all-dev
 
 before_script:
   - git clone https://github.com/celian-garcia/fly.git && cd fly
