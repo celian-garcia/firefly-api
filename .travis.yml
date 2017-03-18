@@ -12,6 +12,7 @@ addons:
       - ubuntu-toolchain-r-test
 
     packages:
+      - g++-6
       - libopencv-dev
       - libcv-dev
       - libboost-all-dev
