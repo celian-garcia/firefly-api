@@ -7,17 +7,23 @@ compiler:
   - gcc
 
 addons:
-    apt:
-      sources:
-        - ubuntu-toolchain-r-test
-        - george-edison55-precise-backports
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - george-edison55-precise-backports
 
-      packages:
-        - cmake
-        - cmake-data
-        - libopencv-dev
-        - libcv-dev
-        - libboost-all-dev
+    packages:
+      - cmake
+      - cmake-data
+      - libopencv-dev
+      - libcv-dev
+      - libboost-all-dev
+
+  postgresql: "9.5"
+
+before_install:
+  - psql --version
+
 
 before_script:
   - git clone https://github.com/celian-garcia/fly.git && cd fly
