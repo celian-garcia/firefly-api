@@ -10,21 +10,18 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
+      - sourceline: 'ppa:george-edison55/cmake-3.x'
 
     packages:
+      - cmake
+      - cmake-data
       - libopencv-dev
       - libcv-dev
       - libboost-all-dev
       - libpq-dev
-      - postgresql-server-dev-all
+      - postgresql-server-dev-9.3
 
 before_install:
-  - sudo apt-get install build-essential
-  - wget http://www.cmake.org/files/v3.7/cmake-3.7.2.tar.gz
-  - tar xf cmake-3.7.2.tar.gz
-  - cd cmake-3.7.2
-  - ./configure
-  - make && cd ..
   - cmake --version
   - psql --version
 
@@ -34,6 +31,6 @@ before_script:
   - cmake .. && make
   - cd ../..
   - mkdir build && cd build
-  - cmake ..
+  - cmake -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgres/9.3/server ..
 
 script: make
