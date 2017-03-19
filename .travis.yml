@@ -21,11 +21,11 @@ addons:
 
 before_install:
   - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
-#  - wget http://www.cmake.org/files/v3.7/cmake-3.7.2.tar.gz
-#  - tar xf cmake-3.7.2.tar.gz
-#  - cd cmake-3.7.2
-#  - ./configure
-#  - make && sudo make install && cd ..
+  - wget http://www.cmake.org/files/v3.7/cmake-3.7.2.tar.gz
+  - tar xf cmake-3.7.2.tar.gz
+  - cd cmake-3.7.2
+  - ./configure
+  - make && sudo make install && cd ..
   - cmake --version
   - psql --version
 
@@ -35,7 +35,7 @@ before_script:
   - cmake .. && make
   - pwd
   - cd ../..
-#  - mkdir build && cd build
-#  - cmake -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgres/9.3/server  -DFly_DIR="../fly" ..
+  - mkdir build && cd build
+  - cmake -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgres/9.3/server  -DFly_DIR="/home/travis/build/celian-garcia/firefly/fly/build" ..
 
-#script: make
+script: make
