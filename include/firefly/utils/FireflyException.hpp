@@ -13,6 +13,9 @@ namespace firefly {
 
     class FireflyException : public std::exception {
     public:
+
+        FireflyException() = default;
+
         FireflyException(const HtmlStatusCode code, const std::string &content) :
                 m_code(code), m_content(content) {}
 

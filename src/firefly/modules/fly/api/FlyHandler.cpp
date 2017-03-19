@@ -1,12 +1,12 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <boost/exception/info.hpp>
 #include "firefly/modules/fly/api/FlyHandler.hpp"
 
 namespace firefly {
     namespace module_fly {
 
-        FlyHandler::FlyHandler(Process process, ProcessAction action) : m_process(process), m_action(action) {}
+        FlyHandler::FlyHandler(Process process, ProcessAction action, ThreadPool *pool) :
+                m_process(process), m_action(action), m_pool(pool) {}
 
         void
         FlyHandler::handleRequest(std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request) {
@@ -30,7 +30,7 @@ namespace firefly {
         FlyHandler::handleP3DRequest(std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request) {
             switch (this->m_action.getActionType()) {
                 case ProcessActionType::START: {
-                    int process_id = FlyCloudPopulation::start();
+                    int process_id = FlyCloudPopulation::start(this->m_pool);
                     json result_content;
                     result_content["process_id"] = process_id;
 
@@ -41,11 +41,11 @@ namespace firefly {
                     *response << content;
                     break;
                 }
-                case ProcessActionType::STOP:{
+                case ProcessActionType::STOP: {
                     FlyCloudPopulation::stop();
                     break;
                 }
-                case ProcessActionType::COLLECT:{
+                case ProcessActionType::COLLECT: {
                     FlyCloudPopulation::collect();
                     break;
                 }

@@ -3,15 +3,22 @@
 #ifndef FIREFLY_FLYCLOUDPOPULATION_HPP
 #define FIREFLY_FLYCLOUDPOPULATION_HPP
 
-#include <firefly/utils/FireflyException.hpp>
 #include <vector>
+#include <firefly/Operation.hpp>
+#include <firefly/utils/FireflyException.hpp>
+#include <firefly/utils/ProcessAction.hpp>
+#include <firefly/modules/common/model/DatabaseManager.hpp>
+#include <firefly/modules/fly/model/Cloud3DModel.hpp>
+#include <firefly/modules/fly/model/beans/Point3DBean.hpp>
+#include <firefly/modules/fly/model/Point3DModel.hpp>
+#include <firefly/utils/ThreadPool.hpp>
 
 namespace firefly {
     namespace module_fly {
         class FlyCloudPopulation {
         public:
 
-            static int start();
+            static int start(ThreadPool* pool);
 
             static void stop();
 

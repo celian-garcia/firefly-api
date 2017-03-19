@@ -12,24 +12,29 @@
 #include <firefly/utils/Process.hpp>
 #include <firefly/modules/fly/workers/FlyCloudPopulation.hpp>
 #include <json/json.hpp>
+#include <boost/exception/info.hpp>
+#include <firefly/utils/ThreadPool.hpp>
 
 namespace firefly {
     namespace module_fly {
         class FlyHandler : public firefly::IModuleHandler {
             using json = nlohmann::json;
         public:
-            FlyHandler(Process process, ProcessAction action);
+            FlyHandler(Process process, ProcessAction action, ThreadPool *pool);
 
             ///
             /// \param response
             /// \param request
             void handleRequest(std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request);
+
             void handleP3DRequest(std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request);
+
             void handleR3DRequest(std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request);
 
         private:
             Process m_process;
             ProcessAction m_action;
+            ThreadPool *m_pool;
         };
 
     }  // end namespace module_fly

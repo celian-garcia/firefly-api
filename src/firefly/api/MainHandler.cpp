@@ -27,11 +27,11 @@ namespace firefly {
                 IModuleHandler *handler;
                 switch (process.getModuleType()) {
                     case ModuleType::FLY: {
-                        handler = new module_fly::FlyHandler(process, processAction);
+                        handler = new module_fly::FlyHandler(process, processAction, this->m_pool);
                         break;
                     }
                     case ModuleType::CV: {
-                        handler = new module_fly::FlyHandler(process, processAction);
+                        handler = new module_fly::FlyHandler(process, processAction, this->m_pool);
                         break;
                     }
                 }
