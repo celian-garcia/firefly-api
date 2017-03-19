@@ -35,6 +35,6 @@ before_script:
   - cmake .. && make
   - cd ../..
   - mkdir build && cd build
-  - cmake -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgres/9.3/server ..
+  - cmake -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgres/9.3/server  -DFly_DIR="../fly" ..
 
 script: make
