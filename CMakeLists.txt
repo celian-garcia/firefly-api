@@ -16,7 +16,8 @@ find_package(PostgreSQL REQUIRED)
 
 # Fly Library initialization
 set(Fly_INCLUDE_DIRS "${Fly_DIR}/include")
-set(Fly_LIB_DIRS "${Fly_DIR}/build/debug/lib")
+set(Fly_LIB_DIRS1 "${Fly_DIR}/build/debug/lib")
+set(Fly_LIB_DIRS2 "${Fly_DIR}/build/lib")
 set(Fly_LIBRARY Fly)
 
 # Firefly executable variables
@@ -36,7 +37,7 @@ list(FILTER FIREFLY_HEADERS EXCLUDE REGEX .+operation.+)
 list(FILTER FIREFLY_HEADERS EXCLUDE REGEX .+modules/opencv.+)
 
 # Firefly executable definition
-link_directories(${Fly_LIB_DIRS} ${PostgreSQL_LIBRARY_DIRS})
+link_directories(${Fly_LIB_DIRS1} ${Fly_LIB_DIRS2} ${PostgreSQL_LIBRARY_DIRS})
 include_directories(include
         ${Boost_INCLUDE_DIRS}  # Necessary because we use asio which is include-only project
         ${Fly_INCLUDE_DIRS}
