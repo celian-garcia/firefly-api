@@ -4,6 +4,8 @@
 #define FIREFLY_FLYCLOUDPOPULATION_HPP
 
 #include <vector>
+#include <chrono>
+#include <thread>
 #include <firefly/Operation.hpp>
 #include <firefly/utils/FireflyException.hpp>
 #include <firefly/utils/ProcessAction.hpp>
@@ -22,10 +24,11 @@ namespace firefly {
 
             static void stop();
 
-            static void collect();
+            static std::vector<Operation> collect(int cloud_id, int client_last_op);
 
         private:
             static const std::vector<ProcessActionType> VALID_ACTION_TYPES;
+            static const std::string DATABASE_NAME;
 
         };
     }

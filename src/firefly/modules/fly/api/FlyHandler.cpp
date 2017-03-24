@@ -5,8 +5,8 @@
 namespace firefly {
     namespace module_fly {
 
-        FlyHandler::FlyHandler(Process process, ProcessAction action, ThreadPool *pool) :
-                m_process(process), m_action(action), m_pool(pool) {}
+        FlyHandler::FlyHandler(Process process, ProcessAction action, QueryParameters parameters, ThreadPool *pool) :
+                m_process(process), m_action(action), m_parameters(parameters), m_pool(pool) {}
 
         void
         FlyHandler::handleRequest(std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request) {
@@ -28,11 +28,13 @@ namespace firefly {
 
         void
         FlyHandler::handleP3DRequest(std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request) {
+
             switch (this->m_action.getActionType()) {
                 case ProcessActionType::START: {
                     int process_id = FlyCloudPopulation::start(this->m_pool);
                     json result_content;
                     result_content["process_id"] = process_id;
+                    result_content["status"] = 0;
 
                     // TODO(Célian): externalize build of response
                     std::string content = result_content.dump();
@@ -46,7 +48,22 @@ namespace firefly {
                     break;
                 }
                 case ProcessActionType::COLLECT: {
-                    FlyCloudPopulation::collect();
+                    try {
+                        int process_id = std::stoi(this->m_parameters["process_id"]);
+                        int client_last_op = std::stoi(this->m_parameters["status"]);
+                        std::vector<Operation> operations_list = FlyCloudPopulation::collect(process_id, client_last_op);
+
+                        json result_content = operations_list;
+
+                        // TODO(Célian): externalize build of response
+                        std::string content = result_content.dump();
+                        *response << "HTTP/1.1 200 \r\n";
+                        *response << "Content-Length: " << content.length() << "\r\n\r\n";
+                        *response << content;
+                    }
+                    catch (std::invalid_argument exception) {
+                        throw FireflyException(HtmlStatusCode::BAD_REQUEST, "Bad Request");
+                    }
                     break;
                 }
                 default: {

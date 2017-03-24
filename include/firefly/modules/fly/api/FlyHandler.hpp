@@ -14,13 +14,14 @@
 #include <json/json.hpp>
 #include <boost/exception/info.hpp>
 #include <firefly/utils/ThreadPool.hpp>
+#include <firefly/utils/QueryParameters.hpp>
 
 namespace firefly {
     namespace module_fly {
         class FlyHandler : public firefly::IModuleHandler {
             using json = nlohmann::json;
         public:
-            FlyHandler(Process process, ProcessAction action, ThreadPool *pool);
+            FlyHandler(Process process, ProcessAction action, QueryParameters parameters, ThreadPool *pool);
 
             ///
             /// \param response
@@ -34,6 +35,7 @@ namespace firefly {
         private:
             Process m_process;
             ProcessAction m_action;
+            QueryParameters m_parameters;
             ThreadPool *m_pool;
         };
 

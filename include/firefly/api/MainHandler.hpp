@@ -10,8 +10,12 @@
 #include <memory>
 #include "firefly/utils/server_types_definitions.hpp"
 #include "firefly/utils/ThreadPool.hpp"
+#include <firefly/utils/ProcessAction.hpp>
+#include <firefly/utils/Process.hpp>
+#include <firefly/utils/QueryParameters.hpp>
 #include "IModuleHandler.hpp"
 #include "firefly/modules/fly/api/FlyHandler.hpp"
+
 //#include "firefly/modules/opencv/api/OpencvFilterHandler.hpp"
 #include "firefly/utils/FireflyException.hpp"
 
