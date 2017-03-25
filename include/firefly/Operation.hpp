@@ -32,6 +32,14 @@ namespace firefly {
         void setValue(const cv::Vec3f &value) { this->m_value = value; }
         void setType(const OperationType &type) { this->m_type = type; }
 
+        static Operation buildEndOperation() {
+            return Operation(-1, OperationType::END, cv::Vec<float, 3>());
+        }
+
+        bool isEndOperation() {
+            return this->getType() == OperationType::END;
+        }
+
     private:
         int m_id = 0;
         OperationType m_type;

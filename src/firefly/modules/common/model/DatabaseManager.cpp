@@ -1,4 +1,6 @@
 // Copyright 2017 <Célian Garcia>
+#include <firefly/utils/HtmlStatusCode.hpp>
+#include <firefly/utils/FireflyException.hpp>
 #include "firefly/modules/common/model/DatabaseManager.hpp"
 
 namespace firefly {
@@ -68,35 +70,44 @@ namespace firefly {
     }
 
     std::string
-    DatabaseManager::format(const int &elt) {
-        return std::to_string(elt);
+    DatabaseManager::format(const int &obj) {
+        return std::to_string(obj);
     }
 
     std::string
-    DatabaseManager::format(const double &elt) {
-        return std::to_string(elt);
+    DatabaseManager::format(const double &obj) {
+        return std::to_string(obj);
     }
 
     std::string
-    DatabaseManager::format(const cv::Vec3f &elt) {
+    DatabaseManager::format(const cv::Vec3f &obj) {
         return std::string(
-                "\'(" + std::to_string(elt[0]) + ", " + std::to_string(elt[1]) + ")\'");
+                "\'(" + std::to_string(obj[0]) + ", " + std::to_string(obj[1]) + ")\'");
     }
 
     std::string
-    DatabaseManager::format(const std::vector<int> &elts) {
-        unsigned long long int size = elts.size();
+    DatabaseManager::format(const std::vector<int> &objs) {
+        unsigned long long int size = objs.size();
         std::string result = "\'{";
         for (unsigned long long int i = 0; i < size - 1; i++) {
-            result += std::to_string(elts[i]) + ", ";
+            result += std::to_string(objs[i]) + ", ";
         }
-        result += std::to_string(elts[size - 1]) + "}\'";
+        result += std::to_string(objs[size - 1]) + "}\'";
         return result;
     }
 
     std::string
-    DatabaseManager::format(const std::string &elt) {
-        return "\'" + elt + "\'";
+    DatabaseManager::format(const std::string &obj) {
+        return "\'" + obj + "\'";
+    }
+
+    int DatabaseManager::parse(std::string str) {
+        try {
+            return std::stoi(str);
+        }
+        catch (std::exception e) {
+            throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, "Error parsing db query result.");
+        }
     }
 
 }  // namespace firefly

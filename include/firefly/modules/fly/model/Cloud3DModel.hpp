@@ -20,6 +20,8 @@ namespace firefly {
             int insertCloud(const Cloud3DBean &cloud);
 
             void updateCloud(const Cloud3DBean &cloud);
+
+            void updateCloudState(Cloud3DBean *cloud, const std::string& state);
         };
 
     }  // namespace module_fly

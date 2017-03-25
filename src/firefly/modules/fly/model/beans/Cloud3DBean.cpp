@@ -3,6 +3,10 @@
 
 namespace firefly {
     namespace module_fly {
+        const std::string Cloud3DBean::STARTED_STATE = "STARTED";
+        const std::string Cloud3DBean::POPULATING_STATE = "POPULATING";
+        const std::string Cloud3DBean::FINISHED_STATE = "FINISHED";
+
         Cloud3DBean::Cloud3DBean(int id, std::string state)
                 : m_id(id), m_state(state) {}
 

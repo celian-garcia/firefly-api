@@ -44,5 +44,10 @@ namespace firefly {
 
             this->m_dbmanager->execUpdateQuery(update_query.c_str());
         }
+
+        void Cloud3DModel::updateCloudState(Cloud3DBean* cloud, const std::string &state) {
+            cloud->setState(state);
+            updateCloud(*cloud);
+        }
     }
 }

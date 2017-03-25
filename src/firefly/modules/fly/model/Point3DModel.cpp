@@ -50,22 +50,19 @@ namespace firefly {
             }
 
             int id_fnum = PQfnumber(res, "id");
-            int cloud_id_fnum = PQfnumber(res, "cloud_id");
             int value_fnum = PQfnumber(res, "value");
             int operations_fnum = PQfnumber(res, "operations");
 
+            std::vector<Point3DBean> points;
             for (int row = 0; row < rows_number; row++) {
-                char *id = PQgetvalue(res, row, id_fnum);
-                char *cloud_id_char = PQgetvalue(res, row, cloud_id_fnum);
-                char *value = PQgetvalue(res, row, value_fnum);
-                char *operations = PQgetvalue(res, row, operations_fnum);
-                std::cout << std::string(id) << std::endl;
-                std::cout << std::string(cloud_id_char) << std::endl;
-                std::cout << std::string(value) << std::endl;
-                std::cout << std::string(operations) << std::endl;
+                int id = this->m_dbmanager->parse(PQgetvalue(res, row, id_fnum));
+
+                cv::Vec3f value(1, 1, 1);//TODO
+                std::vector<int> operations = {4, 5, 6};//TODO
+                points.push_back(Point3DBean(id, value, cloud_id, operations));
             }
 
-            return std::vector<Point3DBean>();
+            return points;
 
         }
 
@@ -80,9 +77,42 @@ namespace firefly {
             this->m_dbmanager->execInsertQuery(insert_query.c_str());
         }
 
-        void
-        Point3DModel::updatePointOperations(Point3DBean point) {
-            std::cout << "Point update" << std::endl;
+        void Point3DModel::updatePoint(Point3DBean point) {
+            std::string update_query =
+                    "UPDATE fpoint3d SET cloud_id = '" +
+                    this->m_dbmanager->format(point.getCloudId()) + "', value = '" +
+                    this->m_dbmanager->format(point.getValue()) + "', operations = '" +
+                    this->m_dbmanager->format(point.getOperationsIds()) + "' WHERE id = " +
+                    this->m_dbmanager->format(point.getId());
+
+            this->m_dbmanager->execUpdateQuery(update_query.c_str());
+        }
+
+        void Point3DModel::insertOperation(Operation operation, int cloud_id) {
+            if (operation.getType() == OperationType::END) {
+                throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, "Internal server error");
+            }
+            cv::Vec3f operation_value = operation.getValue();
+
+            try {
+                Point3DBean point = this->getPointByValueAndCloudId(operation_value, cloud_id);
+
+                // If the size of operations indices is even, the next operation should be an add
+                // If the size of operations indices is odd , the next operation should be a remove
+                // With this type of storing, we don't need to store the ADD or REMOVE flag.
+                // So we can store another thing in place: the total index of the operation,
+                // which is much more useful in the listen part.
+                OperationType operation_type = operation.getType();
+                std::vector<int> operation_indices = point.getOperationsIds();
+                if ((operation_indices.size() % 2 == 0 && operation_type == OperationType::ADD) ||
+                    (operation_indices.size() % 2 == 1 && operation_type == OperationType::REMOVE)) {
+                    point.addOperationId(operation.getId());
+                    this->updatePoint(point);
+                }
+            } catch (ObjectNotFound e) {
+                Point3DBean new_point(operation_value, cloud_id, {operation.getId()});
+                this->insertPoint(new_point);
+            }
         }
     }
 }

@@ -30,6 +30,9 @@ namespace firefly {
             static const std::vector<ProcessActionType> VALID_ACTION_TYPES;
             static const std::string DATABASE_NAME;
 
+            static void run_compute_thread(ConcurrentOperationQueue *queue);
+            static void run_populate_thread(int cloud_id, ConcurrentOperationQueue* queue);
+
         };
     }
 }

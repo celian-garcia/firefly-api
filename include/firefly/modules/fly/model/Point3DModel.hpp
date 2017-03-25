@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <string>
+#include <firefly/Operation.hpp>
 #include "firefly/modules/fly/model/beans/Point3DBean.hpp"
 #include "firefly/modules/common/model/DatabaseManager.hpp"
 #include "firefly/modules/common/model/exceptions.hpp"
@@ -22,7 +23,9 @@ namespace firefly {
 
             void insertPoint(Point3DBean point);
 
-            void updatePointOperations(Point3DBean point);
+            void insertOperation(Operation operation, int cloud_id);
+
+            void updatePoint(Point3DBean point);
 
             static constexpr double INTERSECT_MIN_DISTANCE = 0.00001;
         };

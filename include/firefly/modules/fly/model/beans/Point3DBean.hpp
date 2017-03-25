@@ -12,10 +12,10 @@ namespace firefly {
         class Point3DBean {
         public:
 
-            explicit Point3DBean(cv::Vec3f value,
+            Point3DBean(cv::Vec3f value,
                                  int cloud_id, std::vector<int> operations_ids);
 
-            explicit Point3DBean(int id, cv::Vec3f value,
+            Point3DBean(int id, cv::Vec3f value,
                                  int cloud_id, std::vector<int> operations_ids);
 
             int const &getId() const;

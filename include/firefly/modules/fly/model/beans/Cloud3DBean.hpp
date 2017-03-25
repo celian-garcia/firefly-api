@@ -9,6 +9,10 @@ namespace firefly {
 
         class Cloud3DBean {
         public:
+            static const std::string STARTED_STATE;
+            static const std::string POPULATING_STATE;
+            static const std::string FINISHED_STATE;
+
             explicit Cloud3DBean(int id, std::string state);
 
             explicit Cloud3DBean(std::string state);
@@ -23,7 +27,7 @@ namespace firefly {
 
         private:
             int m_id = 0;
-            std::string m_state = "STARTED";
+            std::string m_state = STARTED_STATE;
         };
     }  // namespace module_fly
 }  // namespace firefly
