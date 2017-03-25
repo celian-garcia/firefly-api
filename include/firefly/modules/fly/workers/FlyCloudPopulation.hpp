@@ -20,7 +20,7 @@ namespace firefly {
         class FlyCloudPopulation {
         public:
 
-            static int start(ThreadPool* pool);
+            static int start(ThreadPool *pool);
 
             static void stop();
 
@@ -31,8 +31,13 @@ namespace firefly {
             static const std::string DATABASE_NAME;
 
             static void run_compute_thread(ConcurrentOperationQueue *queue);
-            static void run_populate_thread(int cloud_id, ConcurrentOperationQueue* queue);
 
+            static void run_populate_thread(int cloud_id, ConcurrentOperationQueue *queue);
+
+            static std::vector<Operation>
+            computeOperationsFromPoints(const std::vector<Point3DBean> &points, int last_operation);
+
+            static Operation computeOperationFromPoint(const Point3DBean &point, int last_operation);
         };
     }
 }

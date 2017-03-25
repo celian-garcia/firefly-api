@@ -11,7 +11,7 @@ namespace firefly {
 
     using json = nlohmann::json;
     enum class OperationType {
-        ADD, REMOVE, END
+        ADD, REMOVE, END, NONE
     };
 
     class Operation {
@@ -29,15 +29,25 @@ namespace firefly {
         OperationType getType() const { return this->m_type; }
 
         void setId(const int &id) { this->m_id = id; }
+
         void setValue(const cv::Vec3f &value) { this->m_value = value; }
+
         void setType(const OperationType &type) { this->m_type = type; }
 
         static Operation buildEndOperation() {
             return Operation(-1, OperationType::END, cv::Vec<float, 3>());
         }
 
+        static Operation buildNoneOperation() {
+            return Operation(-1, OperationType::NONE, cv::Vec<float, 3>());
+        }
+
         bool isEndOperation() {
             return this->getType() == OperationType::END;
+        }
+
+        bool isNoneOperation() {
+            return this->getType() == OperationType::NONE;
         }
 
     private:
@@ -50,14 +60,14 @@ namespace firefly {
     class ConcurrentOperationQueue {
     public:
         void enqueue(Operation operation) {
-            boost::lock_guard <boost::mutex> lock(m);
+            boost::lock_guard<boost::mutex> lock(m);
             operation.setId(last_index++);
             q.push(operation);
             c.notify_one();
         }
 
         Operation dequeue() {
-            boost::unique_lock <boost::mutex> lock(m);
+            boost::unique_lock<boost::mutex> lock(m);
             while (q.empty()) {
                 c.wait(lock);
             }
@@ -68,37 +78,41 @@ namespace firefly {
 
     private:
         int last_index = 0;
-        std::queue <Operation> q;
+        std::queue<Operation> q;
         mutable boost::mutex m;
         boost::condition_variable c;
     };
 }  // end namespace firefly
 
 namespace nlohmann {
-    template <>
+    template<>
     struct adl_serializer<cv::Vec3f> {
-        static void to_json(json& j, const cv::Vec3f& v) {
+        static void to_json(json &j, const cv::Vec3f &v) {
             std::string x_key = "x";
             std::string y_key = "y";
             std::string z_key = "z";
-            j = json{{x_key, v[0]}, {y_key, v[1]}, {z_key, v[2]}};
+            j = json{{x_key, v[0]},
+                     {y_key, v[1]},
+                     {z_key, v[2]}};
         }
     };
 
-    template <>
+    template<>
     struct adl_serializer<firefly::OperationType> {
-        static void to_json(json& j, const firefly::OperationType& operationType) {
+        static void to_json(json &j, const firefly::OperationType &operationType) {
             j = std::string("enum");
         }
     };
 
-    template <>
+    template<>
     struct adl_serializer<firefly::Operation> {
-        static void to_json(json& j, const firefly::Operation& operation) {
+        static void to_json(json &j, const firefly::Operation &operation) {
             std::string id_key = "id";
             std::string value_key = "value";
             std::string type_key = "type";
-            j = json{{id_key, operation.getId()}, {value_key, operation.getValue()}, {type_key, operation.getType()}};
+            j = json{{id_key,    operation.getId()},
+                     {value_key, operation.getValue()},
+                     {type_key,  operation.getType()}};
         }
     };
 }
