@@ -2,7 +2,7 @@
 
 #ifndef FIREFLY_SERVER_TYPES_DEFINITIONS_HPP
 #define FIREFLY_SERVER_TYPES_DEFINITIONS_HPP
-#include "lib/Simple-Web-Server-MODIFIED/simple_web_server/server_http.hpp"
+#include "simple_web_server/server_http.hpp"
 
 typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
 typedef HttpServer::Response HttpResponse;

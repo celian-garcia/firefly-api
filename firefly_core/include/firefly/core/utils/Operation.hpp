@@ -5,7 +5,7 @@
 #include <queue>
 #include <opencv2/opencv.hpp>
 #include <boost/thread.hpp>
-#include <json/json.hpp>
+#include "json/json.hpp"
 
 namespace firefly {
 

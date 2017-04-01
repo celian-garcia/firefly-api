@@ -1,6 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <firefly/utils/Process.hpp>
+#include <firefly/core/utils/Process.hpp>
 
 namespace firefly {
     Process::Process(const std::string &raw_input) {

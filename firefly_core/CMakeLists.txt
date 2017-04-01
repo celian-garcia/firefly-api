@@ -6,6 +6,7 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
     find_package(Boost 1.53.0 COMPONENTS system thread filesystem date_time regex REQUIRED)
     find_package(PostgreSQL REQUIRED)
     get_target_property(SIMPLE_WEB_SERVER_INCLUDE_DIRS ${SIMPLE_WEB_SERVER_TARGET} INCLUDE_DIRECTORIES)
+    get_target_property(JSON_INCLUDE_DIRS ${JSON_TARGET} INCLUDE_DIRECTORIES)
     ## ============ ## ====================================================================
 
 
@@ -29,6 +30,7 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
     target_include_directories(${FIREFLY_CORE_TARGET}
             PUBLIC  include
             PRIVATE ${SIMPLE_WEB_SERVER_INCLUDE_DIRS}
+            PRIVATE ${JSON_INCLUDE_DIRS}
             PRIVATE ${Boost_INCLUDE_DIRS}  # Necessary because we use asio which is include-only project
             PRIVATE ${PostgreSQL_INCLUDE_DIRS})
 
@@ -37,7 +39,9 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
 
 
     ## 3rd party dependencies ## ====================================================================
-    add_dependencies(${FIREFLY_CORE_TARGET} ${SIMPLE_WEB_SERVER_TARGET})
+    add_dependencies(${FIREFLY_CORE_TARGET}
+            ${SIMPLE_WEB_SERVER_TARGET}
+            ${JSON_TARGET})
     ## ====================== ## ====================================================================
 
 endif()

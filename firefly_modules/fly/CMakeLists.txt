@@ -40,7 +40,7 @@ set_target_properties(${FLY_MODULE_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
 
 
 ## FIREFLY target dependency ## ================================================================
-add_dependencies(${FLY_MODULE_TARGET} ${FIREFLY_TARGET})
+#add_dependencies(${FLY_MODULE_TARGET} ${FIREFLY_TARGET})
 ## ========================= ## ================================================================
 
 

@@ -1,7 +1,5 @@
 // Copyright 2017 <Célian Garcia>
-#include "../../include/firefly/core/utils/HtmlStatusCode.hpp"
-#include "../../include/firefly/core/utils/FireflyException.hpp"
-#include "firefly/modules/common/model/DatabaseManager.hpp"
+#include "firefly/core/model/DatabaseManager.hpp"
 
 namespace firefly {
 

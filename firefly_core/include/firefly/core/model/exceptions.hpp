@@ -3,7 +3,7 @@
 #ifndef INCLUDE_FIREFLY_MODEL_EXCEPTIONS_HPP_
 #define INCLUDE_FIREFLY_MODEL_EXCEPTIONS_HPP_
 
-#include "firefly/utils/FireflyException.hpp"
+#include "firefly/core/utils/FireflyException.hpp"
 
 namespace firefly {
 

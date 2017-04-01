@@ -5,9 +5,9 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <boost/algorithm/string.hpp>
 #include "FireflyException.hpp"
 #include "HtmlStatusCode.hpp"
-#include <boost/algorithm/string.hpp>
 
 namespace firefly {
     enum ProcessActionType {

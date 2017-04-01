@@ -5,12 +5,12 @@
 namespace firefly {
     enum HtmlStatusCode {
         // Information
-                CONTINUE = 100,
+        CONTINUE = 100,
         SWITCHING_PROTOCOLS = 101,
         Processing = 102,
 
         // Success
-                OK = 200,
+        OK = 200,
         CREATED = 201,
         ACCEPTED = 202,
         NON_AUTHORITATIVE_INFORMATION = 203,
@@ -22,7 +22,7 @@ namespace firefly {
         IM_USED = 226,
 
         // Redirection
-                MULTIPLE_CHOICES = 300,
+        MULTIPLE_CHOICES = 300,
         MOVED_PERMANENTLY = 301,
         MOVED_TEMPORARILY = 302,
         SEE_OTHER = 303,
@@ -33,7 +33,7 @@ namespace firefly {
         TOO_MANY_REDIRECTS = 310,
 
         // Web Client Error
-                BAD_REQUEST = 400,
+        BAD_REQUEST = 400,
         UNAUTHORIZED = 401,
         PAYMENT_REQUIRED = 402,
         FORBIDDEN = 403,
@@ -72,7 +72,7 @@ namespace firefly {
         CLIENT_CLOSED_REQUEST = 499,
 
         // Server Error
-                INTERNAL_SERVER_ERROR = 500,
+        INTERNAL_SERVER_ERROR = 500,
         NOT_IMPLEMENTED = 501,
         BAD_GATEWAY = 502,
         SERVICE_UNAVAILABLE = 503,
