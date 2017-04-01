@@ -1,6 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include "firefly/modules/fly/model/Point3DModel.hpp"
+#include "fly_module/model/Point3DModel.hpp"
 
 namespace firefly {
     namespace fly_module {

@@ -6,14 +6,14 @@
 #include <vector>
 #include <chrono>
 #include <thread>
-#include <firefly/Operation.hpp>
-#include <firefly/utils/FireflyException.hpp>
-#include <firefly/utils/ProcessAction.hpp>
-#include <firefly/modules/common/model/DatabaseManager.hpp>
-#include <firefly/modules/fly/model/Cloud3DModel.hpp>
-#include <firefly/modules/fly/model/beans/Point3DBean.hpp>
-#include <firefly/modules/fly/model/Point3DModel.hpp>
-#include <firefly/utils/ThreadPool.hpp>
+#include <firefly/core/utils/Operation.hpp>
+#include <firefly/core/utils/FireflyException.hpp>
+#include <firefly/core/utils/ProcessAction.hpp>
+#include <firefly/core/model/DatabaseManager.hpp>
+#include <firefly/core/utils/ThreadPool.hpp>
+#include <fly_module/model/Cloud3DModel.hpp>
+#include <fly_module/model/beans/Point3DBean.hpp>
+#include <fly_module/model/Point3DModel.hpp>
 
 namespace firefly {
     namespace fly_module {

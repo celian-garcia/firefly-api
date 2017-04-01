@@ -1,6 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include "firefly/modules/fly/workers/FlyCloudPopulation.hpp"
+#include "fly_module/workers/FlyCloudPopulation.hpp"
 
 namespace firefly {
     namespace fly_module {

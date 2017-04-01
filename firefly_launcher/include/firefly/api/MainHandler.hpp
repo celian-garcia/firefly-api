@@ -8,15 +8,14 @@
 #include <vector>
 #include <algorithm>
 #include <memory>
-#include "firefly/utils/server_types_definitions.hpp"
-#include "firefly/utils/ThreadPool.hpp"
-#include <firefly/utils/ProcessAction.hpp>
-#include <firefly/utils/Process.hpp>
-#include <firefly/utils/QueryParameters.hpp>
-#include "IModuleHandler.hpp"
+#include "firefly/core/utils/server_types_definitions.hpp"
+#include "firefly/core/utils/ThreadPool.hpp"
+#include "firefly/core/utils/ProcessAction.hpp"
+#include "firefly/core/utils/Process.hpp"
+#include "firefly/core/utils/QueryParameters.hpp"
+#include "firefly/core/utils/FireflyException.hpp"
 
-//#include "firefly/firefly_modules/opencv/api/OpencvFilterHandler.hpp"
-#include "firefly/utils/FireflyException.hpp"
+#include "firefly/core/api/IModuleHandler.hpp"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>

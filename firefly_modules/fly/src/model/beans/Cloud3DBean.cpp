@@ -1,5 +1,5 @@
 // Copyright 2017 <Célian Garcia>
-#include "firefly/modules/fly/model/beans/Cloud3DBean.hpp"
+#include "fly_module/model/beans/Cloud3DBean.hpp"
 
 namespace firefly {
     namespace fly_module {

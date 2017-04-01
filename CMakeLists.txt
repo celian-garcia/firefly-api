@@ -9,15 +9,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 enable_testing()
 
 # Target names
-set(FIREFLY_TARGET FIREFLY)
+set(FIREFLY_LAUNCHER_TARGET FIREFLY_LAUNCHER)
 set(FIREFLY_CORE_TARGET FIREFLY_CORE)
 set(SIMPLE_WEB_SERVER_TARGET SIMPLE_WEB_SERVER)
 set(JSON_TARGET JSON)
 set(FLY_MODULE_TARGET FLY_MODULE)
 set(CV_MODULE_TARGET CV_MODULE)
 
+# Add subdirectory. Beware the order.
 add_subdirectory(lib)
-add_subdirectory(firefly)
 add_subdirectory(firefly_core)
 add_subdirectory(firefly_modules)
+add_subdirectory(firefly_launcher)
 add_subdirectory(test)

@@ -13,7 +13,7 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
     ## Target definition ## ====================================================================
     # TODO : list explicitly all used files
     file(GLOB_RECURSE FIREFLY_CORE_FILES *.cpp *.hpp)
-    add_executable(${FIREFLY_CORE_TARGET}
+    add_library(${FIREFLY_CORE_TARGET}
             ${FIREFLY_CORE_FILES})
 
     # Fix socket issues in windows
@@ -28,7 +28,7 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
 
 
     target_include_directories(${FIREFLY_CORE_TARGET}
-            PUBLIC  include
+            PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
             PRIVATE ${SIMPLE_WEB_SERVER_INCLUDE_DIRS}
             PRIVATE ${JSON_INCLUDE_DIRS}
             PRIVATE ${Boost_INCLUDE_DIRS}  # Necessary because we use asio which is include-only project

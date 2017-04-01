@@ -5,16 +5,16 @@
 
 #include <string>
 #include <vector>
-#include "firefly/api/IModuleHandler.hpp"
-#include "firefly/utils/server_types_definitions.hpp"
-#include <firefly/utils/FireflyException.hpp>
-#include <firefly/utils/ProcessAction.hpp>
-#include <firefly/utils/Process.hpp>
-#include <firefly/modules/fly/workers/FlyCloudPopulation.hpp>
-#include <json/json.hpp>
-#include <boost/exception/info.hpp>
-#include <firefly/utils/ThreadPool.hpp>
-#include <firefly/utils/QueryParameters.hpp>
+#include "firefly/core/api/IModuleHandler.hpp"
+#include "firefly/core/utils/server_types_definitions.hpp"
+#include "firefly/core/utils/FireflyException.hpp"
+#include "firefly/core/utils/ProcessAction.hpp"
+#include "firefly/core/utils/Process.hpp"
+#include "fly_module/workers/FlyCloudPopulation.hpp"
+#include "json/json.hpp"
+#include "boost/exception/info.hpp"
+#include "firefly/core/utils/ThreadPool.hpp"
+#include "firefly/core/utils/QueryParameters.hpp"
 
 namespace firefly {
     namespace fly_module {

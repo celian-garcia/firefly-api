@@ -4,8 +4,8 @@
 #define INCLUDE_FIREFLY_MODEL_CLOUD3DMODEL_HPP_
 
 #include <string>
-#include "firefly/modules/fly/model/beans/Cloud3DBean.hpp"
-#include "firefly/modules/common/model/DatabaseManager.hpp"
+#include "firefly/core/model/DatabaseManager.hpp"
+#include "beans/Cloud3DBean.hpp"
 
 
 namespace firefly {

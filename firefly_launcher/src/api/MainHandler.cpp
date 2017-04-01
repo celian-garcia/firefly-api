@@ -3,10 +3,10 @@
 #include "firefly/api/MainHandler.hpp"
 
 #ifdef WITH_FLY_MODULE
-#include "firefly_modules/fly/api/FlyHandler.hpp"
+#include "fly_module/fly/api/FlyHandler.hpp"
 #endif
 #ifdef WITH_CV_MODULE
-#include "firefly_modules/cv/api/CvHandler.hpp"
+#include "cv_module/cv/api/CvHandler.hpp"
 #endif
 
 namespace firefly {

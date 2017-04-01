@@ -5,10 +5,10 @@
 
 #include <vector>
 #include <string>
-#include <firefly/Operation.hpp>
-#include "firefly/modules/fly/model/beans/Point3DBean.hpp"
-#include "firefly/modules/common/model/DatabaseManager.hpp"
-#include "firefly/modules/common/model/exceptions.hpp"
+#include "firefly/core/utils/Operation.hpp"
+#include "firefly/core/model/DatabaseManager.hpp"
+#include "firefly/core/model/exceptions.hpp"
+#include "beans/Point3DBean.hpp"
 
 namespace firefly {
     namespace fly_module {

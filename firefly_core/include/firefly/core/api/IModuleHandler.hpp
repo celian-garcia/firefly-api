@@ -3,8 +3,8 @@
 #ifndef INCLUDE_FIREFLY_API_ABSTRACTHANDLER_HPP_
 #define INCLUDE_FIREFLY_API_ABSTRACTHANDLER_HPP_
 
-#include "../../../../lib/Simple-Web-Server-MODIFIED/simple_web_server/server_http.hpp"
-#include "include/firefly/utils/server_types_definitions.hpp"
+#include "simple_web_server/server_http.hpp"
+#include "firefly/core/utils/server_types_definitions.hpp"
 
 namespace firefly {
 
