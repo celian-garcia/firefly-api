@@ -1,10 +1,12 @@
 if (NOT TARGET ${FIREFLY_CORE_TARGET})
 
+    SET_PROPERTY(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)
+
     ## Dependencies ## ====================================================================
     # External libraries initialization
     find_package(OpenCV REQUIRED)
     find_package(Boost 1.53.0 COMPONENTS system thread filesystem date_time regex REQUIRED)
-    find_package(PostgreSQL REQUIRED)
+
     get_target_property(SIMPLE_WEB_SERVER_INCLUDE_DIRS ${SIMPLE_WEB_SERVER_TARGET} INCLUDE_DIRECTORIES)
     get_target_property(JSON_INCLUDE_DIRS ${JSON_TARGET} INCLUDE_DIRECTORIES)
     ## ============ ## ====================================================================
@@ -26,13 +28,13 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             ${Boost_LIBRARIES}
             ${PostgreSQL_LIBRARIES})
 
-
     target_include_directories(${FIREFLY_CORE_TARGET}
             PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
             PRIVATE ${SIMPLE_WEB_SERVER_INCLUDE_DIRS}
             PRIVATE ${JSON_INCLUDE_DIRS}
-            PRIVATE ${Boost_INCLUDE_DIRS}  # Necessary because we use asio which is include-only project
-            PRIVATE ${PostgreSQL_INCLUDE_DIRS})
+            PRIVATE ${Boost_INCLUDE_DIRS}
+            PRIVATE ${PostgreSQL_INCLUDE_DIRS}
+            PRIVATE ${OpenCV_INCLUDE_DIRS})
 
     set_property(TARGET ${FIREFLY_CORE_TARGET} PROPERTY CXX_STANDARD 11)
     ## ================ ## ====================================================================

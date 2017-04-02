@@ -30,8 +30,9 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
             src/workers/FlyCloudPopulation.cpp
             include/fly_module/workers/FlyCloudPopulation.hpp)
 
+    link_directories(${Fly_LIB_DIRS1} ${Fly_LIB_DIRS2})
     target_link_libraries(${FLY_MODULE_TARGET}
-            ${Fly_LIBRARY}
+            ${FIREFLY_CORE_TARGET}
             ${OpenCV_LIBS})
 
     target_include_directories(${FLY_MODULE_TARGET}
