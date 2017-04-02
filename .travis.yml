@@ -6,11 +6,6 @@ language: cpp
 compiler:
   - gcc
 
-branches:
-  only:
-  - master
-  - archi_ref
-
 addons:
   apt:
     sources:
