@@ -3,12 +3,28 @@
 #ifndef FIREFLY_SERVER_HPP
 #define FIREFLY_SERVER_HPP
 
-#include <simple_web_server/server_http.hpp>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+#include <memory>
+
 #include <boost/filesystem.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/thread/thread.hpp>
+
+#include <simple_web_server/server_http.hpp>
+
 #include "firefly/core/utils/server_types_definitions.hpp"
 #include "firefly/core/data/ProcessingAction.hpp"
 #include "firefly/core/data/Module.hpp"
 #include "firefly/core/data/Processing.hpp"
+#include <firefly/core/utils/Operation.hpp>
+#include <firefly/core/utils/server_types_definitions.hpp>
+#include <firefly/core/utils/QueryParameters.hpp>
+#include <firefly/core/data/ResponseBuilder.hpp>
 
 namespace firefly {
     typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;

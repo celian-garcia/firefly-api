@@ -10,7 +10,8 @@ namespace firefly {
 
     class Module {
     public:
-        Module(const std::string &title, const std::string &description, const std::string &imagePath);
+
+        Module() = default;
 
         const std::string &getId() const;
 
@@ -23,6 +24,18 @@ namespace firefly {
         const std::vector<ProcessingType> &getProcessingTypesList() const;
 
         const std::string &getVersion() const;
+
+        void setId(const std::string &id);
+
+        void setTitle(const std::string &title);
+
+        void setDescription(const std::string &description);
+
+        void setImagePath(const std::string &imagePath);
+
+        void setVersion(const std::string &version);
+
+        void setProcessingTypesList(const std::vector<ProcessingType> &processingTypesList);
 
     private:
         std::string id;
@@ -39,12 +52,12 @@ namespace nlohmann {
     struct adl_serializer<firefly::Module> {
         static void to_json(json &j, const firefly::Module &m) {
             j = json{
-                    {"id",    m.getId()},
-                    {"title", m.getTitle()},
-                    {"description", m.getDescription()},
-                    {"image_path", m.getImagePath()},
+                    {"id",               m.getId()},
+                    {"title",            m.getTitle()},
+                    {"description",      m.getDescription()},
+                    {"image_path",       m.getImagePath()},
                     {"processing_types", m.getProcessingTypesList()},
-                    {"version", m.getVersion()}
+                    {"version",          m.getVersion()}
             };
         }
     };

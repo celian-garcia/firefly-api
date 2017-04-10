@@ -1,8 +1,5 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <firefly/core/utils/Operation.hpp>
-#include <firefly/core/utils/server_types_definitions.hpp>
-#include <firefly/core/utils/QueryParameters.hpp>
 #include "firefly/core/server/Server.hpp"
 
 using namespace std::literals::string_literals;
@@ -72,10 +69,7 @@ namespace firefly {
                 result_content.push_back(module);
             }
 
-            std::string content = result_content.dump();
-            *response << "HTTP/1.1 200 \r\n";
-            *response << "Content-Length: " << content.length() << "\r\n\r\n";
-            *response << content;
+            ResponseBuilder::build(result_content, response);
         };
     }
 

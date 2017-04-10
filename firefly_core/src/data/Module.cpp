@@ -3,9 +3,6 @@
 #include "firefly/core/data/Module.hpp"
 
 namespace firefly {
-    Module::Module(const std::string &title, const std::string &description, const std::string &imagePath) :
-            title(title), description(description), imagePath(imagePath) {}
-
     const std::string &Module::getTitle() const {
         return title;
     }
@@ -28,6 +25,30 @@ namespace firefly {
 
     const std::string &Module::getVersion() const {
         return version;
+    }
+
+    void Module::setId(const std::string &id) {
+        Module::id = id;
+    }
+
+    void Module::setTitle(const std::string &title) {
+        Module::title = title;
+    }
+
+    void Module::setDescription(const std::string &description) {
+        Module::description = description;
+    }
+
+    void Module::setImagePath(const std::string &imagePath) {
+        Module::imagePath = imagePath;
+    }
+
+    void Module::setVersion(const std::string &version) {
+        Module::version = version;
+    }
+
+    void Module::setProcessingTypesList(const std::vector<ProcessingType> &processingTypesList) {
+        Module::processingTypesList = processingTypesList;
     }
 
 }
