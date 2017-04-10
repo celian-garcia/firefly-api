@@ -5,9 +5,9 @@
 #ifdef WITH_FLY_MODULE
 #include "fly_module/data/FlyModule.hpp"
 #endif
-#ifdef WITH_CV_MODULE
+//#ifdef WITH_CV_MODULE
 //#include "cv_module/api/CvHandler.hpp"
-#endif
+//#endif
 
 typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
 
