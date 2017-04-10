@@ -24,7 +24,7 @@
 #include <firefly/core/utils/Operation.hpp>
 #include <firefly/core/utils/server_types_definitions.hpp>
 #include <firefly/core/utils/QueryParameters.hpp>
-#include <firefly/core/data/ResponseBuilder.hpp>
+#include <firefly/core/server/ResponseBuilder.hpp>
 
 namespace firefly {
     typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;

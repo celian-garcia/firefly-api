@@ -26,7 +26,7 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             src/server/Server.cpp
             include/firefly/core/server/Server.hpp
             src/data/ProcessingAction.cpp
-            include/firefly/core/data/ProcessingAction.hpp src/data/ResponseBuilder.cpp include/firefly/core/data/ResponseBuilder.hpp)
+            include/firefly/core/data/ProcessingAction.hpp src/server/ResponseBuilder.cpp include/firefly/core/server/ResponseBuilder.hpp)
 
     # Fix socket issues in windows
     if (MINGW)

@@ -1,6 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include "firefly/core/data/ResponseBuilder.hpp"
+#include "firefly/core/server/ResponseBuilder.hpp"
 
 namespace firefly {
     void ResponseBuilder::build(nlohmann::json json_content, std::shared_ptr<HttpResponse> response) {

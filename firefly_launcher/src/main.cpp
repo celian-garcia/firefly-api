@@ -1,6 +1,5 @@
 /// Copyright 2017 <Célian Garcia>
 #include <firefly/core/server/Server.hpp>
-#include <firefly/api/MainHandler.hpp>
 
 #ifdef WITH_FLY_MODULE
 #include "fly_module/data/FlyModule.hpp"
@@ -10,8 +9,6 @@
 //#endif
 
 typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
-
-using firefly::MainHandler;
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
