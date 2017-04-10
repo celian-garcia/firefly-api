@@ -38,7 +38,7 @@ if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
             PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
             PRIVATE ${FIREFLY_CORE_INCLUDE_DIRS})
 
-    set_property(TARGET ${FIREFLY_LAUNCHER_TARGET} PROPERTY CXX_STANDARD 11)
+    set_property(TARGET ${FIREFLY_LAUNCHER_TARGET} PROPERTY CXX_STANDARD 14)
     ## ================ ## ====================================================================
 
 

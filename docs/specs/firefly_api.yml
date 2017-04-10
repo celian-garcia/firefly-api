@@ -1,0 +1,63 @@
+---
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Firefly
+  description: |
+
+schemes:
+  - http
+host: Todo
+basePath: /firefly/api/v1
+paths:
+  /processings:
+    get:
+      responses:
+        200:
+          description: Get the processings list.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Processing'
+  /processings/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: Processing ID
+        type: string
+        required: true
+    get:
+      responses:
+        200:
+          description: Get a processing by id.
+    put:
+      responses:
+        200:
+          description: Update a processing by id.
+      parameters:
+        - name: process
+          in: body
+          description: Process to update
+          required: true
+          schema:
+            $ref: '#/definitions/Processing'
+
+definitions:
+  Processing:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique id representing a specific process.
+      type:
+        type: string
+        description: Processing type.
+      module_name:
+        type: string
+        description: Module name.
+      description:
+        type: string
+        description: Description of processing.
+      display_name:
+        type: string
+        description: Display name of processing.

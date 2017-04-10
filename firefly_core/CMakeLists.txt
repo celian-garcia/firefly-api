@@ -16,7 +16,17 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
     # TODO : list explicitly all used files
     file(GLOB_RECURSE FIREFLY_CORE_FILES *.cpp *.hpp)
     add_library(${FIREFLY_CORE_TARGET}
-            ${FIREFLY_CORE_FILES})
+            ${FIREFLY_CORE_FILES}
+            src/data/Module.cpp
+            include/firefly/core/data/Module.hpp
+            src/data/Processing.cpp
+            include/firefly/core/data/Processing.hpp
+            src/data/ProcessingType.cpp
+            include/firefly/core/data/ProcessingType.hpp
+            src/server/Server.cpp
+            include/firefly/core/server/Server.hpp
+            src/data/ProcessingAction.cpp
+            include/firefly/core/data/ProcessingAction.hpp)
 
     # Fix socket issues in windows
     if (MINGW)
@@ -36,7 +46,7 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             PRIVATE ${PostgreSQL_INCLUDE_DIRS}
             PRIVATE ${OpenCV_INCLUDE_DIRS})
 
-    set_property(TARGET ${FIREFLY_CORE_TARGET} PROPERTY CXX_STANDARD 11)
+    set_property(TARGET ${FIREFLY_CORE_TARGET} PROPERTY CXX_STANDARD 14)
     ## ================ ## ====================================================================
 
 
