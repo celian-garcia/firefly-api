@@ -8,9 +8,9 @@
 
 namespace firefly {
 
-    class Processing {
+    class Task {
     public:
-        Processing(const std::string &title, const std::string &description, const ProcessingType &type);
+        Task(const std::string &title, const std::string &description, const ProcessingType &type);
 
         const std::string &getIdentifier() const;
 
@@ -30,4 +30,19 @@ namespace firefly {
         ProcessingType type;
     };
 }
+namespace nlohmann {
+    template<>
+    struct adl_serializer<firefly::Task> {
+        static void to_json(json &j, const firefly::Task &task) {
+            j = json{
+                    {"id",              task.getIdentifier()},
+                    {"title",           task.getTitle()},
+                    {"description",     task.getDescription()},
+                    {"name",            task.getName()},
+                    {"processing_type", task.getType()}
+            };
+        }
+    };
+}
+
 #endif //FIREFLY_PROCESSING_HPP

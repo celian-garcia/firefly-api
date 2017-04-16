@@ -19,8 +19,8 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             ${FIREFLY_CORE_FILES}
             src/data/Module.cpp
             include/firefly/core/data/Module.hpp
-            src/data/Processing.cpp
-            include/firefly/core/data/Processing.hpp
+            src/data/Task.cpp
+            include/firefly/core/data/Task.hpp
             src/data/ProcessingType.cpp
             include/firefly/core/data/ProcessingType.hpp
             src/server/Server.cpp

@@ -20,7 +20,7 @@
 #include "firefly/core/utils/server_types_definitions.hpp"
 #include "firefly/core/data/ProcessingAction.hpp"
 #include "firefly/core/data/Module.hpp"
-#include "firefly/core/data/Processing.hpp"
+#include "firefly/core/data/Task.hpp"
 #include <firefly/core/utils/Operation.hpp>
 #include <firefly/core/utils/server_types_definitions.hpp>
 #include <firefly/core/utils/QueryParameters.hpp>
@@ -55,7 +55,7 @@ namespace firefly {
 
         static std::string buildModuleApiEndpoint(Module module);
 
-//        static std::string buildProcessingUri(std::string moduleApiEndpoint, Processing processing);
+//        static std::string buildProcessingUri(std::string moduleApiEndpoint, Task processing);
 
         void initializeResource(ProcessingAction processingAction);
 

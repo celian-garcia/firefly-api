@@ -7,7 +7,7 @@ using namespace std::literals::string_literals;
 namespace firefly {
 
     Server::Server(unsigned short port, boost::filesystem::path resources_path) :
-            server(port, 1), modules_list(), resources_path(resources_path){}
+            server(port, 1), modules_list(), resources_path(resources_path) {}
 
     void Server::run() {
         this->initDefaultResource();
@@ -54,7 +54,7 @@ namespace firefly {
 //        return "modules/"s + module.getId() + "/api/v"s + module.getVersion();
 //    }
 
-//    std::string Server::buildProcessingUri(std::string moduleApiEndpoint, Processing processing) {
+//    std::string Server::buildProcessingUri(std::string moduleApiEndpoint, Task processing) {
 //        return moduleApiEndpoint + "/"s +
 //    }
 
@@ -68,6 +68,24 @@ namespace firefly {
             for (auto module : this->modules_list) {
                 result_content.push_back(module);
             }
+
+            ResponseBuilder::build(result_content, response);
+        };
+
+        this->server.resource["^/api/v1/tasks"]["GET"] = [this](
+                std::shared_ptr<HttpResponse> response,
+                std::shared_ptr<HttpRequest> request) {
+
+            json result_content;
+
+            std::vector<std::string> aliases{"alias1", "alias2"};
+            ProcessingType pt("proctypetest", aliases);
+            Task p1("test1title", "test1description", pt);
+            Task p2("test2title", "test2description", pt);
+            Task p3("test3title", "test3description", pt);
+            result_content.push_back(p1);
+            result_content.push_back(p2);
+            result_content.push_back(p3);
 
             ResponseBuilder::build(result_content, response);
         };

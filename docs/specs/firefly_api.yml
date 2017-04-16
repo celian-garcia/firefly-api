@@ -18,12 +18,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Processing'
+              $ref: '#/definitions/Task'
   /processings/{id}:
     parameters:
       - name: id
         in: path
-        description: Processing ID
+        description: Task ID
         type: string
         required: true
     get:
@@ -40,10 +40,10 @@ paths:
           description: Process to update
           required: true
           schema:
-            $ref: '#/definitions/Processing'
+            $ref: '#/definitions/Task'
 
 definitions:
-  Processing:
+  Task:
     type: object
     properties:
       id:
@@ -51,7 +51,7 @@ definitions:
         description: Unique id representing a specific process.
       type:
         type: string
-        description: Processing type.
+        description: Task type.
       module_name:
         type: string
         description: Module name.

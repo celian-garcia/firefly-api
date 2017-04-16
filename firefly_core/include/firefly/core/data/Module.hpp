@@ -4,7 +4,7 @@
 #define FIREFLY_MODULE_HPP
 
 #include <string>
-#include "Processing.hpp"
+#include "Task.hpp"
 
 namespace firefly {
 

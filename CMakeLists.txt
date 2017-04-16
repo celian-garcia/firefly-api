@@ -18,7 +18,6 @@ set(SIMPLE_WEB_SERVER_TARGET SIMPLE_WEB_SERVER)
 set(JSON_TARGET JSON)
 set(FLY_MODULE_TARGET FLY_MODULE)
 set(CV_MODULE_TARGET CV_MODULE)
-set(DEPLOY_RESOURCES_TARGET DEPLOY_RESOURCES)
 
 # Add subdirectory. Beware the order.
 add_subdirectory(lib)
@@ -26,11 +25,3 @@ add_subdirectory(firefly_core)
 add_subdirectory(firefly_modules)
 add_subdirectory(firefly_launcher)
 add_subdirectory(test)
-
-# Create the resources deployment target
-
-add_custom_target(${DEPLOY_RESOURCES_TARGET}
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/resources
-        ${CMAKE_BINARY_DIR}/resources
-        COMMENT "======== Deploying resources folder =======")
