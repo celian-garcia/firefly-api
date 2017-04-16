@@ -4,8 +4,8 @@
 
 namespace firefly {
 
-    Task::Task(const std::string &title, const std::string &description,
-                           const ProcessingType &type) : title(title), description(description),
+    Task::Task(const std::string &name, const std::string &description,
+                           const ProcessingType &type) : name(name), description(description),
                                                          type(type) {}
 
     const std::string &Task::getIdentifier() const {
@@ -16,16 +16,24 @@ namespace firefly {
         return name;
     }
 
-    const std::string &Task::getTitle() const {
-        return title;
-    }
-
     const std::string &Task::getDescription() const {
         return description;
     }
 
     const ProcessingType &Task::getType() const {
         return type;
+    }
+
+    const std::string &Task::getCategory() const {
+        return category;
+    }
+
+    const std::string &Task::getUserName() const {
+        return userName;
+    }
+
+    Task::State Task::getState() const {
+        return state;
     }
 
 }

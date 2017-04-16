@@ -10,36 +10,53 @@ namespace firefly {
 
     class Task {
     public:
-        Task(const std::string &title, const std::string &description, const ProcessingType &type);
+        enum State {
+            CREATED,
+            STARTED,
+            PAUSED,
+            FINISHED,
+            ABORTED
+        };
+
+        Task(const std::string &name, const std::string &description, const ProcessingType &type);
 
         const std::string &getIdentifier() const;
 
         const std::string &getName() const;
 
-        const std::string &getTitle() const;
-
         const std::string &getDescription() const;
 
         const ProcessingType &getType() const;
 
+        const std::string &getCategory() const;
+
+        const std::string &getUserName() const;
+
+        State getState() const;
+
     private:
         std::string identifier;
         std::string name;
-        std::string title;
         std::string description;
         ProcessingType type;
+        std::string category;
+        std::string userName;
+        State state = State::CREATED;
     };
+
 }
 namespace nlohmann {
     template<>
     struct adl_serializer<firefly::Task> {
         static void to_json(json &j, const firefly::Task &task) {
             j = json{
-                    {"id",              task.getIdentifier()},
-                    {"title",           task.getTitle()},
-                    {"description",     task.getDescription()},
-                    {"name",            task.getName()},
-                    {"processing_type", task.getType()}
+                    {"id",          task.getIdentifier()},
+                    {"name",        task.getName()},
+                    {"description", task.getDescription()},
+                    {"type",        task.getType()},
+                    {"category",    task.getCategory()},
+                    {"userName",    task.getUserName()},
+                    {"state",       task.getState()}
             };
         }
     };
