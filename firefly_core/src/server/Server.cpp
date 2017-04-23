@@ -89,6 +89,22 @@ namespace firefly {
 
             ResponseBuilder::build(result_content, response);
         };
+
+        this->server.resource["^/api/v1/names"]["GET"] = [this](
+                std::shared_ptr<HttpResponse> response,
+                std::shared_ptr<HttpRequest> request) {
+
+            json result_content{"name1", "name2"};
+            ResponseBuilder::build(result_content, response);
+        };
+
+        this->server.resource["^/api/v1/categories"]["GET"] = [this](
+                std::shared_ptr<HttpResponse> response,
+                std::shared_ptr<HttpRequest> request) {
+
+            json result_content{"category1", "category2"};
+            ResponseBuilder::build(result_content, response);
+        };
     }
 
     void
