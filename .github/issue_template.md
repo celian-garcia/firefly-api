@@ -1,7 +1,13 @@
 # “As a USER_TYPE, I want to TASK so that GOAL.” 
 
-*** User Story ***
+## User Story
 
-*** Acceptance criteria ***
+## Acceptance criteria
 
-*** Definition of Done ***
+## Definition of Done
+
+## Tasks list
+
+- [ ] Mercury
+- [ ] Venus
+- [ ] Earth (Orbit/Moon)
