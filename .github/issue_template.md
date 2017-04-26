@@ -1,4 +1,4 @@
-# “As a <user type>, I want to <task> so that <goal>.” 
+# “As a USER_TYPE, I want to TASK so that GOAL.” 
 
 *** User Story ***
 
