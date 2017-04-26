@@ -10,4 +10,4 @@
 
 - [ ] Mercury
 - [ ] Venus
-- [ ] Earth (Orbit/Moon)
+- [ ] Earth
