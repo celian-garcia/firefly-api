@@ -1,10 +1,5 @@
-# “As a USER_TYPE, I want to TASK so that GOAL.” 
-
 ## User Story
-
-## Acceptance criteria
-
-## Definition of Done
+“As a USER_TYPE, I want to TASK so that GOAL.” 
 
 ## Tasks list
 
