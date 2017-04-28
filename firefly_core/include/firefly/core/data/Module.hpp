@@ -4,7 +4,7 @@
 #define FIREFLY_MODULE_HPP
 
 #include <string>
-#include "Task.hpp"
+#include "ProcessingType.hpp"
 
 namespace firefly {
 
@@ -25,6 +25,8 @@ namespace firefly {
 
         const std::string &getVersion() const;
 
+        const std::string &getName() const;
+
         void setId(const std::string &id);
 
         void setTitle(const std::string &title);
@@ -37,9 +39,12 @@ namespace firefly {
 
         void setProcessingTypesList(const std::vector<ProcessingType> &processingTypesList);
 
+        void setName(const std::string &name);
+
     private:
         std::string id;
         std::string title;
+        std::string name;
         std::string description;
         std::string imagePath;
         std::string version;

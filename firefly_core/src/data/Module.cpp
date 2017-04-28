@@ -51,4 +51,12 @@ namespace firefly {
         Module::processingTypesList = processingTypesList;
     }
 
+    const std::string &Module::getName() const {
+        return name;
+    }
+
+    void Module::setName(const std::string &name) {
+        Module::name = name;
+    }
+
 }

@@ -80,12 +80,19 @@ namespace firefly {
 
             std::vector<std::string> aliases{"alias1", "alias2"};
             ProcessingType pt("proctypetest", aliases);
-            Task p1("test1title", "test1description", pt);
-            Task p2("test2title", "test2description", pt);
-            Task p3("test3title", "test3description", pt);
+            std::string lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            Module m;
+            m.setName("FLY");
+            Task p1("0001", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p2("0002", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p3("0003", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p4("0004", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p5("0004", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
             result_content.push_back(p1);
             result_content.push_back(p2);
             result_content.push_back(p3);
+            result_content.push_back(p4);
+            result_content.push_back(p5);
 
             ResponseBuilder::build(result_content, response);
         };

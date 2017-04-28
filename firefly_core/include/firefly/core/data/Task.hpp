@@ -5,9 +5,9 @@
 
 #include <string>
 #include "ProcessingType.hpp"
+#include "Module.hpp"
 
 namespace firefly {
-
     class Task {
     public:
         enum State {
@@ -18,7 +18,8 @@ namespace firefly {
             ABORTED
         };
 
-        Task(const std::string &name, const std::string &description, const ProcessingType &type);
+        Task(const std::string &identifier, const std::string &name, const std::string &description,
+             const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date);
 
         const std::string &getIdentifier() const;
 
@@ -28,20 +29,23 @@ namespace firefly {
 
         const ProcessingType &getType() const;
 
-        const std::string &getCategory() const;
+        const Module &getModule() const;
 
         const std::string &getUserName() const;
 
         State getState() const;
+
+        const std::string &getDate() const;
 
     private:
         std::string identifier;
         std::string name;
         std::string description;
         ProcessingType type;
-        std::string category;
+        Module module;
         std::string userName;
         State state = State::CREATED;
+        std::string date;
     };
 
 }
@@ -53,9 +57,10 @@ namespace nlohmann {
                     {"id",          task.getIdentifier()},
                     {"name",        task.getName()},
                     {"description", task.getDescription()},
-                    {"type",        task.getType()},
-                    {"category",    task.getCategory()},
-                    {"userName",    task.getUserName()},
+                    {"type",        task.getType().getName()},
+                    {"module",      task.getModule().getName()},
+                    {"user_name",   task.getUserName()},
+                    {"date",        task.getDate()},
                     {"state",       task.getState()}
             };
         }
