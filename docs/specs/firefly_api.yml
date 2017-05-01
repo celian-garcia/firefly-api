@@ -10,16 +10,16 @@ schemes:
 host: Todo
 basePath: /firefly/api/v1
 paths:
-  /processings:
+  /tasks:
     get:
       responses:
         200:
-          description: Get the processings list.
+          description: Get the tasks list.
           schema:
             type: array
             items:
               $ref: '#/definitions/Task'
-  /processings/{id}:
+  /tasks/{id}:
     parameters:
       - name: id
         in: path
@@ -29,15 +29,15 @@ paths:
     get:
       responses:
         200:
-          description: Get a processing by id.
+          description: Get a task by id.
     put:
       responses:
         200:
-          description: Update a processing by id.
+          description: Update a task by id.
       parameters:
-        - name: process
+        - name: task
           in: body
-          description: Process to update
+          description: task to update
           required: true
           schema:
             $ref: '#/definitions/Task'
@@ -48,7 +48,7 @@ definitions:
     properties:
       id:
         type: string
-        description: Unique id representing a specific process.
+        description: Unique id representing a specific task.
       type:
         type: string
         description: Task type.
@@ -57,7 +57,7 @@ definitions:
         description: Module name.
       description:
         type: string
-        description: Description of processing.
+        description: Description of task.
       display_name:
         type: string
-        description: Display name of processing.
+        description: Display name of task.
