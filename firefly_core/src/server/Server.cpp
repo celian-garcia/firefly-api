@@ -87,7 +87,12 @@ namespace firefly {
             Task p2("0002", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
             Task p3("0003", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
             Task p4("0004", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
-            Task p5("0004", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p5("0005", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            p1.setState(Task::CREATED);
+            p2.setState(Task::STARTED);
+            p3.setState(Task::PAUSED);
+            p4.setState(Task::FINISHED);
+            p5.setState(Task::ABORTED);
             result_content.push_back(p1);
             result_content.push_back(p2);
             result_content.push_back(p3);

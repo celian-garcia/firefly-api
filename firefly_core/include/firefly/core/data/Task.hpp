@@ -37,6 +37,8 @@ namespace firefly {
 
         const std::string &getDate() const;
 
+        void setState(State state);
+
     private:
         std::string identifier;
         std::string name;

@@ -41,4 +41,8 @@ namespace firefly {
         return date;
     }
 
+    void Task::setState(Task::State state) {
+        Task::state = state;
+    }
+
 }
