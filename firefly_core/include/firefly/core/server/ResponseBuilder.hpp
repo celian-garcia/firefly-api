@@ -7,11 +7,10 @@
 #include "firefly/core/utils/server_types_definitions.hpp"
 
 namespace firefly {
-    using nlohmann::json;
-
     class ResponseBuilder {
     public:
-        static void build(json content, std::shared_ptr<HttpResponse> response);
+        static void build(nlohmann::json content, std::shared_ptr<HttpResponse> response);
+        static void build(std::string content, std::shared_ptr<HttpResponse> response);
     };
 }
 

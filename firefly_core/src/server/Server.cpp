@@ -78,7 +78,7 @@ namespace firefly {
 
             json result_content;
 
-            std::vector<std::string> aliases{"alias1", "alias2"};
+            const std::vector<std::string> &aliases{"alias1", "alias2"};
             ProcessingType pt("proctypetest", aliases);
             std::string lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
             Module m;
@@ -100,6 +100,12 @@ namespace firefly {
             result_content.push_back(p5);
 
             ResponseBuilder::build(result_content, response);
+        };
+
+        this->server.resource["^/api/v1/tasks"]["POST"] = [this](
+                std::shared_ptr<HttpResponse> response,
+                std::shared_ptr<HttpRequest> request) {
+            ResponseBuilder::build(request->content.string(), response);
         };
 
         this->server.resource["^/api/v1/names"]["GET"] = [this](
