@@ -11,6 +11,8 @@ namespace firefly {
 
     class ProcessingType {
     public:
+        ProcessingType() = default;
+
         ProcessingType(const std::string &name, const std::vector<std::string> &aliases);
 
         const std::string &getName() const;
@@ -18,6 +20,11 @@ namespace firefly {
         const std::vector<std::string> &getAliases() const;
 
         const std::string &getId() const;
+
+//        static const std::vector<ProcessingType> STORES = {
+//                ProcessingType("Reconstruction3D", {}),
+//                ProcessingType("Population3D", {})
+//        };
 
     private:
         std::string id;

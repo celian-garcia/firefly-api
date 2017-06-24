@@ -13,6 +13,8 @@ namespace firefly {
 
         Module() = default;
 
+        Module(const std::string &name, const std::string &description);
+
         const std::string &getId() const;
 
         const std::string &getTitle() const;
@@ -40,6 +42,11 @@ namespace firefly {
         void setProcessingTypesList(const std::vector<ProcessingType> &processingTypesList);
 
         void setName(const std::string &name);
+
+//        static const std::vector<Module> STORES = {
+//                Module("Reconstruction3D", {}),
+//                Module("Population3D", {})
+//        };
 
     private:
         std::string id;

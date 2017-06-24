@@ -4,6 +4,11 @@
 
 namespace firefly {
 
+    Task::Task(const std::string &name, const std::string &description,
+               const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date) :
+            name(name), description(description),
+            type(type), module(module), userName(userName), date(date) {}
+
     Task::Task(const std::string &identifier, const std::string &name, const std::string &description,
                const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date) :
             identifier(identifier), name(name), description(description),
@@ -43,6 +48,34 @@ namespace firefly {
 
     void Task::setState(Task::State state) {
         Task::state = state;
+    }
+
+    void Task::setName(const std::string &name) {
+        Task::name = name;
+    }
+
+    void Task::setIdentifier(const std::string &identifier) {
+        Task::identifier = identifier;
+    }
+
+    void Task::setDescription(const std::string &description) {
+        Task::description = description;
+    }
+
+    void Task::setType(const ProcessingType &type) {
+        Task::type = type;
+    }
+
+    void Task::setModule(const Module &module) {
+        Task::module = module;
+    }
+
+    void Task::setUserName(const std::string &userName) {
+        Task::userName = userName;
+    }
+
+    void Task::setDate(const std::string &date) {
+        Task::date = date;
     }
 
 }

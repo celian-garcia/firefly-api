@@ -1,5 +1,6 @@
 /// Copyright 2017 <Célian Garcia>
 #include <firefly/core/server/Server.hpp>
+#include <firefly/core/config/DataCommonStore.hpp>
 
 #ifdef WITH_FLY_MODULE
 #include "fly_module/data/FlyModule.hpp"
@@ -19,7 +20,9 @@ int main(int argc, char* argv[]) {
     unsigned short port = (unsigned short)atoi(argv[1]);
     boost::filesystem::path resources_path = boost::filesystem::canonical(argv[2]);
     int nb_threads = atoi(argv[3]);
-    firefly::Server server(port, resources_path);
+
+    firefly::DataCommonStore dataStore;
+    firefly::Server server(port, resources_path, dataStore);
 
 #ifdef WITH_FLY_MODULE
     server.registerModule(firefly::FlyModule());

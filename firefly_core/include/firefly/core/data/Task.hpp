@@ -10,6 +10,7 @@
 namespace firefly {
     class Task {
     public:
+
         enum State {
             CREATED,
             STARTED,
@@ -17,6 +18,11 @@ namespace firefly {
             FINISHED,
             ABORTED
         };
+
+        Task() = default;
+
+        Task(const std::string &name, const std::string &description,
+             const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date);
 
         Task(const std::string &identifier, const std::string &name, const std::string &description,
              const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date);
@@ -39,7 +45,22 @@ namespace firefly {
 
         void setState(State state);
 
+        void setName(const std::string &name);
+
+        void setIdentifier(const std::string &identifier);
+
+        void setDescription(const std::string &description);
+
+        void setType(const ProcessingType &type);
+
+        void setModule(const Module &module);
+
+        void setUserName(const std::string &userName);
+
+        void setDate(const std::string &date);
+
     private:
+
         std::string identifier;
         std::string name;
         std::string description;
@@ -48,7 +69,10 @@ namespace firefly {
         std::string userName;
         State state = State::CREATED;
         std::string date;
+
     };
+
+
 
 }
 namespace nlohmann {

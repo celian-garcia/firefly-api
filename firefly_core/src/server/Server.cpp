@@ -1,13 +1,15 @@
 // Copyright 2017 <Célian Garcia>
 
+#include <firefly/core/model/TaskModel.hpp>
+#include <firefly/core/data/TaskBuilder.hpp>
 #include "firefly/core/server/Server.hpp"
 
 using namespace std::literals::string_literals;
 
 namespace firefly {
 
-    Server::Server(unsigned short port, boost::filesystem::path resources_path) :
-            server(port, 1), modules_list(), resources_path(resources_path) {}
+    Server::Server(unsigned short port, boost::filesystem::path resources_path, DataCommonStore dataStore) :
+            server(port, 1), resources_path(resources_path), dataStore(dataStore){}
 
     void Server::run() {
         this->initDefaultResource();
@@ -23,7 +25,7 @@ namespace firefly {
 //    void Server::initializeModuleResources(Module module) {
 //        std::string moduleEndpoint = Server::buildModuleApiEndpoint(module);
 //        std::string processingsUri = moduleEndpoint + "/processings"s;
-//        for (auto &processing : module.getProcessingTypesList()) {
+//        for (auto &processing : module.getProcessingTypeById()) {
 //            for (auto &resource : processing.getActions()) {
 //                this->registerProcessingAction(processingsUri, resource);
 //            }
@@ -65,9 +67,9 @@ namespace firefly {
 
             json result_content;
 
-            for (auto module : this->modules_list) {
-                result_content.push_back(module);
-            }
+//            for (auto module : this->dataStore.modules_list) {
+//                result_content.push_back(module);
+//            }
 
             ResponseBuilder::build(result_content, response);
         };
@@ -105,7 +107,11 @@ namespace firefly {
         this->server.resource["^/api/v1/tasks"]["POST"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
-            ResponseBuilder::build(request->content.string(), response);
+            TaskBuilder taskBuilder = json::parse(request->content);
+            Task task = taskBuilder.buildTask(this->dataStore);
+//            TaskModel taskModel(&db_manager);
+//            Task resultTask = taskModel.insertTask(task);
+            ResponseBuilder::build(task, response);
         };
 
         this->server.resource["^/api/v1/names"]["GET"] = [this](
@@ -199,7 +205,7 @@ namespace firefly {
     }
 
     void Server::registerModule(Module module) {
-        this->modules_list.push_back(module);
+        this->dataStore.storeModule(module);
     };
 
 }

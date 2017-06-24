@@ -26,13 +26,16 @@
 #include <firefly/core/utils/QueryParameters.hpp>
 #include <firefly/core/server/ResponseBuilder.hpp>
 
+#include <firefly/core/model/DatabaseManager.hpp>
+#include <firefly/core/config/DataCommonStore.hpp>
+
 namespace firefly {
     typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
 
     class Server {
     public:
 
-        Server(unsigned short port, boost::filesystem::path resources_path);
+        Server(unsigned short port, boost::filesystem::path resources_path, DataCommonStore dataStore);
 
         void registerModule(Module module);
 
@@ -46,8 +49,8 @@ namespace firefly {
 
     private:
         HttpServer server;
-        std::vector<Module> modules_list;
         boost::filesystem::path resources_path;
+        DataCommonStore dataStore;
 
 //        static const char *API_VERSION = "1";
 
