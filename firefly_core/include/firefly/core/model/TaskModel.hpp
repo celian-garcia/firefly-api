@@ -13,7 +13,7 @@ namespace firefly {
 
 //        Task getTaskById(int id);
 //
-//        Task insertTask(const Task &task);
+        Task insertTask(const Task &task);
 //
 //        void updateTask(const Task &task);
     };

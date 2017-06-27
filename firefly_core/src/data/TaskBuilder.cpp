@@ -32,7 +32,7 @@ namespace firefly {
         this->task.setDescription(description);
     }
 
-    void TaskBuilder::setIdentifier(const std::string &identifier) {
+    void TaskBuilder::setIdentifier(const int &identifier) {
         this->task.setIdentifier(identifier);
     }
 

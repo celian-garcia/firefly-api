@@ -9,12 +9,12 @@ namespace firefly {
             name(name), description(description),
             type(type), module(module), userName(userName), date(date) {}
 
-    Task::Task(const std::string &identifier, const std::string &name, const std::string &description,
+    Task::Task(const int &identifier, const std::string &name, const std::string &description,
                const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date) :
             identifier(identifier), name(name), description(description),
             type(type), module(module), userName(userName), date(date) {}
 
-    const std::string &Task::getIdentifier() const {
+    const int &Task::getIdentifier() const {
         return identifier;
     }
 
@@ -54,7 +54,7 @@ namespace firefly {
         Task::name = name;
     }
 
-    void Task::setIdentifier(const std::string &identifier) {
+    void Task::setIdentifier(const int &identifier) {
         Task::identifier = identifier;
     }
 

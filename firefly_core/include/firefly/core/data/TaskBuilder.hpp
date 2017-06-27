@@ -21,7 +21,7 @@ namespace firefly {
 
         void setName(const std::string &name);
 
-        void setIdentifier(const std::string &identifier);
+        void setIdentifier(const int &identifier);
 
         void setDescription(const std::string &description);
 
@@ -51,7 +51,7 @@ namespace nlohmann {
                 std::cout << "No field state in task json" << std::endl;
             }
             try {
-                taskBuilder.setIdentifier(j.at("id").get<std::string>());
+                taskBuilder.setIdentifier(j.at("id").get<int>());
             } catch (std::out_of_range &e) {
                 std::cout << "No field id in task json" << std::endl;
             }

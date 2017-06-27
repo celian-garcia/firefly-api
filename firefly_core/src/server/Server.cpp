@@ -80,11 +80,11 @@ namespace firefly {
             std::string lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
             Module m;
             m.setName("FLY");
-            Task p1("0001", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
-            Task p2("0002", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
-            Task p3("0003", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
-            Task p4("0004", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
-            Task p5("0005", "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p1(1, "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p2(2, "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p3(3, "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p4(4, "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
+            Task p5(5, "Création d'un nuage de points 3D aléatoires", lorem, pt, m, "celgarcia", "2012-04-23T18:25:43.511Z");
             p1.setState(Task::CREATED);
             p2.setState(Task::STARTED);
             p3.setState(Task::PAUSED);
@@ -104,9 +104,10 @@ namespace firefly {
                 std::shared_ptr<HttpRequest> request) {
             TaskBuilder taskBuilder = json::parse(request->content);
             Task task = taskBuilder.buildTask(this->dataStore);
-//            TaskModel taskModel(&db_manager);
-//            Task resultTask = taskModel.insertTask(task);
-            ResponseBuilder::build(task, response);
+            DatabaseManager db_manager("firefly_hive");
+            TaskModel taskModel(&db_manager);
+            Task resultTask = taskModel.insertTask(task);
+            ResponseBuilder::build(resultTask, response);
         };
 
         this->server.resource["^/api/v1/names"]["GET"] = [this](

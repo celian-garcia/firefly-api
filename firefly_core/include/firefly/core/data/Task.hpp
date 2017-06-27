@@ -21,13 +21,15 @@ namespace firefly {
 
         Task() = default;
 
+        Task(const Task&) = default;
+
         Task(const std::string &name, const std::string &description,
              const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date);
 
-        Task(const std::string &identifier, const std::string &name, const std::string &description,
+        Task(const int &identifier, const std::string &name, const std::string &description,
              const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date);
 
-        const std::string &getIdentifier() const;
+        const int &getIdentifier() const;
 
         const std::string &getName() const;
 
@@ -47,7 +49,7 @@ namespace firefly {
 
         void setName(const std::string &name);
 
-        void setIdentifier(const std::string &identifier);
+        void setIdentifier(const int &identifier);
 
         void setDescription(const std::string &description);
 
@@ -61,7 +63,7 @@ namespace firefly {
 
     private:
 
-        std::string identifier;
+        int identifier;
         std::string name;
         std::string description;
         ProcessingType type;
@@ -71,8 +73,6 @@ namespace firefly {
         std::string date;
 
     };
-
-
 
 }
 namespace nlohmann {
