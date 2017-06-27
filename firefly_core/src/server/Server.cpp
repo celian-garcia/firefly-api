@@ -96,6 +96,12 @@ namespace firefly {
             result_content.push_back(p4);
             result_content.push_back(p5);
 
+            DatabaseManager db_manager("firefly_hive");
+            TaskModel taskModel(&db_manager, dataStore);
+            for (auto task : taskModel.getTasks()) {
+                result_content.push_back(task);
+            }
+
             ResponseBuilder::build(result_content, response);
         };
 

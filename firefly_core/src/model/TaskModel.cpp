@@ -35,4 +35,40 @@ namespace firefly {
         result_task.setIdentifier(task_id);
         return result_task;
     }
+
+    std::vector<Task> TaskModel::getTasks() {
+        std::string query = "SELECT * FROM task";
+        PGresult *res = this->m_dbmanager->execSelectQuery(query.c_str());
+        int nb_rows = PQntuples(res);
+        int i_col_id = PQfnumber(res, "id");
+        int i_col_name = PQfnumber(res, "name");
+        int i_col_description = PQfnumber(res, "description");
+        int i_col_type = PQfnumber(res, "type");
+        int i_col_module = PQfnumber(res, "module");
+        int i_col_state = PQfnumber(res, "state");
+        int i_col_user = PQfnumber(res, "\"user\"");
+        int i_col_date = PQfnumber(res, "date");
+        std::vector <Task> tasks_list;
+        std::vector<Module> modules = this->data_store.getModules();
+        for (int row = 0; row < nb_rows; row++) {
+            int id = atoi(PQgetvalue(res, row, i_col_id));
+            std::string name = PQgetvalue(res, row, i_col_name);
+            std::string description = PQgetvalue(res, row, i_col_description);
+            int type_id = atoi(PQgetvalue(res, row, i_col_type));
+            int module_id = atoi(PQgetvalue(res, row, i_col_module));
+            Task::State state = static_cast<Task::State> (atoi(PQgetvalue(res, row, i_col_state)));
+            std::string user = PQgetvalue(res, row, i_col_user);
+            std::string date = PQgetvalue(res, row, i_col_date);
+            Module module = modules[module_id];
+            std::vector<ProcessingType> types = module.getProcessingTypesList();
+            ProcessingType type = types[type_id];
+            Task task(id, name, description, type, module, state, user, date);
+            tasks_list.push_back(task);
+        }
+        return tasks_list;
+    }
+
+    TaskModel::TaskModel(DatabaseManager* db_manager, const DataCommonStore & data_store): BaseModel(db_manager){
+        this->data_store = data_store;
+    }
 }

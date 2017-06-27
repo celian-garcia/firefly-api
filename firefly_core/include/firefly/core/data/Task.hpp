@@ -12,7 +12,7 @@ namespace firefly {
     public:
 
         enum State {
-            CREATED,
+            CREATED = 0,
             STARTED,
             PAUSED,
             FINISHED,
@@ -28,6 +28,9 @@ namespace firefly {
 
         Task(const int &identifier, const std::string &name, const std::string &description,
              const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date);
+
+        Task(const int &identifier, const std::string &name, const std::string &description,
+             const ProcessingType &type, const Module &module, const State &state, const std::string &userName, const std::string &date);
 
         const int &getIdentifier() const;
 
