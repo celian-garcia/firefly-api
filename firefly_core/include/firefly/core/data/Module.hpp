@@ -15,7 +15,7 @@ namespace firefly {
 
         Module(const std::string &name, const std::string &description);
 
-        const std::string &getId() const;
+        const int &getId() const;
 
         const std::string &getTitle() const;
 
@@ -29,7 +29,7 @@ namespace firefly {
 
         const std::string &getName() const;
 
-        void setId(const std::string &id);
+        void setId(const int &id);
 
         void setTitle(const std::string &title);
 
@@ -43,13 +43,8 @@ namespace firefly {
 
         void setName(const std::string &name);
 
-//        static const std::vector<Module> STORES = {
-//                Module("Reconstruction3D", {}),
-//                Module("Population3D", {})
-//        };
-
     private:
-        std::string id;
+        int id;
         std::string title;
         std::string name;
         std::string description;

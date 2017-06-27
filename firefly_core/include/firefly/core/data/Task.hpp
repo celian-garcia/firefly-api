@@ -83,8 +83,8 @@ namespace nlohmann {
                     {"id",          task.getIdentifier()},
                     {"name",        task.getName()},
                     {"description", task.getDescription()},
-                    {"type",        task.getType().getName()},
-                    {"module",      task.getModule().getName()},
+                    {"type",        task.getType().getId()},
+                    {"module",      task.getModule().getId()},
                     {"user_name",   task.getUserName()},
                     {"date",        task.getDate()},
                     {"state",       task.getState()}

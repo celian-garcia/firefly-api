@@ -19,15 +19,12 @@ namespace firefly {
 
         const std::vector<std::string> &getAliases() const;
 
-        const std::string &getId() const;
+        const int &getId() const;
 
-//        static const std::vector<ProcessingType> STORES = {
-//                ProcessingType("Reconstruction3D", {}),
-//                ProcessingType("Population3D", {})
-//        };
+        void setId(const int &id);
 
     private:
-        std::string id;
+        int id;
         std::string name;
         std::vector<std::string> aliases;
 

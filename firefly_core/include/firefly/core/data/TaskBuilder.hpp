@@ -25,9 +25,9 @@ namespace firefly {
 
         void setDescription(const std::string &description);
 
-        void setType(const std::string &type);
+        void setType(const int &type);
 
-        void setModule(const std::string &module);
+        void setModule(const int &module);
 
         void setUserName(const std::string &userName);
 
@@ -35,8 +35,8 @@ namespace firefly {
 
     private:
         Task task;
-        std::string type_id;
-        std::string module_id;
+        int type_id;
+        int module_id;
     };
 }
 
@@ -66,12 +66,12 @@ namespace nlohmann {
                 std::cout << "No field name in task json" << std::endl;
             }
             try {
-                taskBuilder.setType(j.at("type").get<std::string>());
+                taskBuilder.setType(j.at("type").get<int>());
             } catch (std::out_of_range &e) {
                 std::cout << "No field type in task json" << std::endl;
             }
             try {
-                taskBuilder.setModule(j.at("module").get<std::string>());
+                taskBuilder.setModule(j.at("module").get<int>());
             } catch (std::out_of_range &e) {
                 std::cout << "No field module in task json" << std::endl;
             }

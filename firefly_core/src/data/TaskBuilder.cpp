@@ -6,8 +6,13 @@
 namespace firefly {
 
     Task TaskBuilder::buildTask(DataCommonStore dataStore) {
-        this->task.setModule(dataStore.getModuleById(this->module_id));
-        this->task.setType(dataStore.getProcessingTypeById(this->type_id));
+        std::vector<Module> modules = dataStore.getModules();
+        Module module = modules[this->module_id];
+        std::vector<ProcessingType> types = module.getProcessingTypesList();
+        ProcessingType type = types[this->type_id];
+
+        this->task.setModule(module);
+        this->task.setType(type);
         return this->task;
     }
 
@@ -31,11 +36,11 @@ namespace firefly {
         this->task.setIdentifier(identifier);
     }
 
-    void TaskBuilder::setType(const std::string &type) {
+    void TaskBuilder::setType(const int &type) {
         this->type_id = type;
     }
 
-    void TaskBuilder::setModule(const std::string &module) {
+    void TaskBuilder::setModule(const int &module) {
         this->module_id = module;
     }
 

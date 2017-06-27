@@ -4,20 +4,25 @@
 #define FIREFLY_DATACOMMONSTORE_HPP
 
 #include <firefly/core/data/Module.hpp>
+#include <atomic>
 
 namespace firefly {
+    /**
+     * Not thread safe class
+     */
     class DataCommonStore {
 
     public:
         void storeModule(Module module);
 
-        Module getModuleById(std::string id);
+        const Module getModuleById(int id) const;
 
-        ProcessingType getProcessingTypeById(std::string id);
+        const std::vector<Module> getModules() const;
+
+        const ProcessingType &getProcessingTypeByIds(int module_id, int proc_id);
 
     private:
-        std::map<std::string, Module> modulesMap;
-        std::map<std::string, ProcessingType> procTypesMap;
+        std::vector<Module> modules;
     };
 }
 

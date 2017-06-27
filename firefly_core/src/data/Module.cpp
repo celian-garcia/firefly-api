@@ -19,7 +19,7 @@ namespace firefly {
         return processingTypesList;
     }
 
-    const std::string &Module::getId() const {
+    const int &Module::getId() const {
         return id;
     }
 
@@ -27,7 +27,7 @@ namespace firefly {
         return version;
     }
 
-    void Module::setId(const std::string &id) {
+    void Module::setId(const int &id) {
         Module::id = id;
     }
 

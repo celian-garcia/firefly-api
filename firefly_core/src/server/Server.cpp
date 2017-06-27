@@ -61,16 +61,11 @@ namespace firefly {
 //    }
 
     void Server::initializeFireflyResources() {
-        this->server.resource["^/firefly/modules$"]["GET"] = [this](
+        this->server.resource["^/api/v1/modules$"]["GET"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
 
-            json result_content;
-
-//            for (auto module : this->dataStore.modules_list) {
-//                result_content.push_back(module);
-//            }
-
+            json result_content(this->dataStore.getModules());
             ResponseBuilder::build(result_content, response);
         };
 

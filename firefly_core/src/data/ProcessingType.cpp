@@ -15,8 +15,12 @@ namespace firefly {
         return aliases;
     }
 
-    const std::string &ProcessingType::getId() const {
+    const int &ProcessingType::getId() const {
         return id;
+    }
+
+    void ProcessingType::setId(const int &id) {
+        ProcessingType::id = id;
     }
 }
 
