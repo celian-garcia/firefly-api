@@ -116,6 +116,15 @@ namespace firefly {
             ResponseBuilder::build(resultTask, response);
         };
 
+        this->server.resource["^/api/v1/tasks/([0-9]+)/progress/([0-9]+)$"]["GET"] = [this](
+                std::shared_ptr<HttpResponse> response,
+                std::shared_ptr<HttpRequest> request) {
+            std::string task_id = request->path_match[1];
+            std::string progress_id = request->path_match[2];
+            json result_content{"task_id", "progress_id"};
+            ResponseBuilder::build(result_content, response);
+        };
+
         this->server.resource["^/api/v1/names"]["GET"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {

@@ -9,9 +9,6 @@ namespace firefly {
 
     void ResponseBuilder::build(std::string raw_content, std::shared_ptr<HttpResponse> response) {
         *response << "HTTP/1.1 200 \r\n";
-        *response << "Access-Control-Allow-Origin: *\r\n";
-        *response << "Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS\r\n";
-        *response << "Access-Control-Allow-Headers: Content-Type, api_key, Authorization\r\n";
         *response << "Content-Type: application/json\r\n";
         *response << "Content-Length: " << raw_content.length() << "\r\n\r\n";
         *response << raw_content;
