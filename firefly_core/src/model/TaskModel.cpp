@@ -1,16 +1,10 @@
 // Copyright 2017 <Célian Garcia>
 
+#include <firefly/core/model/PGResultInterpreter.hpp>
+#include <firefly/core/model/TaskInterpreter.hpp>
 #include "firefly/core/model/TaskModel.hpp"
-namespace firefly {
-//    Task
-//    TaskModel::getTaskById(int id) {
-//        std::string query =
-//                "SELECT * FROM task WHERE id = " + this->m_dbmanager->format(id);
-//        PGresult *res = this->m_dbmanager->execSelectQuery(query.c_str());
-//        std::string state = PQgetvalue(res, 0, 1);
-//        return NULL;
-//    }
 
+namespace firefly {
     Task TaskModel::insertTask(const Task &task) {
         std::string insert_query =
                 "INSERT INTO task (name, description, type, module, state, \"user\", date) VALUES (" +
@@ -26,8 +20,8 @@ namespace firefly {
 
         // TODO(Célian) : Danger if an insert command is run asynchronously
         // between the two following lines....
-        this->m_dbmanager->execInsertQuery(insert_query.c_str());
-        PGresult *res = this->m_dbmanager->execSelectQuery(select_query.c_str());
+        this->m_dbmanager->execInsertQuery(insert_query);
+        PGresult *res = this->m_dbmanager->execSelectQuery(select_query);
 
         int task_id = atoi(PQgetvalue(res, 0, 0));
         m_dbmanager->clearResult(res);
@@ -37,38 +31,34 @@ namespace firefly {
     }
 
     std::vector<Task> TaskModel::getTasks() {
+        // Request
         std::string query = "SELECT * FROM task";
-        PGresult *res = this->m_dbmanager->execSelectQuery(query.c_str());
-        int nb_rows = PQntuples(res);
-        int i_col_id = PQfnumber(res, "id");
-        int i_col_name = PQfnumber(res, "name");
-        int i_col_description = PQfnumber(res, "description");
-        int i_col_type = PQfnumber(res, "type");
-        int i_col_module = PQfnumber(res, "module");
-        int i_col_state = PQfnumber(res, "state");
-        int i_col_user = PQfnumber(res, "\"user\"");
-        int i_col_date = PQfnumber(res, "date");
-        std::vector <Task> tasks_list;
-        std::vector<Module> modules = this->data_store.getModules();
-        for (int row = 0; row < nb_rows; row++) {
-            int id = atoi(PQgetvalue(res, row, i_col_id));
-            std::string name = PQgetvalue(res, row, i_col_name);
-            std::string description = PQgetvalue(res, row, i_col_description);
-            int type_id = atoi(PQgetvalue(res, row, i_col_type));
-            int module_id = atoi(PQgetvalue(res, row, i_col_module));
-            Task::State state = static_cast<Task::State> (atoi(PQgetvalue(res, row, i_col_state)));
-            std::string user = PQgetvalue(res, row, i_col_user);
-            std::string date = PQgetvalue(res, row, i_col_date);
-            Module module = modules[module_id];
-            std::vector<ProcessingType> types = module.getProcessingTypesList();
-            ProcessingType type = types[type_id];
-            Task task(id, name, description, type, module, state, user, date);
-            tasks_list.push_back(task);
+        PGresult *res = this->m_dbmanager->execSelectQuery(query);
+
+        // Initialize interpreter
+        TaskInterpreter interpreter(&this->data_store, res);
+
+        // Get the task list
+        std::vector<Task> tasks_list;
+        for (int row = 0; row < interpreter.get_row_number(); row++) {
+            // Get the task from row
+            tasks_list.push_back(interpreter.getTask(row));
         }
         return tasks_list;
     }
 
-    TaskModel::TaskModel(DatabaseManager* db_manager, const DataCommonStore & data_store): BaseModel(db_manager){
+    //TODO : handle error if id is not in the database (for the check : id=1 is not in the DB)
+    Task TaskModel::getTaskById(int id) {
+        // Request
+        std::string query =
+                "SELECT * FROM task WHERE id = " + this->m_dbmanager->format(id);
+        PGresult *res = this->m_dbmanager->execSelectQuery(query);
+        TaskInterpreter interpreter(&this->data_store, res);
+        int row = 0;
+        return interpreter.getTask(row);
+    }
+
+    TaskModel::TaskModel(DatabaseManager *db_manager, const DataCommonStore &data_store) : BaseModel(db_manager) {
         this->data_store = data_store;
     }
 }

@@ -19,6 +19,9 @@ namespace firefly {
 //
 //        void updateTask(const Task &task);
         std::vector<Task> getTasks();
+
+        Task getTaskById(int task_id);
+
     private:
         DataCommonStore data_store;
     };

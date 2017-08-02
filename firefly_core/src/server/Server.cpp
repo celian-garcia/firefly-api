@@ -116,6 +116,18 @@ namespace firefly {
             ResponseBuilder::build(resultTask, response);
         };
 
+        this->server.resource["^/api/v1/tasks/([0-9]+)"]["GET"] = [this](
+                std::shared_ptr<HttpResponse> response,
+                std::shared_ptr<HttpRequest> request) {
+
+            std::string task_id = request->path_match[1];
+
+            DatabaseManager db_manager("firefly_hive");
+            TaskModel taskModel(&db_manager, dataStore);
+            Task resultTask = taskModel.getTaskById(atoi(task_id.c_str()));
+            ResponseBuilder::build(resultTask, response);
+        };
+
         this->server.resource["^/api/v1/tasks/([0-9]+)/progress/([0-9]+)$"]["GET"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
