@@ -6,6 +6,9 @@
 #include <firefly/core/config/DataCommonStore.hpp>
 #include "firefly/core/data/Task.hpp"
 #include "DatabaseManager.hpp"
+#include <firefly/core/model/PGResultInterpreter.hpp>
+#include <firefly/core/model/TaskInterpreter.hpp>
+#include <optional>
 
 namespace firefly {
     class TaskModel : public BaseModel {
@@ -13,14 +16,13 @@ namespace firefly {
         using BaseModel::BaseModel;
 
         TaskModel(DatabaseManager*, const DataCommonStore&);
-//        Task getTaskById(int id);
-//
+
         Task insertTask(const Task &task);
-//
+
 //        void updateTask(const Task &task);
         std::vector<Task> getTasks();
 
-        Task getTaskById(int task_id);
+        std::optional<Task> getTaskById(int task_id);
 
     private:
         DataCommonStore data_store;

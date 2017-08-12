@@ -260,7 +260,7 @@ protected:
                 //If content, read that as well
                 auto it=request->header.find("Content-Length");
                 if(it!=request->header.end()) {
-                    unsigned long long content_length;
+                    unsigned long long content_length = 0;
                     try {
                         content_length=stoull(it->second);
                     }
@@ -364,7 +364,7 @@ protected:
                 if(timer)
                     timer->cancel();
                 if(!ec) {
-                    float http_version;
+                    float http_version = 1.1;
                     try {
                         http_version=stof(request->http_version);
                     }

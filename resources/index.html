@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>FireflyFront</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        body {
+            background: #222222 url(assets/images/background.png);
+            background-position-x: center;
+            background-position-y: 90px;
+            background-size: 80%;
+            background-repeat: no-repeat;
+            background-color: rgb(34, 34, 34);
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        }
+
+        #loading {
+            opacity: 0;
+        }
+
+        app-root:empty + #loading {
+            opacity: 1;
+            z-index: 100;
+            background: url("assets/images/loading.gif") no-repeat;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+
+</head>
+<body>
+
+<app-root></app-root>
+<div id="loading"></div>
+
+<script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
+</html>

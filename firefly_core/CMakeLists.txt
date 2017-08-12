@@ -2,10 +2,14 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
 
     SET_PROPERTY(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)
 
+    if (MINGW)
+        set(Boost_COMPILER -mgw71)
+    endif ()
+
     ## Dependencies ## ====================================================================
     # External libraries initialization
     find_package(OpenCV REQUIRED)
-    find_package(Boost 1.53.0 COMPONENTS system thread filesystem date_time regex REQUIRED)
+    find_package(Boost 1.62.0 COMPONENTS system thread filesystem date_time regex REQUIRED)
 
     get_target_property(SIMPLE_WEB_SERVER_INCLUDE_DIRS ${SIMPLE_WEB_SERVER_TARGET} INCLUDE_DIRECTORIES)
     get_target_property(JSON_INCLUDE_DIRS ${JSON_TARGET} INCLUDE_DIRECTORIES)
@@ -46,7 +50,7 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             PRIVATE ${PostgreSQL_INCLUDE_DIRS}
             PRIVATE ${OpenCV_INCLUDE_DIRS})
 
-    set_property(TARGET ${FIREFLY_CORE_TARGET} PROPERTY CXX_STANDARD 14)
+    set_property(TARGET ${FIREFLY_CORE_TARGET} PROPERTY CXX_STANDARD 17)
     ## ================ ## ====================================================================
 
 

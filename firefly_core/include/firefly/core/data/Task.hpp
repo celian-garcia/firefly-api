@@ -23,6 +23,8 @@ namespace firefly {
 
         Task(const Task&) = default;
 
+        Task(Task&&) = default;
+
         Task(const std::string &name, const std::string &description,
              const ProcessingType &type, const Module &module, const std::string &userName, const std::string &date);
 
@@ -65,7 +67,6 @@ namespace firefly {
         void setDate(const std::string &date);
 
     private:
-
         int identifier;
         std::string name;
         std::string description;

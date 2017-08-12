@@ -13,7 +13,7 @@ namespace firefly {
     class DataCommonStore {
 
     public:
-        void storeModule(Module module);
+        void storeModule(Module& module);
 
         const Module getModuleById(int id) const;
 

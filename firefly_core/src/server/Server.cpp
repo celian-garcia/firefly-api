@@ -1,7 +1,5 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <firefly/core/model/TaskModel.hpp>
-#include <firefly/core/data/TaskBuilder.hpp>
 #include "firefly/core/server/Server.hpp"
 
 using namespace std::literals::string_literals;
@@ -102,6 +100,13 @@ namespace firefly {
                 result_content.push_back(task);
             }
 
+            json result_json = static_cast<json>(result_content);
+            std::string result = result_json.dump();
+            *response << "HTTP/1.1 200 \r\n";
+            *response << "Content-Type: application/json\r\n";
+            *response << "Content-Length: " << result.length() << "\r\n\r\n";
+            *response << result;
+
             ResponseBuilder::build(result_content, response);
         };
 
@@ -112,7 +117,7 @@ namespace firefly {
             Task task = taskBuilder.buildTask(this->dataStore);
             DatabaseManager db_manager("firefly_hive");
             TaskModel taskModel(&db_manager);
-            Task resultTask = taskModel.insertTask(task);
+            json resultTask = taskModel.insertTask(task);
             ResponseBuilder::build(resultTask, response);
         };
 
@@ -124,8 +129,13 @@ namespace firefly {
 
             DatabaseManager db_manager("firefly_hive");
             TaskModel taskModel(&db_manager, dataStore);
-            Task resultTask = taskModel.getTaskById(atoi(task_id.c_str()));
-            ResponseBuilder::build(resultTask, response);
+            const std::optional<Task> &resultTask = taskModel.getTaskById(atoi(task_id.c_str()));
+            if (resultTask) {
+                ResponseBuilder::build(static_cast<json>(resultTask.value()), response);
+            }
+            else {
+                ResponseBuilder::build("{}", response);
+            }
         };
 
         this->server.resource["^/api/v1/tasks/([0-9]+)/progress/([0-9]+)$"]["GET"] = [this](
@@ -227,7 +237,7 @@ namespace firefly {
         }
     }
 
-    void Server::registerModule(Module module) {
+    void Server::registerModule(Module& module) {
         this->dataStore.storeModule(module);
     };
 

@@ -3,7 +3,7 @@
 #include "firefly/core/config/DataCommonStore.hpp"
 
 namespace firefly {
-    void DataCommonStore::storeModule(Module module) {
+    void DataCommonStore::storeModule(Module& module) {
         module.setId(int(modules.size()));
         std::vector<ProcessingType> new_proc_types;
         int current_proc_id = 0;

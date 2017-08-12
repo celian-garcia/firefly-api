@@ -1,0 +1,10 @@
+version: '2'
+services:
+  server:
+    build: .
+    ports:
+     - "8080:8080"
+    volumes:
+     - .:/firefly
+    tty: true
+    command: /firefly/build/bin/FIREFLY_LAUNCHER 8080 /firefly/resources 5

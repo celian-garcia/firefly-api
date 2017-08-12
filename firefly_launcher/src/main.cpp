@@ -9,8 +9,6 @@
 //#include "cv_module/api/CvHandler.hpp"
 //#endif
 
-typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
-
 int main(int argc, char* argv[]) {
     if (argc != 4) {
         std::cerr << "Usage: Firefly.exe <port> <web_root> <nb_thread>\n";
@@ -25,10 +23,13 @@ int main(int argc, char* argv[]) {
     firefly::Server server(port, resources_path, dataStore);
 
 #ifdef WITH_FLY_MODULE
-    server.registerModule(firefly::FlyModule());
+    firefly::Module module = firefly::FlyModule();
+    server.registerModule(module);
 #endif
+    std::cerr << "Server successfully initialized\n";
 
     server.run();
+
 
     return 0;
 }

@@ -25,9 +25,13 @@
 #include <firefly/core/utils/server_types_definitions.hpp>
 #include <firefly/core/utils/QueryParameters.hpp>
 #include <firefly/core/server/ResponseBuilder.hpp>
+#include <firefly/core/model/TaskModel.hpp>
+#include <firefly/core/data/TaskBuilder.hpp>
 
 #include <firefly/core/model/DatabaseManager.hpp>
 #include <firefly/core/config/DataCommonStore.hpp>
+
+#include <optional>
 
 namespace firefly {
     typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
@@ -37,7 +41,7 @@ namespace firefly {
 
         Server(unsigned short port, boost::filesystem::path resources_path, DataCommonStore dataStore);
 
-        void registerModule(Module module);
+        void registerModule(Module& module);
 
         void initializeFireflyResources();
 
@@ -62,7 +66,7 @@ namespace firefly {
 
         void initializeResource(ProcessingAction processingAction);
 
-        void sendDefaultResource(const std::shared_ptr<HttpResponse> &response, const std::shared_ptr<std::ifstream> &ifs);
+        void sendDefaultResource(const std::shared_ptr<HttpServer::Response> &response, const std::shared_ptr<std::ifstream> &ifs);
 
         void initDefaultResource();
     };

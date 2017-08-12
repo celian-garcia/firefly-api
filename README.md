@@ -13,8 +13,9 @@ Larger purpose would be to have access to high level OpenCV features.
 [![Linkedin Célian Garcia](./docs/images/linkedin.png)](https://www.linkedin.com/in/celiangarcia/)
 
 #### Used technologies
+- [Docker](https://www.docker.com/)
 - [Cmake](https://github.com/Kitware/CMake)
-- [Angular 2](https://github.com/angular/angular)
+- [Angular 4](https://github.com/angular/angular)
 - [OpenCV](https://github.com/opencv/opencv)
 - [C++ Fly Library](https://github.com/celian-garcia/fly)
 - [C++ Boost Library](https://github.com/boostorg/boost)

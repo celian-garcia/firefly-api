@@ -1,0 +1,1 @@
+{"version":3,"file":"Type.js","sourceRoot":"","sources":["../../../../../src/app/api-firefly/data/Type.ts"],"names":[],"mappings":";;AAAA;;GAEG;AACH;IAAA;IAIA,CAAC;IAAD,WAAC;AAAD,CAAC,AAJD,IAIC;AAJY,oBAAI","sourcesContent":["/**\r\n * Created by celia on 14/05/2017.\r\n */\r\nexport class Type {\r\n    id: number;\r\n    name: string;\r\n    code: string;\r\n}\r\n"]}

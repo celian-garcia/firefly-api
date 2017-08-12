@@ -9,8 +9,11 @@
 namespace firefly {
     class ResponseBuilder {
     public:
-        static void build(nlohmann::json content, std::shared_ptr<HttpResponse> response);
         static void build(std::string content, std::shared_ptr<HttpResponse> response);
+
+        static void build(nlohmann::json raw_content, std::shared_ptr<HttpResponse> response);
+
+        static void build(const char *raw_content, std::shared_ptr<HttpResponse> response);
     };
 }
 

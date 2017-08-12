@@ -1,7 +1,5 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <firefly/core/model/PGResultInterpreter.hpp>
-#include <firefly/core/model/TaskInterpreter.hpp>
 #include "firefly/core/model/TaskModel.hpp"
 
 namespace firefly {
@@ -47,15 +45,15 @@ namespace firefly {
         return tasks_list;
     }
 
-    //TODO : handle error if id is not in the database (for the check : id=1 is not in the DB)
-    Task TaskModel::getTaskById(int id) {
+    std::optional<Task> TaskModel::getTaskById(int id) {
         // Request
-        std::string query =
-                "SELECT * FROM task WHERE id = " + this->m_dbmanager->format(id);
+        std::string query = "SELECT * FROM task WHERE id = " + this->m_dbmanager->format(id);
         PGresult *res = this->m_dbmanager->execSelectQuery(query);
         TaskInterpreter interpreter(&this->data_store, res);
-        int row = 0;
-        return interpreter.getTask(row);
+        if (interpreter.get_row_number() == 0) {
+            return {};
+        }
+        return interpreter.getTask(0);
     }
 
     TaskModel::TaskModel(DatabaseManager *db_manager, const DataCommonStore &data_store) : BaseModel(db_manager) {
