@@ -16,13 +16,16 @@ namespace firefly {
                 "user=" + this->USER + " " +
                 "password=" + this->PASSWORD + " " +
                 "dbname=" + db_name + " " +
-                "hostaddr=" + this->HOST + " " +
+                "host=" + this->HOST + " " +
                 "port=" + this->PORT + " ";
+
+        std::cout<<"Connecting to database with the following connection string : " + conn_str << std::endl;
 
         this->m_connection = PQconnectdb(conn_str.c_str());
 
         if (PQstatus(this->m_connection) != CONNECTION_OK) {
             std::string errMessage = PQerrorMessage(this->m_connection);
+            std::cerr<<errMessage<<"\n"<<std::endl;
             PQfinish(this->m_connection);
             throw DatabaseException(errMessage);
         }

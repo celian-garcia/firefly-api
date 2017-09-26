@@ -54,7 +54,7 @@ namespace firefly {
         // TODO(Célian): put it in configuration file
         const std::string USER = "postgres";
         const std::string PASSWORD = "postgres";
-        const std::string HOST = "127.0.0.1";
+        const std::string HOST = "database";
         const std::string PORT = "5432";
     };
 

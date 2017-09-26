@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
     firefly::Module module = firefly::FlyModule();
     server.registerModule(module);
 #endif
-    std::cerr << "Server successfully initialized\n";
+    std::cout << "Server successfully initialized\n"<<std::endl;;
 
     server.run();
 

@@ -62,15 +62,15 @@ namespace firefly {
         this->server.resource["^/api/v1/modules$"]["GET"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
-
+            std::cout<<"api/v1/modules endpoint reached\n"<<std::endl;
             json result_content(this->dataStore.getModules());
             ResponseBuilder::build(result_content, response);
         };
 
-        this->server.resource["^/api/v1/tasks"]["GET"] = [this](
+        this->server.resource["^/api/v1/tasks$"]["GET"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
-
+            std::cout<<"api/v1/tasks endpoint reached\n"<<std::endl;
             json result_content;
 
             const std::vector<std::string> &aliases{"alias1", "alias2"};
@@ -93,19 +93,12 @@ namespace firefly {
             result_content.push_back(p3);
             result_content.push_back(p4);
             result_content.push_back(p5);
-
             DatabaseManager db_manager("firefly_hive");
             TaskModel taskModel(&db_manager, dataStore);
             for (auto task : taskModel.getTasks()) {
                 result_content.push_back(task);
             }
-
-            json result_json = static_cast<json>(result_content);
-            std::string result = result_json.dump();
-            *response << "HTTP/1.1 200 \r\n";
-            *response << "Content-Type: application/json\r\n";
-            *response << "Content-Length: " << result.length() << "\r\n\r\n";
-            *response << result;
+            std::cout<<result_content<<"\n"<<std::endl;
 
             ResponseBuilder::build(result_content, response);
         };
@@ -147,13 +140,13 @@ namespace firefly {
             ResponseBuilder::build(result_content, response);
         };
 
-        this->server.resource["^/api/v1/names"]["GET"] = [this](
-                std::shared_ptr<HttpResponse> response,
-                std::shared_ptr<HttpRequest> request) {
-
-            json result_content{"name1", "name2"};
-            ResponseBuilder::build(result_content, response);
-        };
+//        this->server.resource["^/api/v1/names"]["GET"] = [this](
+//                std::shared_ptr<HttpResponse> response,
+//                std::shared_ptr<HttpRequest> request) {
+//
+//            json result_content{"name1", "name2"};
+//            ResponseBuilder::build(result_content, response);
+//        };
 
         this->server.resource["^/api/v1/categories"]["GET"] = [this](
                 std::shared_ptr<HttpResponse> response,

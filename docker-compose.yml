@@ -4,7 +4,16 @@ services:
     build: .
     ports:
      - "8080:8080"
-    volumes:
-     - .:/firefly
-    tty: true
+#    volumes:
+#     - .:/firefly
+#    tty: true
     command: /firefly/build/bin/FIREFLY_LAUNCHER 8080 /firefly/resources 5
+  database:
+    image: postgres
+    volumes:
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=firefly_hive
+    ports:
+      - "5400:5432"
