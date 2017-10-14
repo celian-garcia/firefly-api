@@ -30,7 +30,7 @@ namespace firefly {
 
     std::vector<Task> TaskModel::getTasks() {
         // Request
-        std::string query = "SELECT * FROM task";
+        std::string query = "SELECT * FROM task;";
         PGresult *res = this->m_dbmanager->execSelectQuery(query);
 
         // Initialize interpreter
@@ -47,13 +47,13 @@ namespace firefly {
 
     std::optional<Task> TaskModel::getTaskById(int id) {
         // Request
-        std::string query = "SELECT * FROM task WHERE id = " + this->m_dbmanager->format(id);
+        std::string query = "SELECT * FROM task WHERE id = " + this->m_dbmanager->format(id) + ";";
         PGresult *res = this->m_dbmanager->execSelectQuery(query);
         TaskInterpreter interpreter(&this->data_store, res);
         if (interpreter.get_row_number() == 0) {
             return {};
         }
-        return std::optional<firefly::Task>{interpreter.getTask(0)};
+        return std::optional<Task>{interpreter.getTask(0)};
     }
 
     TaskModel::TaskModel(DatabaseManager *db_manager, const DataCommonStore &data_store) : BaseModel(db_manager) {

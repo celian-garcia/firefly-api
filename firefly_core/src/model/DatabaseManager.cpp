@@ -37,9 +37,11 @@ namespace firefly {
 
     void
     DatabaseManager::execInsertQuery(const std::string &query) {
+        std::cout << "Insert query execution: " << query << std::endl;
         PGresult *res = PQexec(this->m_connection, query.c_str());
         if (PQresultStatus(res) != PGRES_COMMAND_OK) {
             std::string errMessage = PQresultErrorMessage(res);
+            std::cerr<<errMessage<<"\n"<<std::endl;
             PQclear(res);
             PQfinish(this->m_connection);
             throw DatabaseException(errMessage);
@@ -54,10 +56,12 @@ namespace firefly {
 
     PGresult *
     DatabaseManager::execSelectQuery(const std::string &query) {
+        std::cout << "Select query execution: " << query << std::endl;
         PGresult *res = PQexec(this->m_connection, query.c_str());
 
         if (PQresultStatus(res) != PGRES_TUPLES_OK) {
             std::string errMessage = PQresultErrorMessage(res);
+            std::cerr<<errMessage<<"\n"<<std::endl;
             PQclear(res);
             PQfinish(this->m_connection);
             throw DatabaseException(errMessage);

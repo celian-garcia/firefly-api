@@ -37,7 +37,7 @@ SET search_path = public, pg_catalog;
 
 --
 -- TOC entry 186 (class 1259 OID 16451)
--- Name: task_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: task_id_seq; Type: SEQUENCE; Schema: public; Owner: firefly_foreman
 --
 
 CREATE SEQUENCE task_id_seq
@@ -48,7 +48,7 @@ CREATE SEQUENCE task_id_seq
     CACHE 1;
 
 
-ALTER TABLE task_id_seq OWNER TO postgres;
+ALTER TABLE task_id_seq OWNER TO firefly_foreman;
 
 SET default_tablespace = '';
 
@@ -56,7 +56,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 185 (class 1259 OID 16431)
--- Name: task; Type: TABLE; Schema: public; Owner: postgres
+-- Name: task; Type: TABLE; Schema: public; Owner: firefly_foreman
 --
 
 CREATE TABLE task (
@@ -71,12 +71,12 @@ CREATE TABLE task (
 );
 
 
-ALTER TABLE task OWNER TO postgres;
+ALTER TABLE task OWNER TO firefly_foreman;
 
 ----
 ---- TOC entry 2122 (class 0 OID 16431)
 ---- Dependencies: 185
----- Data for Name: task; Type: TABLE DATA; Schema: public; Owner: postgres
+---- Data for Name: task; Type: TABLE DATA; Schema: public; Owner: firefly_foreman
 ----
 --
 --COPY task (id, name, description, type, module, state, "user", date) FROM stdin;
@@ -97,7 +97,7 @@ ALTER TABLE task OWNER TO postgres;
 ----
 ---- TOC entry 2131 (class 0 OID 0)
 ---- Dependencies: 186
----- Name: task_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+---- Name: task_id_seq; Type: SEQUENCE SET; Schema: public; Owner: firefly_foreman
 ----
 --
 --SELECT pg_catalog.setval('task_id_seq', 12, true);
@@ -106,7 +106,7 @@ INSERT INTO task (name, description, type, module, state, "user", date) VALUES
 
 --
 -- TOC entry 2004 (class 2606 OID 16438)
--- Name: task task_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: task task_id_key; Type: CONSTRAINT; Schema: public; Owner: firefly_foreman
 --
 
 ALTER TABLE ONLY task
