@@ -5,7 +5,6 @@ if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
     ## Dependencies ## ====================================================================
     # External libraries initialization
     find_package(OpenCV REQUIRED)
-    find_package(PostgreSQL REQUIRED)
 
     # Get FIREFLY CORE include directories
     get_target_property(FIREFLY_CORE_INCLUDE_DIRS ${FIREFLY_CORE_TARGET} INCLUDE_DIRECTORIES)
@@ -35,7 +34,7 @@ if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
         target_link_libraries(${FIREFLY_LAUNCHER_TARGET} ws2_32 wsock32)
     endif ()
 
-    link_directories(${PostgreSQL_LIBRARY_DIRS})
+#    link_directories(${PostgreSQL_LIBRARY_DIRS})
     target_link_libraries(${FIREFLY_LAUNCHER_TARGET}
             ${FIREFLY_CORE_TARGET})
 

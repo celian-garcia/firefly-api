@@ -10,6 +10,8 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
     # External libraries initialization
     find_package(OpenCV REQUIRED)
     find_package(Boost 1.62.0 COMPONENTS system thread filesystem date_time regex REQUIRED)
+    find_package(PostgreSQL REQUIRED)
+    find_library(PQTYPES_LIB NAMES pqtypes)
 
     get_target_property(SIMPLE_WEB_SERVER_INCLUDE_DIRS ${SIMPLE_WEB_SERVER_TARGET} INCLUDE_DIRECTORIES)
     get_target_property(JSON_INCLUDE_DIRS ${JSON_TARGET} INCLUDE_DIRECTORIES)
@@ -40,7 +42,8 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
     target_link_libraries(${FIREFLY_CORE_TARGET}
             ${OpenCV_LIBS}
             ${Boost_LIBRARIES}
-            ${PostgreSQL_LIBRARIES})
+            ${PostgreSQL_LIBRARIES}
+            ${PQTYPES_LIB})
 
     target_include_directories(${FIREFLY_CORE_TARGET}
             PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include

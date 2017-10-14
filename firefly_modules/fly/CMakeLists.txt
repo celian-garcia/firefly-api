@@ -32,7 +32,7 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
             src/workers/FlyCloudPopulation.cpp
             include/fly_module/workers/FlyCloudPopulation.hpp
             src/data/FlyModule.cpp
-            include/fly_module/data/FlyModule.hpp)
+            include/fly_module/data/FlyModule.hpp src/model/Point3DInterpreter.cpp include/fly_module/model/Point3DInterpreter.hpp)
 
     link_directories(${Fly_LIB_DIRS1} ${Fly_LIB_DIRS2})
     target_link_libraries(${FLY_MODULE_TARGET}

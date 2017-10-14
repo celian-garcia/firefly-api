@@ -1,5 +1,7 @@
 // Copyright 2017 <Célian Garcia>
 
+#include <fly_module/model/Point3DInterpreter.hpp>
+#include <libpqtypes.h>
 #include "fly_module/model/Point3DModel.hpp"
 
 namespace firefly {
@@ -40,30 +42,21 @@ namespace firefly {
         Point3DModel::getPointListByCloudId(int cloud_id) {
             std::string select_query =
                     "SELECT * FROM fpoint3d WHERE cloud_id = " +
-                    this->m_dbmanager->format(cloud_id);
+                    this->m_dbmanager->format(cloud_id) + ";";
 
             PGresult *res = this->m_dbmanager->execSelectQuery(select_query.c_str());
 
-            int rows_number = PQntuples(res);
-            if (rows_number == 0) {
-                throw ObjectNotFound();
+
+            // Initialize interpreter
+            Point3DInterpreter interpreter(res);
+
+            // Get the point list
+            std::vector<Point3DBean> points_list;
+            for (int row = 0; row < interpreter.get_row_number(); row++) {
+                // Get the point from row
+                points_list.push_back(interpreter.getPoint3D(row));
             }
-
-            int id_fnum = PQfnumber(res, "id");
-            int value_fnum = PQfnumber(res, "value");
-            int operations_fnum = PQfnumber(res, "operations");
-
-            std::vector<Point3DBean> points;
-            for (int row = 0; row < rows_number; row++) {
-                int id = this->m_dbmanager->parse(PQgetvalue(res, row, id_fnum));
-
-                cv::Vec3f value(1, 1, 1);//TODO
-                std::vector<int> operations = {4, 5, 6};//TODO
-                points.push_back(Point3DBean(id, value, cloud_id, operations));
-            }
-
-            return points;
-
+            return points_list;
         }
 
         void
@@ -79,10 +72,10 @@ namespace firefly {
 
         void Point3DModel::updatePoint(Point3DBean point) {
             std::string update_query =
-                    "UPDATE fpoint3d SET cloud_id = '" +
-                    this->m_dbmanager->format(point.getCloudId()) + "', value = '" +
-                    this->m_dbmanager->format(point.getValue()) + "', operations = '" +
-                    this->m_dbmanager->format(point.getOperationsIds()) + "' WHERE id = " +
+                    "UPDATE fpoint3d SET cloud_id = " +
+                    this->m_dbmanager->format(point.getCloudId()) + ", value = " +
+                    this->m_dbmanager->format(point.getValue()) + ", operations = " +
+                    this->m_dbmanager->format(point.getOperationsIds()) + " WHERE id = " +
                     this->m_dbmanager->format(point.getId());
 
             this->m_dbmanager->execUpdateQuery(update_query.c_str());

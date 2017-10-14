@@ -75,7 +75,7 @@ namespace firefly {
             }
         };
 
-        this->server.resource["^/api/v1/tasks/([0-9]+)/run"]["POST"] = [this](
+        this->server.resource["^/api/v1/tasks/([0-9]+)/run$"]["POST"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
             std::string task_id = request->path_match[1];
@@ -95,9 +95,12 @@ namespace firefly {
         this->server.resource["^/api/v1/tasks/([0-9]+)/progress/([0-9]+)$"]["GET"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
-            std::string task_id = request->path_match[1];
-            std::string progress_id = request->path_match[2];
-            json result_content{"task_id", "progress_id"};
+            int task_id = std::stoi(request->path_match[1]);
+            int client_last_op = std::stoi(request->path_match[2]);
+            std::vector<Operation> operations_list = fly_module::FlyCloudPopulation::collect(task_id, client_last_op);
+
+            json result_content = operations_list;
+
             ResponseBuilder::build(result_content, response);
         };
     }

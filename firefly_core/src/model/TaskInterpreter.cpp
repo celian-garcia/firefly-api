@@ -25,8 +25,8 @@ namespace firefly {
         auto type_id = this->interpreter->get<int>("type", row);
         auto module_id = this->interpreter->get<int>("module", row);
         auto state = static_cast<Task::State> (this->interpreter->get<int>("state", row));
-        auto user = static_cast<std::string> (this->interpreter->get<char *>("state", row));
-        auto date = static_cast<std::string> (this->interpreter->get<char *>("state", row));
+        auto user = static_cast<std::string> (this->interpreter->get<char *>("user", row));
+        auto date = static_cast<std::string> (this->interpreter->get<char *>("date", row));
 
         // Task creation from interpreted data
         Module module = this->dataStore->getModuleById(module_id);
