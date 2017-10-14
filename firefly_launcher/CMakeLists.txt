@@ -1,9 +1,13 @@
 if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
 
+    message(STATUS "=========== START OF '${FIREFLY_LAUNCHER_TARGET}' target configuration ==============")
+
     ## Dependencies ## ====================================================================
     # External libraries initialization
     find_package(OpenCV REQUIRED)
     find_package(PostgreSQL REQUIRED)
+
+    # Get FIREFLY CORE include directories
     get_target_property(FIREFLY_CORE_INCLUDE_DIRS ${FIREFLY_CORE_TARGET} INCLUDE_DIRECTORIES)
     ## ============ ## ====================================================================
 
@@ -17,6 +21,7 @@ if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
         set(WITH_CV_MODULE OFF)
     endif ()
     ## ==================== ## ====================================================================
+
 
 
     ## Target definition ## ====================================================================
@@ -49,6 +54,7 @@ if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
 
     ## Modules dependencies ## ====================================================================
     if (WITH_FLY_MODULE)
+        message(STATUS "=========== >> LINK '${FLY_MODULE_TARGET}' target to '${FIREFLY_LAUNCHER_TARGET}' ==============")
         add_dependencies(${FIREFLY_LAUNCHER_TARGET} ${FLY_MODULE_TARGET})
         target_compile_options(${FIREFLY_LAUNCHER_TARGET}
                 PRIVATE -DWITH_FLY_MODULE)
@@ -57,6 +63,7 @@ if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
     endif ()
 
     if (WITH_CV_MODULE)
+        message(STATUS "=========== >> LINK '${CV_MODULE_TARGET}' target to '${FIREFLY_LAUNCHER_TARGET}' ==============")
         add_dependencies(${FIREFLY_LAUNCHER_TARGET} ${CV_MODULE_TARGET})
         target_compile_options(${FIREFLY_LAUNCHER_TARGET}
                 PRIVATE -DWITH_CV_MODULE)
@@ -64,6 +71,8 @@ if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
                 ${CV_MODULE_TARGET})
     endif ()
     ## ==================== ## ====================================================================
+
+    message(STATUS "=========== END OF '${FIREFLY_LAUNCHER_TARGET}' target configuration ==============")
 
 endif ()
 

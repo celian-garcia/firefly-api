@@ -1,6 +1,6 @@
 /// Copyright 2017 <Célian Garcia>
-#include <firefly/core/server/Server.hpp>
-#include <firefly/core/config/DataCommonStore.hpp>
+#include <firefly/server/Server.hpp>
+#include <fly_module/api/FlyHandler.hpp>
 
 #ifdef WITH_FLY_MODULE
 #include "fly_module/data/FlyModule.hpp"
@@ -24,7 +24,8 @@ int main(int argc, char* argv[]) {
 
 #ifdef WITH_FLY_MODULE
     firefly::Module module = firefly::FlyModule();
-    server.registerModule(module);
+    firefly::ThreadPool* flyThreadPool = new firefly::ThreadPool(nb_threads);
+    server.registerModule(module, flyThreadPool);
 #endif
     std::cout << "Server successfully initialized\n"<<std::endl;;
 

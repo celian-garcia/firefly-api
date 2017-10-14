@@ -26,7 +26,7 @@ namespace firefly {
             Cloud3DModel cloud_model(&db_manager);
             int cloud_id = cloud_model.insertCloud(Cloud3DBean());
 
-            ConcurrentOperationQueue *operations = new ConcurrentOperationQueue;
+            auto *operations = new ConcurrentOperationQueue;
 
             pool->enqueue([operations] {
                 run_compute_thread(operations);

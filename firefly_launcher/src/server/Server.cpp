@@ -1,6 +1,8 @@
 // Copyright 2017 <Célian Garcia>
 
-#include "firefly/core/server/Server.hpp"
+#include <thread>
+#include <firefly/server/Server.hpp>
+#include <fly_module/workers/FlyCloudPopulation.hpp>
 
 using namespace std::literals::string_literals;
 
@@ -19,44 +21,6 @@ namespace firefly {
 
         server_thread.join();
     }
-
-//    void Server::initializeModuleResources(Module module) {
-//        std::string moduleEndpoint = Server::buildModuleApiEndpoint(module);
-//        std::string processingsUri = moduleEndpoint + "/processings"s;
-//        for (auto &processing : module.getProcessingTypeById()) {
-//            for (auto &resource : processing.getActions()) {
-//                this->registerProcessingAction(processingsUri, resource);
-//            }
-//        }
-//    }
-
-//    void Server::registerProcessingAction(std::string processingsUri, ProcessingAction processingAction) {
-//        std::string queryPath =
-//                processingsUri + "/"s + processingAction.getProcessingId() + "/"s + processingAction.getName();
-//
-//        this->server.resource[queryPath + "(\\?.*)?"s][processingAction.getHttpMethod()] = [processingAction](
-//                std::shared_ptr<HttpResponse> response,
-//                std::shared_ptr<HttpRequest> request) {
-//            request->content
-//            json postData;
-//            std::string query_string = request->path_match[1];
-//            QueryParameters queryParameters(query_string);
-//            processingAction.run(queryParameters, postData);
-//        };
-//    }
-
-//    std::string Server::buildFireflyApiEndpoint() {
-//        return "api/v"s + Server::API_VERSION;
-//    }
-//
-//    std::string Server::buildModuleApiEndpoint(Module module) {
-//        std::string endpoint = "modules/";
-//        return "modules/"s + module.getId() + "/api/v"s + module.getVersion();
-//    }
-
-//    std::string Server::buildProcessingUri(std::string moduleApiEndpoint, Task processing) {
-//        return moduleApiEndpoint + "/"s +
-//    }
 
     void Server::initializeFireflyResources() {
         this->server.resource["^/api/v1/modules$"]["GET"] = [this](
@@ -103,7 +67,7 @@ namespace firefly {
             ResponseBuilder::build(result_content, response);
         };
 
-        this->server.resource["^/api/v1/tasks"]["POST"] = [this](
+        this->server.resource["^/api/v1/tasks$"]["POST"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
             TaskBuilder taskBuilder = json::parse(request->content);
@@ -114,7 +78,7 @@ namespace firefly {
             ResponseBuilder::build(resultTask, response);
         };
 
-        this->server.resource["^/api/v1/tasks/([0-9]+)"]["GET"] = [this](
+        this->server.resource["^/api/v1/tasks/([0-9]+)$"]["GET"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
 
@@ -131,28 +95,29 @@ namespace firefly {
             }
         };
 
+        this->server.resource["^/api/v1/tasks/([0-9]+)/run"]["POST"] = [this](
+                std::shared_ptr<HttpResponse> response,
+                std::shared_ptr<HttpRequest> request) {
+            std::string task_id = request->path_match[1];
+            DatabaseManager db_manager("firefly_hive");
+            TaskModel taskModel(&db_manager, dataStore);
+            const std::optional<Task> &resultTask = taskModel.getTaskById(atoi(task_id.c_str()));
+            if (resultTask) {
+                Task task = resultTask.value();
+                int module_id = task.getModule().getId();
+                fly_module::FlyCloudPopulation::start(thread_pool_map[module_id]);
+                ResponseBuilder::build("{\"resultOk\": true}", response);
+            } else {
+                ResponseBuilder::build("{\"resultOk\": false}", response);
+            }
+        };
+
         this->server.resource["^/api/v1/tasks/([0-9]+)/progress/([0-9]+)$"]["GET"] = [this](
                 std::shared_ptr<HttpResponse> response,
                 std::shared_ptr<HttpRequest> request) {
             std::string task_id = request->path_match[1];
             std::string progress_id = request->path_match[2];
             json result_content{"task_id", "progress_id"};
-            ResponseBuilder::build(result_content, response);
-        };
-
-//        this->server.resource["^/api/v1/names"]["GET"] = [this](
-//                std::shared_ptr<HttpResponse> response,
-//                std::shared_ptr<HttpRequest> request) {
-//
-//            json result_content{"name1", "name2"};
-//            ResponseBuilder::build(result_content, response);
-//        };
-
-        this->server.resource["^/api/v1/categories"]["GET"] = [this](
-                std::shared_ptr<HttpResponse> response,
-                std::shared_ptr<HttpRequest> request) {
-
-            json result_content{"category1", "category2"};
             ResponseBuilder::build(result_content, response);
         };
     }
@@ -230,8 +195,9 @@ namespace firefly {
         }
     }
 
-    void Server::registerModule(Module& module) {
+    void Server::registerModule(Module& module, ThreadPool* pool) {
         this->dataStore.storeModule(module);
-    };
+        this->thread_pool_map[module.getId()] = pool;
+    }
 
 }

@@ -53,7 +53,7 @@ namespace firefly {
         if (interpreter.get_row_number() == 0) {
             return {};
         }
-        return interpreter.getTask(0);
+        return std::optional<firefly::Task>{interpreter.getTask(0)};
     }
 
     TaskModel::TaskModel(DatabaseManager *db_manager, const DataCommonStore &data_store) : BaseModel(db_manager) {

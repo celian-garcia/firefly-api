@@ -24,7 +24,7 @@
 #include <firefly/core/utils/Operation.hpp>
 #include <firefly/core/utils/server_types_definitions.hpp>
 #include <firefly/core/utils/QueryParameters.hpp>
-#include <firefly/core/server/ResponseBuilder.hpp>
+#include "ResponseBuilder.hpp"
 #include <firefly/core/model/TaskModel.hpp>
 #include <firefly/core/data/TaskBuilder.hpp>
 
@@ -32,6 +32,7 @@
 #include <firefly/core/config/DataCommonStore.hpp>
 
 #include <optional>
+#include <firefly/core/utils/ThreadPool.hpp>
 
 namespace firefly {
     typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
@@ -41,13 +42,9 @@ namespace firefly {
 
         Server(unsigned short port, boost::filesystem::path resources_path, DataCommonStore dataStore);
 
-        void registerModule(Module& module);
+        void registerModule(Module& module, ThreadPool* pool);
 
         void initializeFireflyResources();
-
-        void initializeModuleResources(Module module);
-
-        void registerProcessingAction(std::string procUri, ProcessingAction resource);
 
         void run();
 
@@ -55,20 +52,12 @@ namespace firefly {
         HttpServer server;
         boost::filesystem::path resources_path;
         DataCommonStore dataStore;
-
-//        static const char *API_VERSION = "1";
-
-        static std::string buildFireflyApiEndpoint();
-
-        static std::string buildModuleApiEndpoint(Module module);
-
-//        static std::string buildProcessingUri(std::string moduleApiEndpoint, Task processing);
-
-        void initializeResource(ProcessingAction processingAction);
+        std::map<int, firefly::ThreadPool*> thread_pool_map;
 
         void sendDefaultResource(const std::shared_ptr<HttpServer::Response> &response, const std::shared_ptr<std::ifstream> &ifs);
 
         void initDefaultResource();
+
     };
 }
 

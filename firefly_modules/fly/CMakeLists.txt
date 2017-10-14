@@ -1,5 +1,7 @@
 if (NOT TARGET ${FLY_MODULE_TARGET})
 
+    message(STATUS "=========== START OF '${FLY_MODULE_TARGET}' target configuration ==============")
+
     ## Dependencies ## ====================================================================
     find_package(OpenCV REQUIRED)
 
@@ -28,7 +30,9 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
             src/model/beans/Point3DBean.cpp
             include/fly_module/model/beans/Point3DBean.hpp
             src/workers/FlyCloudPopulation.cpp
-            include/fly_module/workers/FlyCloudPopulation.hpp src/data/FlyModule.cpp include/fly_module/data/FlyModule.hpp)
+            include/fly_module/workers/FlyCloudPopulation.hpp
+            src/data/FlyModule.cpp
+            include/fly_module/data/FlyModule.hpp)
 
     link_directories(${Fly_LIB_DIRS1} ${Fly_LIB_DIRS2})
     target_link_libraries(${FLY_MODULE_TARGET}
@@ -48,6 +52,7 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
     add_dependencies(${FLY_MODULE_TARGET} ${FIREFLY_CORE_TARGET})
     ## ========================= ## ================================================================
 
+    message(STATUS "=========== END OF '${FLY_MODULE_TARGET}' target configuration ==============")
 endif ()
 
 
