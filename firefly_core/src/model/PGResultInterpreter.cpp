@@ -3,10 +3,10 @@
 #include <vector>
 #include <algorithm>
 #include <cxcore.h>
+#include <libpqtypes.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 #include "firefly/core/model/PGResultInterpreter.hpp"
-#include "libpqtypes.h"
 
 namespace firefly {
     struct str2int { int operator ()( std::string value ) const { return atoi(value.c_str()); } };
@@ -45,9 +45,9 @@ namespace firefly {
         str = str.substr(1, str.size()-2);
         boost::algorithm::split(results, str, boost::algorithm::is_any_of(","));
         std::vector<int> int_results;
-        std::transform( results.begin(), results.end(), std::back_inserter(int_results), [] (const std::string& s) {
+        std::transform(results.begin(), results.end(), std::back_inserter(int_results), [](const std::string& s){
             return std::stoi(s);
-        } );
+        });
         return int_results;
     }
 
@@ -55,7 +55,7 @@ namespace firefly {
     cv::Vec3f PGResultInterpreter::get<cv::Vec3f>(const char *property_name, int position) {
         PGpoint pt;
         PQgetf(this->result, position, "%point", this->f_numbers_map[property_name], &pt);
-        cv::Vec3f point((float)pt.x, (float)pt.y);
+        cv::Vec3f point(static_cast<float>(pt.x), static_cast<float>(pt.y));
         return point;
     }
 

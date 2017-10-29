@@ -8,6 +8,7 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <libpq-fe.h>
+#include "libpqtypes.h"
 #include "firefly/core/utils/HtmlStatusCode.hpp"
 #include "firefly/core/utils/FireflyException.hpp"
 

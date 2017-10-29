@@ -19,7 +19,7 @@ namespace firefly {
                 "host=" + this->HOST + " " +
                 "port=" + this->PORT + " ";
 
-        std::cout<<"Connecting to database with the following connection string : " + conn_str << std::endl;
+        std::cout << "Connecting to database with the following connection string : " + conn_str << std::endl;
 
         this->m_connection = PQconnectdb(conn_str.c_str());
 
@@ -27,6 +27,8 @@ namespace firefly {
             std::string errMessage = PQerrorMessage(this->m_connection);
             throw DatabaseException(errMessage);
         }
+
+        PQinitTypes(this->m_connection);
     }
 
     DatabaseManager::~DatabaseManager() {
@@ -39,7 +41,7 @@ namespace firefly {
         PGresult *res = PQexec(this->m_connection, query.c_str());
         if (PQresultStatus(res) != PGRES_COMMAND_OK) {
             std::string errMessage = PQresultErrorMessage(res);
-            std::cerr<<errMessage<<"\n"<<std::endl;
+            std::cerr << errMessage<<"\n"<<std::endl;
             PQclear(res);
             throw DatabaseException(errMessage);
         }
