@@ -19,7 +19,7 @@ namespace firefly {
         Point3DInterpreter::getPoint3D(int row) {
             // Interpretation of the given row
             auto id = this->interpreter->get<int>("id", row);
-            auto cloud_id = this->interpreter->get<int>("cloud_id", row);
+            auto cloud_id = this->interpreter->get<int>("task_id", row);
             auto value = this->interpreter->get<cv::Vec3f>("value", row);
             auto operations = this->interpreter->get<std::vector<int>>("operations", row);
 
@@ -36,7 +36,7 @@ namespace firefly {
 
         const std::vector<const char *>
         Point3DInterpreter::PROPERTIES() {
-            return {"id", "cloud_id", "value", "operations"};
+            return {"id", "task_id", "value", "operations"};
         }
     }
 }
