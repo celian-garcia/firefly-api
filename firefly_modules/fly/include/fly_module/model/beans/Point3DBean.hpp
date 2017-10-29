@@ -22,7 +22,7 @@ namespace firefly {
 
             cv::Vec3f const &getValue() const;
 
-            int const &getCloudId() const;
+            int const &getTaskId() const;
 
             std::vector<int> const &getOperationsIds() const;
 
@@ -30,14 +30,14 @@ namespace firefly {
 
             void setOperationsIds(const std::vector<int> &operations_ids);
 
-            void setCloudId(const int &cloud_id);
+            void setTaskId(const int &task_id);
 
             void addOperationId(const int &operation_id);
 
         private:
             int m_id = 0;
             cv::Vec3f m_value;
-            int m_cloud_id;
+            int m_task_id;
             std::vector<int> m_operations_ids;
         };
 

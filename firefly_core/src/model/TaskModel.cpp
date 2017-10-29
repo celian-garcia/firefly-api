@@ -28,6 +28,20 @@ namespace firefly {
         return result_task;
     }
 
+    void
+    TaskModel::updateTaskStateById(int task_id, const Task::State &state) {
+        std::stringstream update_query;
+        update_query << "UPDATE task SET " <<
+                     "state = " << this->m_dbmanager->format(state) << " "
+                     "WHERE id = " << this->m_dbmanager->format(task_id) << ";";
+        try {
+            this->m_dbmanager->execUpdateQuery(update_query.str());
+        }
+        catch (DatabaseException e) {
+            throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, e.what());
+        }
+    }
+
     std::vector<Task> TaskModel::getTasks() {
         // Request
         std::string query = "SELECT * FROM task;";
@@ -53,7 +67,7 @@ namespace firefly {
         if (interpreter.get_row_number() == 0) {
             return {};
         }
-        return std::optional<Task>{interpreter.getTask(0)};
+        return std::optional < Task > {interpreter.getTask(0)};
     }
 
     TaskModel::TaskModel(DatabaseManager *db_manager, const DataCommonStore &data_store) : BaseModel(db_manager) {

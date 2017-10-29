@@ -8,6 +8,8 @@
 #include <string>
 #include "HtmlStatusCode.hpp"
 #include "server_types_definitions.hpp"
+#include "Operation.hpp"
+#include "ResponseBuilder.hpp"
 
 namespace firefly {
 
@@ -24,9 +26,11 @@ namespace firefly {
         }
 
         void sendError(std::shared_ptr<HttpResponse> response) const {
-            *response << "HTTP/1.1 " << this->m_code << "\r\n";
-            *response << "Content-Length: " << this->m_content.length() << "\r\n\r\n";
-            *response << this->m_content;
+            json content;
+            content["code"] = this->m_code;
+            content["message"] = this->m_content;
+
+            ResponseBuilder::build(content, response);
         }
 
     private:

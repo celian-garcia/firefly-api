@@ -24,7 +24,7 @@
 #include <firefly/core/utils/Operation.hpp>
 #include <firefly/core/utils/server_types_definitions.hpp>
 #include <firefly/core/utils/QueryParameters.hpp>
-#include "ResponseBuilder.hpp"
+#include "firefly/core/utils/ResponseBuilder.hpp"
 #include <firefly/core/model/TaskModel.hpp>
 #include <firefly/core/data/TaskBuilder.hpp>
 
@@ -57,6 +57,9 @@ namespace firefly {
         void sendDefaultResource(const std::shared_ptr<HttpServer::Response> &response, const std::shared_ptr<std::ifstream> &ifs);
 
         void initDefaultResource();
+
+        std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)> static buildFireflyResource(
+                const std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)>& resource);
 
     };
 }

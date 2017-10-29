@@ -4,14 +4,14 @@
 namespace firefly {
     namespace fly_module {
         Point3DBean::Point3DBean(int id, cv::Vec3f value,
-                                 int cloud_id, std::vector<int> operations_ids)
+                                 int task_id, std::vector<int> operations_ids)
                 : m_id(id), m_value(value),
-                  m_cloud_id(cloud_id), m_operations_ids(operations_ids) {}
+                  m_task_id(task_id), m_operations_ids(operations_ids) {}
 
         Point3DBean::Point3DBean(cv::Vec3f value,
-                                 int cloud_id, std::vector<int> operations_ids)
+                                 int task_id, std::vector<int> operations_ids)
                 : m_value(value),
-                  m_cloud_id(cloud_id), m_operations_ids(operations_ids) {}
+                  m_task_id(task_id), m_operations_ids(operations_ids) {}
 
         int const &
         Point3DBean::getId() const {
@@ -24,8 +24,8 @@ namespace firefly {
         }
 
         int const &
-        Point3DBean::getCloudId() const {
-            return this->m_cloud_id;
+        Point3DBean::getTaskId() const {
+            return this->m_task_id;
         }
 
         std::vector<int> const &
@@ -44,8 +44,8 @@ namespace firefly {
         }
 
         void
-        Point3DBean::setCloudId(const int &cloud_id) {
-            this->m_cloud_id = cloud_id;
+        Point3DBean::setTaskId(const int &task_id) {
+            this->m_task_id = task_id;
         }
 
         void

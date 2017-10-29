@@ -17,9 +17,9 @@ namespace firefly {
         public:
             using BaseModel::BaseModel;
 
-            Point3DBean getPointByValueAndCloudId(cv::Vec3f value, int cloud_id);
+            Point3DBean getPointByValueAndTaskId(cv::Vec3f value, int cloud_id);
 
-            std::vector <Point3DBean> getPointListByCloudId(int cloud_id);
+            std::vector <Point3DBean> getPointListByTaskId(int task_id);
 
             void insertPoint(Point3DBean point);
 

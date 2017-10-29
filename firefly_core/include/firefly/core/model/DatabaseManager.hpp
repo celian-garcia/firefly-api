@@ -47,8 +47,6 @@ namespace firefly {
 
         std::string format(const std::string &);
 
-        int parse(std::string str);
-
     protected:
         PGconn *m_connection;
         // TODO(Célian): put it in configuration file

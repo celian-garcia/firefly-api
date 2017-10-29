@@ -19,13 +19,9 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
 
     ## Target definition ## ================================================================
     add_library(${FLY_MODULE_TARGET}
-            src/api/FlyHandler.cpp
-            include/fly_module/api/FlyHandler.hpp
-            src/model/Cloud3DModel.cpp
             include/fly_module/model/Cloud3DModel.hpp
             src/model/Point3DModel.cpp
             include/fly_module/model/Point3DModel.hpp
-            src/model/beans/Cloud3DBean.cpp
             include/fly_module/model/beans/Cloud3DBean.hpp
             src/model/beans/Point3DBean.cpp
             include/fly_module/model/beans/Point3DBean.hpp

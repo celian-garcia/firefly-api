@@ -1,6 +1,5 @@
 /// Copyright 2017 <Célian Garcia>
 #include <firefly/server/Server.hpp>
-#include <fly_module/api/FlyHandler.hpp>
 
 #ifdef WITH_FLY_MODULE
 #include "fly_module/data/FlyModule.hpp"

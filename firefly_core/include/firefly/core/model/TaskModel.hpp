@@ -19,7 +19,8 @@ namespace firefly {
 
         Task insertTask(const Task &task);
 
-//        void updateTask(const Task &task);
+        void updateTaskStateById(int task_id, const Task::State& state);
+
         std::vector<Task> getTasks();
 
         std::optional<Task> getTaskById(int task_id);

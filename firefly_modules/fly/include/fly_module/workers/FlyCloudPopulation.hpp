@@ -20,14 +20,13 @@ namespace firefly {
         class FlyCloudPopulation {
         public:
 
-            static int start(ThreadPool *pool);
+            static int start(int task_id, ThreadPool *pool);
 
             static void stop();
 
-            static std::vector<Operation> collect(int cloud_id, int client_last_op);
+            static std::vector<Operation> collect(int task_id, int client_last_op);
 
         private:
-            static const std::vector<ProcessActionType> VALID_ACTION_TYPES;
             static const std::string DATABASE_NAME;
 
             static void run_compute_thread(ConcurrentOperationQueue *queue);

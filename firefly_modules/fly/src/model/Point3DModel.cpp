@@ -8,14 +8,14 @@ namespace firefly {
     namespace fly_module {
 
         Point3DBean
-        Point3DModel::getPointByValueAndCloudId(cv::Vec3f value, int cloud_id) {
+        Point3DModel::getPointByValueAndTaskId(cv::Vec3f value, int task_id) {
             double min_distance = Point3DModel::INTERSECT_MIN_DISTANCE;
             std::string select_query =
                     "SELECT * FROM fpoint3d WHERE value <-> point " +
                     this->m_dbmanager->format(value) + " < " +
                     this->m_dbmanager->format(min_distance) +
-                    " AND cloud_id = " +
-                    this->m_dbmanager->format(cloud_id);
+                    " AND task_id = " +
+                    this->m_dbmanager->format(task_id);
 
             PGresult *res = this->m_dbmanager->execSelectQuery(select_query.c_str());
 
@@ -25,7 +25,7 @@ namespace firefly {
 
             // TODO(Célian) : get correctly the point from the database
             // int id_fnum = PQfnumber(res, "id");
-            // int cloud_id_fnum = PQfnumber(res, "cloud_id");
+            // int task_id_fnum = PQfnumber(res, "task_id");
             // int value_fnum = PQfnumber(res, "value");
             // int operations_fnum = PQfnumber(res, "operations");
             // int point_id = atoi(PQgetvalue(res, 0, id_fnum));
@@ -35,14 +35,14 @@ namespace firefly {
             // std::string operations = PQgetvalue(res, 0, operations_fnum);
             // // std::cout << operations << std::endl;
             // m_dbmanager->clearResult(res);
-            return Point3DBean(value, cloud_id, {0});
+            return Point3DBean(value, task_id, {0});
         }
 
         std::vector<Point3DBean>
-        Point3DModel::getPointListByCloudId(int cloud_id) {
+        Point3DModel::getPointListByTaskId(int task_id) {
             std::string select_query =
-                    "SELECT * FROM fpoint3d WHERE cloud_id = " +
-                    this->m_dbmanager->format(cloud_id) + ";";
+                    "SELECT * FROM fpoint3d WHERE task_id = " +
+                    this->m_dbmanager->format(task_id) + ";";
 
             PGresult *res = this->m_dbmanager->execSelectQuery(select_query.c_str());
 
@@ -62,8 +62,8 @@ namespace firefly {
         void
         Point3DModel::insertPoint(Point3DBean point) {
             std::string insert_query =
-                    "INSERT INTO fpoint3d (cloud_id, value, operations) VALUES (" +
-                    this->m_dbmanager->format(point.getCloudId()) + ", " +
+                    "INSERT INTO fpoint3d (task_id, value, operations) VALUES (" +
+                    this->m_dbmanager->format(point.getTaskId()) + ", " +
                     this->m_dbmanager->format(point.getValue()) + ", " +
                     this->m_dbmanager->format(point.getOperationsIds()) + ")";
 
@@ -72,8 +72,8 @@ namespace firefly {
 
         void Point3DModel::updatePoint(Point3DBean point) {
             std::string update_query =
-                    "UPDATE fpoint3d SET cloud_id = " +
-                    this->m_dbmanager->format(point.getCloudId()) + ", value = " +
+                    "UPDATE fpoint3d SET task_id = " +
+                    this->m_dbmanager->format(point.getTaskId()) + ", value = " +
                     this->m_dbmanager->format(point.getValue()) + ", operations = " +
                     this->m_dbmanager->format(point.getOperationsIds()) + " WHERE id = " +
                     this->m_dbmanager->format(point.getId());
@@ -81,14 +81,14 @@ namespace firefly {
             this->m_dbmanager->execUpdateQuery(update_query.c_str());
         }
 
-        void Point3DModel::insertOperation(Operation operation, int cloud_id) {
+        void Point3DModel::insertOperation(Operation operation, int task_id) {
             if (operation.getType() == OperationType::END) {
                 throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, "Internal server error");
             }
             cv::Vec3f operation_value = operation.getValue();
 
             try {
-                Point3DBean point = this->getPointByValueAndCloudId(operation_value, cloud_id);
+                Point3DBean point = this->getPointByValueAndTaskId(operation_value, task_id);
 
                 // If the size of operations indices is even, the next operation should be an add
                 // If the size of operations indices is odd , the next operation should be a remove
@@ -103,7 +103,7 @@ namespace firefly {
                     this->updatePoint(point);
                 }
             } catch (ObjectNotFound e) {
-                Point3DBean new_point(operation_value, cloud_id, {operation.getId()});
+                Point3DBean new_point(operation_value, task_id, {operation.getId()});
                 this->insertPoint(new_point);
             }
         }

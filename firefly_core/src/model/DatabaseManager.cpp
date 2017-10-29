@@ -25,8 +25,6 @@ namespace firefly {
 
         if (PQstatus(this->m_connection) != CONNECTION_OK) {
             std::string errMessage = PQerrorMessage(this->m_connection);
-            std::cerr<<errMessage<<"\n"<<std::endl;
-            PQfinish(this->m_connection);
             throw DatabaseException(errMessage);
         }
     }
@@ -37,13 +35,12 @@ namespace firefly {
 
     void
     DatabaseManager::execInsertQuery(const std::string &query) {
-        std::cout << "Insert query execution: " << query << std::endl;
+        std::cout << "Insert/Update query execution: " << query << std::endl;
         PGresult *res = PQexec(this->m_connection, query.c_str());
         if (PQresultStatus(res) != PGRES_COMMAND_OK) {
             std::string errMessage = PQresultErrorMessage(res);
             std::cerr<<errMessage<<"\n"<<std::endl;
             PQclear(res);
-            PQfinish(this->m_connection);
             throw DatabaseException(errMessage);
         }
         PQclear(res);
@@ -63,7 +60,6 @@ namespace firefly {
             std::string errMessage = PQresultErrorMessage(res);
             std::cerr<<errMessage<<"\n"<<std::endl;
             PQclear(res);
-            PQfinish(this->m_connection);
             throw DatabaseException(errMessage);
         }
         return res;
@@ -104,15 +100,6 @@ namespace firefly {
     std::string
     DatabaseManager::format(const std::string &obj) {
         return "\'" + obj + "\'";
-    }
-
-    int DatabaseManager::parse(std::string str) {
-        try {
-            return std::stoi(str);
-        }
-        catch (std::exception e) {
-            throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, "Error parsing db query result.");
-        }
     }
 
 }  // namespace firefly
