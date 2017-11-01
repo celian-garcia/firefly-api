@@ -10,8 +10,9 @@ RUN apt-key adv --keyserver hkp://wwwkeys.pgp.net --recv-keys B97B0AFCAA1A47F044
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential wget libbz2-dev \
- && apt-get install -y vim libopencv-dev libcv-dev software-properties-common libpq-dev postgresql-9.6 \
+ && apt-get install -y vim libopencv-dev libcv-dev software-properties-common libpq-dev libpqtypes-dev postgresql-9.6 \
  postgresql-client-9.6 postgresql-contrib-9.6 net-tools
+
 
 # Boost installation (inspired from lballabio docker file https://github.com/lballabio/dockerfiles/blob/master/boost/Dockerfile)
 ARG boost_version=1.64.0

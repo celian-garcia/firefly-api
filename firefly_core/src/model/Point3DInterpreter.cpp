@@ -2,7 +2,7 @@
 // Created by root on 14/10/17.
 //
 
-#include "fly_module/model/Point3DInterpreter.hpp"
+#include "firefly/core/model/Point3DInterpreter.hpp"
 
 namespace firefly {
     namespace fly_module {

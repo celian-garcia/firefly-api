@@ -1,6 +1,5 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <firefly/core/model/TaskModel.hpp>
 #include "fly_module/workers/FlyCloudPopulation.hpp"
 
 namespace firefly {

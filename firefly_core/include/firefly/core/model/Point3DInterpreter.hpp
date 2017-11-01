@@ -7,7 +7,7 @@
 
 #include <libpq-fe.h>
 #include <vector>
-#include <fly_module/model/beans/Point3DBean.hpp>
+#include <firefly/core/model/beans/Point3DBean.hpp>
 #include <firefly/core/model/PGResultInterpreter.hpp>
 
 namespace firefly {

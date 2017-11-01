@@ -8,7 +8,7 @@
 #include "firefly/core/utils/Operation.hpp"
 #include "firefly/core/model/DatabaseManager.hpp"
 #include "firefly/core/model/exceptions.hpp"
-#include "beans/Point3DBean.hpp"
+#include "firefly/core/model/beans/Point3DBean.hpp"
 
 namespace firefly {
     namespace fly_module {

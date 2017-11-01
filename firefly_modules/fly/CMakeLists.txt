@@ -19,18 +19,10 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
 
     ## Target definition ## ================================================================
     add_library(${FLY_MODULE_TARGET}
-            include/fly_module/model/Cloud3DModel.hpp
-            src/model/Point3DModel.cpp
-            include/fly_module/model/Point3DModel.hpp
-            include/fly_module/model/beans/Cloud3DBean.hpp
-            src/model/beans/Point3DBean.cpp
-            include/fly_module/model/beans/Point3DBean.hpp
             src/workers/FlyCloudPopulation.cpp
             include/fly_module/workers/FlyCloudPopulation.hpp
             src/data/FlyModule.cpp
-            include/fly_module/data/FlyModule.hpp
-            src/model/Point3DInterpreter.cpp
-            include/fly_module/model/Point3DInterpreter.hpp)
+            include/fly_module/data/FlyModule.hpp)
 
     link_directories(${Fly_LIB_DIRS1} ${Fly_LIB_DIRS2})
     target_link_libraries(${FLY_MODULE_TARGET}

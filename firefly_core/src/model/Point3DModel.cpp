@@ -1,8 +1,8 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <fly_module/model/Point3DInterpreter.hpp>
 #include <libpqtypes.h>
-#include "fly_module/model/Point3DModel.hpp"
+#include <firefly/core/model/Point3DInterpreter.hpp>
+#include "firefly/core/model/Point3DModel.hpp"
 
 namespace firefly {
 namespace fly_module {
