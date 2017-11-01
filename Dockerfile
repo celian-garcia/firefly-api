@@ -10,7 +10,8 @@ RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B97
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential wget libbz2-dev \
- && apt-get install -y vim libopencv-dev libcv-dev software-properties-common libpq-dev postgresql-9.6 postgresql-client-9.6 postgresql-contrib-9.6 net-tools
+ && apt-get install -y vim libopencv-dev libcv-dev software-properties-common libpq-dev postgresql-9.6 \
+ postgresql-client-9.6 postgresql-contrib-9.6 net-tools
 
 # Boost installation (inspired from lballabio docker file https://github.com/lballabio/dockerfiles/blob/master/boost/Dockerfile)
 ARG boost_version=1.64.0
@@ -25,6 +26,14 @@ RUN wget https://dl.bintray.com/boostorg/release/${boost_version}/source/${boost
     && ./b2 --without-python --prefix=/usr -j 4 link=shared runtime-link=shared install \
     && cd .. && rm -rf ${boost_dir} && ldconfig
 
+# Google test installation
+RUN apt-get install -y libgtest-dev \
+    && cd /usr/src/gtest \
+    && mkdir build && cd build \
+    && cmake .. \
+    && make -j 12 \
+    && make install
+
 WORKDIR /firefly
 COPY . .
 
@@ -33,4 +42,4 @@ RUN rm -rf build \
     && cd build \
     && ls -l \
     && cmake -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgresql .. \
-    && make -j4 \
+    && make -j 12 \
