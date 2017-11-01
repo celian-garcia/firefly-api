@@ -64,6 +64,9 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
     set_property(TARGET ${FIREFLY_CORE_TARGET} PROPERTY CXX_STANDARD 17)
     ## ================ ## ====================================================================
 
+    ## Target tests ## ================================================================
+    add_subdirectory(test)
+    ## ============ ## ====================================================================
 
     ## 3rd party dependencies ## ====================================================================
     add_dependencies(${FIREFLY_CORE_TARGET}
