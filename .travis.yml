@@ -41,6 +41,7 @@ before_install:
   # doing out-of-the-ordinary docker-compose builds.
   - sudo docker-compose pull
   - sudo docker-compose build
+  - sudo docker-compose create
   - sudo docker-compose start
 
   # You will want this for logging. If one of your containers does not build for
