@@ -11,27 +11,23 @@
 #include <firefly/core/model/PGResultInterpreter.hpp>
 
 namespace firefly {
-    namespace fly_module {
-        class Point3DInterpreter {
-        public:
-            explicit Point3DInterpreter(PGresult *result);
+class Point3DInterpreter {
+ public:
+    explicit Point3DInterpreter(PGresult *result);
 
-            virtual ~Point3DInterpreter();
+    virtual ~Point3DInterpreter();
 
-            Point3DBean getPoint3D(int row);
+    Point3DBean getPoint3D(int row);
 
-            int get_row_number();
+    int get_row_number();
 
-        private:
-            static const std::vector<const char *> PROPERTIES();
+ private:
+    static const std::vector<const char *> PROPERTIES();
 
-            PGResultInterpreter *interpreter;
+    PGResultInterpreter *interpreter;
 
-        };
-    }
+};
 }
-
-
 
 
 #endif //FIREFLY_POINT3DINTERPRETER_H

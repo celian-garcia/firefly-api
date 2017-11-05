@@ -2,7 +2,6 @@
 #include "firefly/core/model/beans/Point3DBean.hpp"
 
 namespace firefly {
-namespace fly_module {
 
 Point3DBean::Point3DBean(int id, cv::Vec3f value,
                          int task_id, std::vector<int> operations_ids)
@@ -54,5 +53,4 @@ Point3DBean::addOperationId(const int &operation_id) {
     this->m_operations_ids.push_back(operation_id);
 }
 
-}
 }

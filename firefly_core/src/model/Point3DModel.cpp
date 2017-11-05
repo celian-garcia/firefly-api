@@ -5,7 +5,6 @@
 #include "firefly/core/model/Point3DModel.hpp"
 
 namespace firefly {
-namespace fly_module {
 
 Point3DBean
 Point3DModel::getPointByValueAndTaskId(cv::Vec3f value, int task_id) {
@@ -106,6 +105,5 @@ void Point3DModel::insertOperation(Operation operation, int task_id) {
         Point3DBean new_point(operation_value, task_id, {operation.getId()});
         this->insertPoint(new_point);
     }
-}
 }
 }
