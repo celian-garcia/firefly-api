@@ -1,7 +1,9 @@
+**Quality**<br> 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b129025453c047129aeb1b418c49b7bf)](https://www.codacy.com/app/celiangarcia/firefly-server?utm_source=github.com&utm_medium=referral&utm_content=celian-garcia/firefly-server&utm_campaign=badger)
-[![Build Status](https://travis-ci.org/celian-garcia/firefly-server.svg?branch=master)](https://travis-ci.org/celian-garcia/firefly-server)
-[![CircleCI](https://circleci.com/gh/celian-garcia/firefly-server.svg?style=svg)](https://circleci.com/gh/celian-garcia/firefly-server)
 [![Documentation](https://codedocs.xyz/celian-garcia/firefly.svg)](https://codedocs.xyz/celian-garcia/firefly/)
+
+**Build**<br>
+[![CircleCI](https://circleci.com/gh/celian-garcia/firefly-server.svg?style=svg)](https://circleci.com/gh/celian-garcia/firefly-server)
 
 ## Firefly
 C++ and Angular2 Web Application to have remote access to Fly library functionalities.
