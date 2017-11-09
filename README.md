@@ -32,6 +32,5 @@ Larger purpose would be to have access to high level OpenCV features.
     - [API interface definition](../../wiki/User-documentation#api-interface-definition)
     - [Installation](../../wiki/User-documentation#installation)
 
-
 #### Licence 
 [GNU GPL v3](./LICENCE.txt)
