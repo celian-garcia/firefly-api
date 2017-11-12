@@ -62,7 +62,7 @@ DECLARE
   current_op    INTEGER;
   pt            FPOINT3D;
   pt_id         INTEGER;
-  pt_operations INTEGER[];
+  pt_operations INTEGER [];
 BEGIN
   -- Initialize declared variables
   current_op = nextval('f_operation_seq_for_task_' || in_task_id);
@@ -81,10 +81,72 @@ BEGIN
   RETURN current_op;
 END
 $$;
+
+CREATE FUNCTION save_add_operation(in_value POINT, in_task_id INTEGER)
+  RETURNS INTEGER
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  current_op    INTEGER;
+  pt_operations INTEGER [];
+BEGIN
+
+  SELECT operations
+  INTO pt_operations
+  FROM FPOINT3D
+  WHERE value <-> in_value < 0.00001 AND task_id = in_task_id;
+
+  current_op = currval('f_operation_seq_for_task_' || in_task_id);
+
+  IF NOT FOUND
+  THEN
+    INSERT INTO fpoint3d (task_id, value)
+    VALUES (in_task_id, in_value);
+  ELSE
+    IF array_length(pt_operations, 1) % 2 = 0
+    THEN
+      current_op = increase_operations(in_value, in_task_id);
+    END IF;
+  END IF;
+
+  RETURN current_op;
+END
+$$;
+
+CREATE FUNCTION save_del_operation(in_value POINT, in_task_id INTEGER)
+  RETURNS INTEGER
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  current_op    INTEGER;
+  pt_operations INTEGER [];
+BEGIN
+
+  SELECT operations
+  INTO pt_operations
+  FROM FPOINT3D
+  WHERE value <-> in_value < 0.00001 AND task_id = in_task_id;
+
+  current_op = currval('f_operation_seq_for_task_' || in_task_id);
+
+  IF NOT FOUND
+  THEN
+    INSERT INTO fpoint3d (task_id, value)
+    VALUES (in_task_id, in_value);
+  ELSE
+    IF array_length(pt_operations, 1) % 2 = 1
+    THEN
+      current_op = increase_operations(in_value, in_task_id);
+    END IF;
+  END IF;
+
+  RETURN current_op;
+END
+$$;
 -- ##############################
 
 -- Plan the tests.
-SELECT plan(13);
+SELECT plan(15);
 
 -- Run the tests.
 SELECT lives_ok(
@@ -167,6 +229,26 @@ SELECT results_eq(
     $$VALUES (1, 0, POINT(1, 1), ARRAY[2, 3])$$,
     'second point data should now be (1, 0, (1, 1), {2, 3})'
 );
+
+SELECT is(
+    save_add_operation(point(1, 1), 0),
+    4,
+    'Saving add operation on the first point should return state 4');
+
+SELECT is(
+    save_add_operation(point(1, 1), 0),
+    4,
+    'Saving another add operation on the first point should still return state 4');
+
+SELECT is(
+    save_del_operation(point(1, 1), 0),
+    5,
+    'Saving delete operation on the first point should return state 5');
+
+SELECT is(
+    save_del_operation(point(1, 1), 0),
+    5,
+    'Saving another delete operation on the first point should still return 5');
 
 -- Finish the tests and clean up.
 SELECT *
