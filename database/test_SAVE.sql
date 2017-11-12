@@ -15,6 +15,15 @@
 BEGIN;
 
 -- ##### SQL code to test #####
+CREATE OR REPLACE FUNCTION hashpoint(POINT)
+  RETURNS INTEGER
+LANGUAGE SQL IMMUTABLE
+AS 'SELECT hashfloat8($1 [0]) # hashfloat8($1 [1])';
+
+CREATE OPERATOR CLASS point_hash_ops DEFAULT FOR TYPE POINT USING HASH AS
+OPERATOR 1 ~=( POINT, POINT ),
+FUNCTION 1 hashpoint( POINT );
+
 CREATE FUNCTION make_operation_seq()
   RETURNS TRIGGER
 LANGUAGE plpgsql
@@ -44,10 +53,38 @@ $$;
 CREATE TRIGGER fill_in_operation_seq
 BEFORE INSERT ON fpoint3d
 FOR EACH ROW EXECUTE PROCEDURE fill_in_operation_seq();
+
+CREATE FUNCTION increase_operations(in_value POINT, in_task_id INTEGER)
+  RETURNS INTEGER
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  current_op    INTEGER;
+  pt            FPOINT3D;
+  pt_id         INTEGER;
+  pt_operations INTEGER[];
+BEGIN
+  -- Initialize declared variables
+  current_op = nextval('f_operation_seq_for_task_' || in_task_id);
+  SELECT *
+  INTO pt
+  FROM fpoint3D
+  WHERE value <-> in_value < 0.00001 AND task_id = in_task_id;
+  pt_id = pt.id;
+  pt_operations = pt.operations;
+
+  -- Do the update
+  UPDATE fpoint3d
+  SET operations = pt_operations || current_op
+  WHERE id = pt_id;
+
+  RETURN current_op;
+END
+$$;
 -- ##############################
 
 -- Plan the tests.
-SELECT plan(11);
+SELECT plan(13);
 
 -- Run the tests.
 SELECT lives_ok(
@@ -87,37 +124,48 @@ SELECT lives_ok(
 
 SELECT results_eq(
     'SELECT id FROM task',
-    ARRAY[0, 1],
+    ARRAY [0, 1],
     'tasks ids should be {0, 1}'
 );
 
 SELECT results_eq(
     'SELECT id FROM fpoint3d',
-    ARRAY[0, 1, 2],
+    ARRAY [0, 1, 2],
     'points id should be {0, 1, 2}'
 );
 
 SELECT results_eq(
-    'SELECT id, task_id, operations FROM fpoint3d WHERE id = 0',
-    $$VALUES (0, 0, ARRAY[1])$$,
-    'first point data should be (0, 0, X, {1})'
+    'SELECT id, task_id, value, operations FROM fpoint3d WHERE id = 0',
+    $$VALUES (0, 0, POINT(0, 0), ARRAY[1])$$,
+    'first point data should be (0, 0, (0, 0), {1})'
 );
 
 SELECT results_eq(
-    'SELECT id, task_id, operations FROM fpoint3d WHERE id = 1',
-    $$VALUES (1, 0, ARRAY[2])$$,
-    'second point data should be (1, 0, X, {2})'
+    'SELECT id, task_id, value, operations FROM fpoint3d WHERE id = 1',
+    $$VALUES (1, 0, POINT(1, 1), ARRAY[2])$$,
+    'second point data should be (1, 0, (1, 1), {2})'
 );
 
 SELECT results_eq(
-    'SELECT id, task_id, operations FROM fpoint3d WHERE id = 2',
-    $$VALUES (2, 1, ARRAY[1])$$,
-    'third point data should be (2, 1, X, {1})'
+    'SELECT id, task_id, value, operations FROM fpoint3d WHERE id = 2',
+    $$VALUES (2, 1, POINT(0, 0), ARRAY[1])$$,
+    'third point data should be (2, 1, (0, 0), {1})'
 );
 
 SELECT sequences_are(
     'public',
-    ARRAY[ 'fpoint3d_id_seq', 'task_id_seq', 'f_operation_seq_for_task_0', 'f_operation_seq_for_task_1']
+    ARRAY ['fpoint3d_id_seq', 'task_id_seq', 'f_operation_seq_for_task_0', 'f_operation_seq_for_task_1']
+);
+
+SELECT is(
+    increase_operations(point(1, 1), 0),
+    3,
+    'Increasing second point operations should return 3');
+
+SELECT results_eq(
+    'SELECT id, task_id, value, operations FROM fpoint3d WHERE id = 1',
+    $$VALUES (1, 0, POINT(1, 1), ARRAY[2, 3])$$,
+    'second point data should now be (1, 0, (1, 1), {2, 3})'
 );
 
 -- Finish the tests and clean up.
