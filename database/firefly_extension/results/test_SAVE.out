@@ -1,0 +1,19 @@
+\unset ECHO
+1..17
+ok 1 - inserting a new task
+ok 2 - inserting a new task
+ok 3 - inserting a new point
+ok 4 - inserting a new point
+ok 5 - inserting a new point
+ok 6 - tasks ids should be {0, 1}
+ok 7 - points id should be {0, 1, 2}
+ok 8 - first point data should be (0, 0, (0, 0), {1})
+ok 9 - second point data should be (1, 0, (1, 1), {2})
+ok 10 - third point data should be (2, 1, (0, 0), {1})
+ok 11 - Schema public should have the correct sequences
+ok 12 - Increasing second point operations should return 3
+ok 13 - second point data should now be (1, 0, (1, 1), {2, 3})
+ok 14 - Saving add operation on the first point should return state 4
+ok 15 - Saving another add operation on the first point should still return state 4
+ok 16 - Saving delete operation on the first point should return state 5
+ok 17 - Saving another delete operation on the first point should still return 5
