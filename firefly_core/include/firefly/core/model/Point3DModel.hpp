@@ -22,7 +22,7 @@ class Point3DModel : public BaseModel {
 
     void insertPoint(Point3DBean point);
 
-    void insertOperation(Operation operation, int cloud_id);
+    int insertOperation(Operation operation, int cloud_id);
 
     void updatePoint(Point3DBean point);
 

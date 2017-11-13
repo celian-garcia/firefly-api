@@ -80,30 +80,23 @@ void Point3DModel::updatePoint(Point3DBean point) {
     this->m_dbmanager->execUpdateQuery(update_query.c_str());
 }
 
-void Point3DModel::insertOperation(Operation operation, int task_id) {
+int Point3DModel::insertOperation(Operation operation, int task_id) {
     if (operation.getType() == OperationType::END) {
-        throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, "Internal server error");
+        throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, "Cannot insert an END operation");
     }
     cv::Vec3f operation_value = operation.getValue();
+    std::string operation_str = operation.getType() == OperationType::ADD ? "add" : "del";
 
-    try {
-        Point3DBean point = this->getPointByValueAndTaskId(operation_value, task_id);
+    std::string method = "save_" + operation_str + "_operation";
+    std::string select_query =
+            "SELECT * FROM " + method + " (" +
+            this->m_dbmanager->format(operation.getValue()) + ", " +
+            this->m_dbmanager->format(task_id) + ")";
 
-        // If the size of operations indices is even, the next operation should be an add
-        // If the size of operations indices is odd , the next operation should be a remove
-        // With this type of storing, we don't need to store the ADD or REMOVE flag.
-        // So we can store another thing in place: the total index of the operation,
-        // which is much more useful in the listen part.
-        OperationType operation_type = operation.getType();
-        std::vector<int> operation_indices = point.getOperationsIds();
-        if ((operation_indices.size() % 2 == 0 && operation_type == OperationType::ADD) ||
-            (operation_indices.size() % 2 == 1 && operation_type == OperationType::REMOVE)) {
-            point.addOperationId(operation.getId());
-            this->updatePoint(point);
-        }
-    } catch (ObjectNotFound e) {
-        Point3DBean new_point(operation_value, task_id, {operation.getId()});
-        this->insertPoint(new_point);
-    }
+    PGresult *res = this->m_dbmanager->execSelectQuery(select_query);
+
+    PGResultInterpreter interpreter(res);
+    interpreter.registerProperty(method.c_str());
+    return interpreter.get<int>(method.c_str(), 0);
 }
 }

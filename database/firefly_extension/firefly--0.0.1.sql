@@ -123,7 +123,7 @@ BEGIN
   FROM FPOINT3D
   WHERE value <-> in_value < 0.00001 AND task_id = in_task_id;
 
-  current_op = currval('f_operation_seq_for_task_' || in_task_id);
+  EXECUTE 'SELECT last_value FROM f_operation_seq_for_task_' || in_task_id INTO current_op;
 
   IF NOT FOUND
   THEN
@@ -154,7 +154,7 @@ BEGIN
   FROM FPOINT3D
   WHERE value <-> in_value < 0.00001 AND task_id = in_task_id;
 
-  current_op = currval('f_operation_seq_for_task_' || in_task_id);
+  EXECUTE 'SELECT last_value FROM f_operation_seq_for_task_' || in_task_id INTO current_op;
 
   IF NOT FOUND
   THEN
