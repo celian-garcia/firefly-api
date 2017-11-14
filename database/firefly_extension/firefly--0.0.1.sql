@@ -12,7 +12,7 @@ CREATE TABLE fpoint3d (
   id         INTEGER DEFAULT nextval('fpoint3d_id_seq' :: REGCLASS) NOT NULL,
   task_id    INTEGER,
   value      POINT                                                  NOT NULL,
-  operations INTEGER []                                             NOT NULL
+  operations INTEGER []                                             NOT NULL DEFAULT '{}'
 );
 
 CREATE SEQUENCE task_id_seq
@@ -65,22 +65,6 @@ CREATE TRIGGER make_operation_seq
 AFTER INSERT ON task
 FOR EACH ROW EXECUTE PROCEDURE make_operation_seq();
 
-CREATE FUNCTION fill_in_operation_seq()
-  RETURNS TRIGGER
-LANGUAGE plpgsql
-AS $$
-DECLARE
-  current_op INTEGER := nextval('f_operation_seq_for_task_' || NEW.task_id);
-BEGIN
-  NEW.operations := NEW.operations || current_op;
-  RETURN NEW;
-END
-$$;
-
-CREATE TRIGGER fill_in_operation_seq
-BEFORE INSERT ON fpoint3d
-FOR EACH ROW EXECUTE PROCEDURE fill_in_operation_seq();
-
 CREATE FUNCTION increase_operations(in_value POINT, in_task_id INTEGER)
   RETURNS INTEGER
 LANGUAGE plpgsql
@@ -123,14 +107,16 @@ BEGIN
   FROM FPOINT3D
   WHERE value <-> in_value < 0.00001 AND task_id = in_task_id;
 
-  EXECUTE 'SELECT last_value FROM f_operation_seq_for_task_' || in_task_id INTO current_op;
+  EXECUTE 'SELECT last_value FROM f_operation_seq_for_task_' || in_task_id
+  INTO current_op;
 
   IF NOT FOUND
   THEN
     INSERT INTO fpoint3d (task_id, value)
     VALUES (in_task_id, in_value);
+    current_op = increase_operations(in_value, in_task_id);
   ELSE
-    IF array_length(pt_operations, 1) % 2 = 0
+    IF coalesce(array_length(pt_operations, 1), 0) % 2 = 0
     THEN
       current_op = increase_operations(in_value, in_task_id);
     END IF;
@@ -154,7 +140,8 @@ BEGIN
   FROM FPOINT3D
   WHERE value <-> in_value < 0.00001 AND task_id = in_task_id;
 
-  EXECUTE 'SELECT last_value FROM f_operation_seq_for_task_' || in_task_id INTO current_op;
+  EXECUTE 'SELECT last_value FROM f_operation_seq_for_task_' || in_task_id
+  INTO current_op;
 
   IF NOT FOUND
   THEN
