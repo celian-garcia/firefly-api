@@ -42,10 +42,9 @@ $on-laptop:        800px;
     }
 }
 
-
-
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
+        "{{ site.theme }}",
         "base",
         "layout",
         "swagger",
