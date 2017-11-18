@@ -5,6 +5,10 @@ info:
   title: Firefly
   description: |
 
+consumes:
+  - application/json
+produces:
+  - application/json
 schemes:
   - http
 host: localhost:8080
@@ -16,48 +20,107 @@ paths:
       responses:
         200:
           description: Array of tasks.
+          examples:
+            application/json: >
+              [
+                {
+                  "date": "01/01/2001",
+                  "description": "Description of first task",
+                  "id": 0,
+                  "module": 0,
+                  "name": "Title of first task",
+                  "state": 3,
+                  "type": 1,
+                  "user_name": "toto"
+                },
+                {
+                  "date": "01/01/2001",
+                  "description": "Description of second task",
+                  "id": 1,
+                  "module": 0,
+                  "name": "Title of second task",
+                  "state": 3,
+                  "type": 1,
+                  "user_name": "toto"
+                }
+              ]
           schema:
             type: array
             items:
               $ref: '#/definitions/FullTask'
     post:
+      summary: Create a task
       responses:
         200:
-          description: Value of the freshly created task.
+          description: Task created with success.
+          examples:
+            application/json: >
+              {
+                "date": "01/01/2001",
+                "description": "Description of third task",
+                "id": 2,
+                "module": 0,
+                "name": "Title of third task",
+                "state": 0,
+                "type": 1,
+                "user_name": "toto"
+              }
           schema:
             $ref: '#/definitions/FullTask'
       parameters:
-        - name: body
+        - name: name
           in: body
-          description: Task we want to create.
+          type: string
+          description: Name of the task
           required: true
-          schema:
-            $ref: '#/definitions/Task'
+        - name: description
+          in: body
+          type: string
+          description: Description of the task
+          required: true
+        - name: user
+          in: body
+          type: string
+          description: User login who creates the task
+          required: true
+        - name: module
+          in: body
+          type: int
+          description: Module id
+          required: true
+        - name: type
+          in: body
+          type: int
+          description: Type id
+          required: true
+
   /tasks/{id}:
     get:
+      summary: Get a task by id
       responses:
         200:
-          description: Get a task by id.
+          description: The task of the given id.
+          examples:
+            application/json: >
+              {
+                "date": "01/01/2001",
+                "description": "Description of third task",
+                "id": 2,
+                "module": 0,
+                "name": "Title of third task",
+                "state": 0,
+                "type": 1,
+                "user_name": "toto"
+              }
       parameters:
-            - name: id
-              in: path
-              description: Task ID
-              type: integer
-              required: true
+        - name: id
+          in: path
+          description: Task ID
+          type: integer
+          required: true
   /tasks/{id}/progress/{progress}:
-    parameters:
-      - name: id
-        in: path
-        description: Task ID
-        type: integer
-        required: true
-      - name: progress
-        in: path
-        description: Current progress ID of the task (defaulted to 0)
-        type: integer
-        required: true
-        default: 0
     get:
+      summary: WIP on this endpoint
       responses:
         200:
           description: Get the progress of a task from last progress id.
@@ -74,19 +137,32 @@ paths:
                   $ref: '#/definitions/Operation'
         410:
           description: The task is not running anymore so operations are gone. Now use the result endpoint.
+      parameters:
+        - name: id
+          in: path
+          description: Task ID
+          type: integer
+          required: true
+        - name: progress
+          in: path
+          description: Current progress ID of the task (defaulted to 0)
+          type: integer
+          required: true
+          default: 0
   /tasks/{id}/result:
-    parameters:
-      - name: id
-        in: path
-        description: Task ID
-        type: integer
-        required: true
     get:
+      summary: WIP on this endpoint
       responses:
         200:
           description: Get the final result of a task.
         404:
           description: There is no result for this task because it is probably running.
+      parameters:
+        - name: id
+          in: path
+          description: Task ID
+          type: integer
+          required: true
 definitions:
   Task:
     required:
