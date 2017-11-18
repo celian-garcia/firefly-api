@@ -12,6 +12,7 @@ basePath: /api/v1
 paths:
   /tasks:
     get:
+      summary: List all tasks
       responses:
         200:
           description: Array of tasks.
@@ -33,16 +34,16 @@ paths:
           schema:
             $ref: '#/definitions/Task'
   /tasks/{id}:
-    parameters:
-      - name: id
-        in: path
-        description: Task ID
-        type: integer
-        required: true
     get:
       responses:
         200:
           description: Get a task by id.
+      parameters:
+            - name: id
+              in: path
+              description: Task ID
+              type: integer
+              required: true
   /tasks/{id}/progress/{progress}:
     parameters:
       - name: id
