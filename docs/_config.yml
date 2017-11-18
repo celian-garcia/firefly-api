@@ -21,6 +21,7 @@ baseurl: "/firefly-server" # the subpath of your site, e.g. /blog
 url: "https://celian-garcia.github.io/firefly-server" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: celian-garcia
 github_username:  celian-garcia
+show_downloads: true
 
 # Build settings
 markdown: kramdown
