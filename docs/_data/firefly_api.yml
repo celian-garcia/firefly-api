@@ -118,6 +118,23 @@ paths:
           description: Task ID
           type: integer
           required: true
+  /tasks/{id}/run:
+    post:
+      summary: Run a task by id
+      responses:
+        200:
+          description: A simple result ok json.
+          examples:
+            application/json: >
+              {
+                "resultOk": true
+              }
+      parameters:
+        - name: id
+          in: path
+          description: Task ID
+          type: integer
+          required: true
   /tasks/{id}/progress/{progress}:
     get:
       summary: WIP on this endpoint
