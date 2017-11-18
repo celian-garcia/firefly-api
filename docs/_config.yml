@@ -26,9 +26,12 @@ github_username:  jekyll
 
 # Build settings
 markdown: kramdown
-#theme: jekyll-theme-cayman
+theme: jekyll-theme-cayman
 plugins:
   - jekyll-feed
+
+sass:
+  sass_dir: _sass
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
