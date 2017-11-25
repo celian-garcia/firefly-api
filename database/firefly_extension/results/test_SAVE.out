@@ -1,25 +1,18 @@
 \unset ECHO
-1..23
-ok 1 - inserting a new task
-ok 2 - inserting a new task
-ok 3 - inserting a new task
-ok 4 - inserting a new point
-ok 5 - inserting a new point
-ok 6 - inserting a new point
-ok 7 - inserting a new point
-ok 8 - tasks ids should be {0, 1, 2}
-ok 9 - points id should be {0, 1, 2, 3}
-ok 10 - first point data should be (0, 0, (0, 0), {})
-ok 11 - second point data should be (1, 0, (1, 1), {})
-ok 12 - third point data should be (2, 1, (0, 0), {})
-ok 13 - fourth point data should be (3, 2, (0, 0), {})
-ok 14 - Schema public should have the correct sequences
-ok 15 - Increasing second point operations should return 1
-ok 16 - second point data should now be (1, 0, (1, 1), {1})
-ok 17 - Saving add operation on the first point should return state 2
-ok 18 - first point data should now be (0, 0, (0, 0), {2})
-ok 19 - Saving another add operation on the first point should still return state 2
-ok 20 - Saving delete operation on the first point should return state 3
-ok 21 - Saving another delete operation on the first point should still return 3
-ok 22 - Saving add operation on the third point should return 1
-ok 23 - Saving del operation on the fourth point should return 1
+1..16
+ok 1 - tasks ids should be {0, 1, 2}
+ok 2 - points id should be {0, 1, 2, 3}
+ok 3 - first point data should be (0, 0, (0, 0), {})
+ok 4 - second point data should be (1, 0, (1, 1), {})
+ok 5 - third point data should be (2, 1, (0, 0), {})
+ok 6 - fourth point data should be (3, 2, (0, 0), {})
+ok 7 - Schema public should have the correct sequences
+ok 8 - Increasing second point operations should return 1
+ok 9 - second point data should now be (1, 0, (1, 1), {1})
+ok 10 - Saving add operation on the first point should return state 2
+ok 11 - first point data should now be (0, 0, (0, 0), {2})
+ok 12 - Saving another add operation on the first point should still return state 2
+ok 13 - Saving delete operation on the first point should return state 3
+ok 14 - Saving another delete operation on the first point should still return 3
+ok 15 - Saving add operation on the third point should return 1
+ok 16 - Saving del operation on the fourth point should return 1

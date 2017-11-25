@@ -1,59 +1,11 @@
 \unset ECHO
 \i test/setup.sql
+\i test/scripts/fill_data.sql
 
 -- Plan the tests.
-SELECT plan(23);
+SELECT plan(16);
 
 -- Run the tests.
-SELECT lives_ok(
-    'INSERT INTO
-      task (name, description, type, module, state, "user", date)
-      values('''', '''', 0, 0, 0, '''', '''');',
-    'inserting a new task'
-);
-
-SELECT lives_ok(
-    'INSERT INTO
-      task (name, description, type, module, state, "user", date)
-      values('''', '''', 0, 0, 0, '''', '''');',
-    'inserting a new task'
-);
-
-SELECT lives_ok(
-    'INSERT INTO
-      task (name, description, type, module, state, "user", date)
-      values('''', '''', 0, 0, 0, '''', '''');',
-    'inserting a new task'
-);
-
-SELECT lives_ok(
-    'INSERT INTO
-      fpoint3d (task_id, value)
-      values(0, ''(0,0)'');',
-    'inserting a new point'
-);
-
-SELECT lives_ok(
-    'INSERT INTO
-      fpoint3d (task_id, value)
-      values(0, ''(1,1)'');',
-    'inserting a new point'
-);
-
-SELECT lives_ok(
-    'INSERT INTO
-      fpoint3d (task_id, value)
-      values(1, ''(0,0)'');',
-    'inserting a new point'
-);
-
-SELECT lives_ok(
-    'INSERT INTO
-      fpoint3d (task_id, value)
-      values(2, ''(0,0)'');',
-    'inserting a new point'
-);
-
 SELECT results_eq(
     'SELECT id FROM task',
     ARRAY [0, 1, 2],
@@ -144,7 +96,4 @@ SELECT is(
     1,
     'Saving del operation on the fourth point should return 1');
 
--- Finish the tests and clean up.
-SELECT *
-FROM finish();
-ROLLBACK;
+\i test/teardown.sql

@@ -157,3 +157,67 @@ BEGIN
   RETURN current_op;
 END
 $$;
+
+CREATE TYPE OPERATION_TYPE AS ENUM ('add', 'delete', 'nothing');
+
+CREATE FUNCTION collect_operation(in_operations INTEGER [], in_from_operation INTEGER)
+  RETURNS OPERATION_TYPE
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  in_operations_length  INTEGER = array_length(in_operations, 1);
+  new_operations_length INTEGER;
+BEGIN
+  new_operations_length := count_operations_since(in_operations, in_from_operation);
+  IF in_operations_length = 0
+    THEN
+      RETURN 'nothing';
+  ELSIF new_operations_length % 2 = 0
+    THEN
+      RETURN 'nothing';
+  ELSIF in_operations_length % 2 = 0
+    THEN
+      RETURN 'delete';
+  ELSIF in_operations_length % 2 = 1
+    THEN
+      RETURN 'add';
+  END IF;
+  RETURN 'nothing';
+END
+$$;
+
+
+-- TODO ameliorate performance using dichotomy and recursion
+CREATE FUNCTION count_operations_since(in_array INTEGER [], in_value INTEGER)
+  RETURNS INTEGER
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  tmp_value INTEGER;
+BEGIN
+  FOREACH tmp_value IN ARRAY in_array
+  LOOP
+    IF tmp_value > in_value
+    THEN
+      RETURN array_length(in_array, 1) - array_position(in_array, tmp_value) + 1;
+    END IF;
+  END LOOP;
+  RETURN 0;
+END
+$$;
+
+CREATE FUNCTION empty_firefly_database()
+  RETURNS VOID
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  sequence_number INTEGER = currval('task_id_seq');
+BEGIN
+  FOR seq_id IN 0..sequence_number LOOP
+    EXECUTE format('DROP SEQUENCE f_operation_seq_for_task_%s', seq_id);
+  END LOOP;
+  TRUNCATE task, fpoint3d;
+  ALTER SEQUENCE fpoint3d_id_seq RESTART WITH 0;
+  ALTER SEQUENCE task_id_seq RESTART WITH 0;
+END
+$$;

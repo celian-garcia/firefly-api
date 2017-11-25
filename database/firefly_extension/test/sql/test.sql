@@ -7,6 +7,4 @@ SELECT plan(1);
 -- Run the tests.
 SELECT has_table( 'task', 'task table exists' );
 
--- Finish the tests and clean up.
-SELECT * FROM finish();
-ROLLBACK;
+\i test/teardown.sql
