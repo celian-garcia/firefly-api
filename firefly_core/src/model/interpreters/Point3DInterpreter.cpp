@@ -2,7 +2,7 @@
 // Created by root on 14/10/17.
 //
 
-#include "firefly/core/model/Point3DInterpreter.hpp"
+#include "firefly/core/model/interpreters/Point3DInterpreter.hpp"
 
 namespace firefly {
 Point3DInterpreter::Point3DInterpreter(PGresult *result) {

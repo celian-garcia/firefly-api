@@ -6,7 +6,7 @@
 #include <libpqtypes.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
-#include "firefly/core/model/PGResultInterpreter.hpp"
+#include "firefly/core/model/interpreters/PGResultInterpreter.hpp"
 
 namespace firefly {
     struct str2int { int operator ()( std::string value ) const { return atoi(value.c_str()); } };

@@ -1,6 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include "firefly/core/model/TaskInterpreter.hpp"
+#include "firefly/core/model/interpreters/TaskInterpreter.hpp"
 
 namespace firefly {
     TaskInterpreter::TaskInterpreter(DataCommonStore * dataStore, PGresult *result) {

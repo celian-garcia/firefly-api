@@ -6,8 +6,8 @@
 #include <firefly/core/config/DataCommonStore.hpp>
 #include "firefly/core/data/Task.hpp"
 #include "DatabaseManager.hpp"
-#include <firefly/core/model/PGResultInterpreter.hpp>
-#include <firefly/core/model/TaskInterpreter.hpp>
+#include <firefly/core/model/interpreters/PGResultInterpreter.hpp>
+#include <firefly/core/model/interpreters/TaskInterpreter.hpp>
 #include <optional>
 
 namespace firefly {

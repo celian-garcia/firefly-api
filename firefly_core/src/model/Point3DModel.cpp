@@ -1,7 +1,7 @@
 // Copyright 2017 <Célian Garcia>
 
 #include <libpqtypes.h>
-#include <firefly/core/model/Point3DInterpreter.hpp>
+#include <firefly/core/model/interpreters/Point3DInterpreter.hpp>
 #include "firefly/core/model/Point3DModel.hpp"
 
 namespace firefly {
@@ -90,7 +90,7 @@ int Point3DModel::insertOperation(Operation operation, int task_id) {
     std::string method = "save_" + operation_str + "_operation";
     std::string select_query =
             "SELECT * FROM " + method + " (" +
-            this->m_dbmanager->format(operation.getValue()) + ", " +
+            this->m_dbmanager->format(operation_value) + ", " +
             this->m_dbmanager->format(task_id) + ")";
 
     PGresult *res = this->m_dbmanager->execSelectQuery(select_query);

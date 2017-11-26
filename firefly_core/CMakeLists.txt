@@ -37,18 +37,16 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             include/firefly/core/config/DataCommonStore.hpp
             src/data/TaskBuilder.cpp
             include/firefly/core/data/TaskBuilder.hpp
-            src/model/PGResultInterpreter.cpp
-            include/firefly/core/model/PGResultInterpreter.hpp
-            src/model/TaskInterpreter.cpp
-            include/firefly/core/model/TaskInterpreter.hpp
-            src/saving/OperationSaver.cpp
-            include/firefly/core/saving/OperationSaver.h
+            src/model/interpreters/PGResultInterpreter.cpp
+            include/firefly/core/model/interpreters/PGResultInterpreter.hpp
+            src/model/interpreters/TaskInterpreter.cpp
+            include/firefly/core/model/interpreters/TaskInterpreter.hpp
             src/model/Point3DModel.cpp
             include/firefly/core/model/Point3DModel.hpp
             src/model/beans/Point3DBean.cpp
             include/firefly/core/model/beans/Point3DBean.hpp
-            src/model/Point3DInterpreter.cpp
-            include/firefly/core/model/Point3DInterpreter.hpp)
+            src/model/interpreters/Point3DInterpreter.cpp
+            include/firefly/core/model/interpreters/Point3DInterpreter.hpp src/model/OperationModel.cpp include/firefly/core/model/OperationModel.hpp src/model/interpreters/OperationInterpreter.cpp include/firefly/core/model/interpreters/OperationInterpreter.hpp)
 
     # Fix socket issues in windows
     if (MINGW)

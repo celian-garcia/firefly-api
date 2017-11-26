@@ -1,5 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
+#include <firefly/core/model/OperationModel.hpp>
 #include "fly_module/workers/FlyCloudPopulation.hpp"
 
 namespace firefly {
@@ -51,9 +52,8 @@ void FlyCloudPopulation::stop() {
  */
 std::vector<Operation> FlyCloudPopulation::collect(int task_id, int client_last_op) {
     DatabaseManager db_manager(DATABASE_NAME);
-    Point3DModel point_model(&db_manager);
-    std::vector<Point3DBean> points = point_model.getPointListByTaskId(task_id);
-    return computeOperationsFromPoints(points, client_last_op);
+    OperationModel operation_model(&db_manager);
+    return operation_model.getOperationsSince(task_id, client_last_op);
 }
 
 void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *operationQueue) {
@@ -61,7 +61,7 @@ void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *operationQ
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         operationQueue->enqueue(Operation(OperationType::ADD, cv::Vec3f(i, i, i)));
         operationQueue->enqueue(Operation(OperationType::ADD, cv::Vec3f(i, i, i)));
-        operationQueue->enqueue(Operation(OperationType::REMOVE, cv::Vec3f(i, i, i)));
+        operationQueue->enqueue(Operation(OperationType::DELETE, cv::Vec3f(i, i, i)));
         operationQueue->enqueue(Operation(OperationType::ADD, cv::Vec3f(i, i, i)));
     }
     operationQueue->enqueue(Operation::buildEndOperation());
@@ -135,7 +135,7 @@ Operation FlyCloudPopulation::computeOperationFromPoint(const Point3DBean &point
         return Operation(OperationType::ADD, point.getValue());
     }
     if ((i1 + i2) % 2 == 1 && i2 % 2 == 1) {
-        return Operation(OperationType::REMOVE, point.getValue());
+        return Operation(OperationType::DELETE, point.getValue());
     }
 
     return Operation::buildNoneOperation();

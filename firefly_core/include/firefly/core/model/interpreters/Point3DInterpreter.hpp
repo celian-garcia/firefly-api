@@ -8,7 +8,7 @@
 #include <libpq-fe.h>
 #include <vector>
 #include <firefly/core/model/beans/Point3DBean.hpp>
-#include <firefly/core/model/PGResultInterpreter.hpp>
+#include <firefly/core/model/interpreters/PGResultInterpreter.hpp>
 
 namespace firefly {
 class Point3DInterpreter {
