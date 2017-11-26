@@ -214,10 +214,39 @@ DECLARE
   sequence_number INTEGER = currval('task_id_seq');
 BEGIN
   FOR seq_id IN 0..sequence_number LOOP
-    EXECUTE format('DROP SEQUENCE f_operation_seq_for_task_%s', seq_id);
+    EXECUTE format('DROP SEQUENCE IF EXISTS f_operation_seq_for_task_%s', seq_id);
   END LOOP;
   TRUNCATE task, fpoint3d;
   ALTER SEQUENCE fpoint3d_id_seq RESTART WITH 0;
   ALTER SEQUENCE task_id_seq RESTART WITH 0;
+END
+$$;
+
+CREATE TYPE OPERATION AS (op_type OPERATION_TYPE, pt_id INTEGER, pt_value POINT);
+
+CREATE FUNCTION collect_operations(in_task_id INTEGER, in_from_operation INTEGER)
+  RETURNS SETOF OPERATION
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  tmp_op_type OPERATION_TYPE;
+  tmp_op      OPERATION;
+  r           RECORD;
+BEGIN
+  FOR r IN SELECT
+             id,
+             "value",
+             operations
+           FROM fpoint3d
+           WHERE task_id = in_task_id LOOP
+    tmp_op_type := collect_operation(r.operations, in_from_operation);
+    IF NOT tmp_op_type = 'nothing'
+    THEN
+      tmp_op := (tmp_op_type, r.id, r.value);
+      RETURN NEXT tmp_op;
+    END IF;
+
+  END LOOP;
+  RETURN;
 END
 $$;

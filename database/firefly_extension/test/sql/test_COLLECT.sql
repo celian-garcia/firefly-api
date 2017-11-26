@@ -13,35 +13,6 @@ DO $$ BEGIN
   PERFORM save_del_operation(point(1, 1), 0);
 END $$;
 
-CREATE TYPE OPERATION AS (op_type OPERATION_TYPE, pt_id INTEGER, pt_value POINT);
-
-CREATE FUNCTION collect_operations(in_task_id INTEGER, in_from_operation INTEGER)
-  RETURNS SETOF OPERATION
-LANGUAGE plpgsql
-AS $$
-DECLARE
-  tmp_op_type OPERATION_TYPE;
-  tmp_op      OPERATION;
-  r           RECORD;
-BEGIN
-  FOR r IN SELECT
-             id,
-             "value",
-             operations
-           FROM fpoint3d
-           WHERE task_id = in_task_id LOOP
-    tmp_op_type := collect_operation(r.operations, in_from_operation);
-    IF NOT tmp_op_type = 'nothing'
-    THEN
-      tmp_op := (tmp_op_type, r.id, r.value);
-      RETURN NEXT tmp_op;
-    END IF;
-
-  END LOOP;
-  RETURN;
-END
-$$;
-
 -- Plan the tests.
 SELECT plan(16);
 
@@ -111,10 +82,10 @@ SELECT results_eq(
 SELECT results_eq(
     'SELECT * FROM collect_operations(0, 4)',
     $$ VALUES ('delete'::OPERATION_TYPE, 1, POINT(1, 1)) $$,
-    'Collect operations of task 0 since operation 0 should return a delete of point 1');
+    'Collect operations of task 0 since operation 4 should return a delete of point 1');
 
 SELECT is_empty(
     'SELECT * FROM collect_operations(0, 3)',
-    'Collect operations of task 0 since operation 0 should return no operation');
+    'Collect operations of task 0 since operation 3 should return no operation');
 
 \i test/teardown.sql
