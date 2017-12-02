@@ -44,10 +44,6 @@ paths:
                   "user_name": "toto"
                 }
               ]
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/FullTask'
     post:
       summary: Create a task
       responses:
@@ -65,8 +61,6 @@ paths:
                 "type": 1,
                 "user_name": "toto"
               }
-          schema:
-            $ref: '#/definitions/FullTask'
       parameters:
         - name: name
           in: body
@@ -135,40 +129,61 @@ paths:
           description: Task ID
           type: integer
           required: true
-  /tasks/{id}/progress/{progress}:
+  /tasks/{id}/operations/{lastOperationIndex}:
     get:
-      summary: WIP on this endpoint
+      summary: Get the progress of a task from last operation index.
       responses:
         200:
-          description: Get the progress of a task from last progress id.
-          schema:
-            type: object
-            properties:
-              new_progress:
-                type: integer
-                example: 1
-                description: The last progress ID that should be used for next progress request.
-              operations:
-                type: array
-                items:
-                  $ref: '#/definitions/Operation'
-        410:
-          description: The task is not running anymore so operations are gone. Now use the result endpoint.
+          description: A new last operation index and a list of all the operations to do.
+          examples:
+            application/json: >
+              {
+                "lastOperationIndex": 48,
+                "operations": [
+                  {
+                    "id": 47,
+                    "type": "add",
+                    "element": {
+                      "id": 18,
+                      "type": "f_point3d"
+                      "value": {
+                        "x": 8,
+                        "y": 8,
+                        "z": 0
+                      }
+                    }
+                  },
+                  {
+                    "id": 48,
+                    "type": "add",
+                    "element": {
+                      "id": 19,
+                      "type": "f_point3d"
+                      "value": {
+                        "x": 9,
+                        "y": 9,
+                        "z": 0
+                      }
+                    }
+                  }
+                ]
+              }
+        301:
+          description: (Not yet implemented) The task is not running anymore so operations are gone. Now use the result endpoint.
       parameters:
         - name: id
           in: path
           description: Task ID
           type: integer
           required: true
-        - name: progress
+        - name: lastOperationIndex
           in: path
-          description: Current progress ID of the task (defaulted to 0)
+          description: Index of the last operation (defaulted to 0)
           type: integer
-          required: true
           default: 0
   /tasks/{id}/result:
     get:
-      summary: WIP on this endpoint
+      summary: (Not yet implemented) Get the final result of a task.
       responses:
         200:
           description: Get the final result of a task.
@@ -180,59 +195,3 @@ paths:
           description: Task ID
           type: integer
           required: true
-definitions:
-  Task:
-    required:
-      - name
-      - description
-      - type
-      - module
-    properties:
-      name:
-        type: string
-        description: Display name of the task.
-      description:
-        type: string
-        description: Description of the task.
-      type:
-        type: integer
-        description: The unique ID which identify the type of the task.
-      module:
-        type: integer
-        description: The unique ID which identify the module to which the task belongs.
-  FullTask:
-    allOf:
-      - $ref: '#/definitions/Task'
-      - properties:
-          id:
-            type: integer
-            description: Unique id representing a specific task.
-          state:
-            type: integer
-            description: State of the task.
-            default: started
-            enum:
-              - started
-              - stopped
-          user_name:
-            type: string
-            description: Name of the user who created the task.
-          date:
-            type: string
-            description: Date and time of the task creation, in iso format.
-  Operation:
-    type: object
-    properties:
-      id:
-        type: integer
-        description: Unique ID of the operation
-      type:
-        type: string
-        enum:
-          - "ADD"
-          - "REMOVE"
-        description: Type of operation that should be done.
-      json:
-        type: string
-        description: JSON field defining the object that should be processed. <br>Properties of json field are not decided for the moment...
-
