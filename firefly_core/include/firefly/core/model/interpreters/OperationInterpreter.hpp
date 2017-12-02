@@ -10,7 +10,7 @@
 #include <map>
 #include <string>
 #include <libpq-fe.h>
-#include <firefly/core/utils/Operation.hpp>
+#include <firefly/core/data/Operation.hpp>
 #include "PGResultInterpreter.hpp"
 
 namespace firefly {
@@ -33,7 +33,7 @@ class OperationInterpreter {
     PGResultInterpreter *interpreter;
 };
 
-}
+}  // namespace firefly
 
 
 #endif //FIREFLY_OPERATIONINTERPRETER_H

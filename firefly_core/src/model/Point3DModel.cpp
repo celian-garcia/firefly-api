@@ -81,10 +81,7 @@ void Point3DModel::updatePoint(Point3DBean point) {
 }
 
 int Point3DModel::insertOperation(Operation operation, int task_id) {
-    if (operation.getType() == OperationType::END) {
-        throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, "Cannot insert an END operation");
-    }
-    cv::Vec3f operation_value = operation.getValue();
+    cv::Vec3f operation_value = operation.getElement().getValue();
     std::string operation_str = operation.getType() == OperationType::ADD ? "add" : "del";
 
     std::string method = "save_" + operation_str + "_operation";

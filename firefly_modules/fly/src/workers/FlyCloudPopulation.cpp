@@ -1,12 +1,14 @@
 // Copyright 2017 <Célian Garcia>
 
+#include <thread>
 #include <firefly/core/model/OperationModel.hpp>
-#include "fly_module/workers/FlyCloudPopulation.hpp"
+#include <firefly/core/utils/ConcurrentOperationQueue.hpp>
+#include <fly_module/workers/FlyCloudPopulation.hpp>
 
 namespace firefly {
 namespace fly_module {
 
-const std::string FlyCloudPopulation::DATABASE_NAME = "firefly_hive";
+const char* FlyCloudPopulation::DATABASE_NAME = "firefly_hive";
 
 /**
  * - Initiate database connection;
@@ -44,6 +46,7 @@ void FlyCloudPopulation::stop() {
     throw FireflyException(HtmlStatusCode::NOT_IMPLEMENTED, "Stop action not yet implemented");
 }
 
+//TODO(célian): move it to firefly_core
 /**
  * Collect operations from database. We only collect the operations from the last time we collect.
  * @param task_id the id of the task we're collecting.
@@ -56,21 +59,19 @@ std::vector<Operation> FlyCloudPopulation::collect(int task_id, int client_last_
     return operation_model.getOperationsSince(task_id, client_last_op);
 }
 
-void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *operationQueue) {
+void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *queue) {
     for (int i = 0; i < 10; ++i) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        operationQueue->enqueue(Operation(OperationType::ADD, cv::Vec3f(i, i, i)));
-        operationQueue->enqueue(Operation(OperationType::ADD, cv::Vec3f(i, i, i)));
-        operationQueue->enqueue(Operation(OperationType::DELETE, cv::Vec3f(i, i, i)));
-        operationQueue->enqueue(Operation(OperationType::ADD, cv::Vec3f(i, i, i)));
+        queue->enqueue({OperationType::ADD, {"fpoint3d", {i, i, i}}});
+        queue->enqueue({OperationType::ADD, {"fpoint3d", {i, i, i}}});
+        queue->enqueue({OperationType::DELETE, {"fpoint3d", {i, i, i}}});
+        queue->enqueue({OperationType::ADD, {"fpoint3d", {i, i, i}}});
     }
-    operationQueue->enqueue(Operation::buildEndOperation());
+    queue->endQueue();
 }
 
 void FlyCloudPopulation::run_populate_thread(int task_id, ConcurrentOperationQueue *queue) {
-    std::cout
-            << "Thread starts for the task id : " << task_id
-            << std::endl;
+    std::cout << "Thread starts for the task id : " << task_id << std::endl;
 
     // Trying to get task from database
     DatabaseManager db_manager(DATABASE_NAME);
@@ -79,10 +80,9 @@ void FlyCloudPopulation::run_populate_thread(int task_id, ConcurrentOperationQue
 
     try {
         // Save all operations in base
-        Operation operation = queue->dequeue();
-        while (!operation.isEndOperation()) {
+        while (!queue->isEmptyAndEnded()) {
+            Operation operation = queue->dequeue();
             point_model.insertOperation(operation, task_id);
-            operation = queue->dequeue();
         }
 
         // Move task to FINISHED state
@@ -92,53 +92,7 @@ void FlyCloudPopulation::run_populate_thread(int task_id, ConcurrentOperationQue
         throw FireflyException(HtmlStatusCode::BAD_REQUEST, e.what());
     }
 
-    std::cout
-            << "Thread have finished the work for the task of id : " << task_id
-            << std::endl;
+    std::cout << "Thread have finished the work for the task of id : " << task_id << std::endl;
 }
-
-std::vector<Operation>
-FlyCloudPopulation::computeOperationsFromPoints(const std::vector<Point3DBean> &points, int last_operation) {
-    std::vector<Operation> operations;
-    for (auto it = points.begin(); it < points.end(); it++) {
-        Operation operation = computeOperationFromPoint(*it, last_operation);
-        if (!operation.isNoneOperation() && !operation.isEndOperation()) {
-            operations.push_back(operation);
-        }
-
-    }
-    return operations;
-}
-
-/**
- * TODO: remake it using TDD and move it to a common place
- * @param point
- * @param last_operation
- * @return
- */
-Operation FlyCloudPopulation::computeOperationFromPoint(const Point3DBean &point, int last_operation) {
-    std::vector<int> op_indices = point.getOperationsIds();
-    int point_last_op = op_indices.back();
-    if (point_last_op <= last_operation) {
-        return Operation::buildNoneOperation();
-    }
-    unsigned long long int i1 = op_indices.size() - 1;
-    int i2 = 0;
-    for (unsigned int i = 0; i < op_indices.size(); i++) {
-        if (op_indices[i] <= last_operation)
-            i2 = i;
-        else
-            break;
-    }
-
-    if ((i1 - i2) % 2 == 0 && i2 % 2 == 0) {
-        return Operation(OperationType::ADD, point.getValue());
-    }
-    if ((i1 + i2) % 2 == 1 && i2 % 2 == 1) {
-        return Operation(OperationType::DELETE, point.getValue());
-    }
-
-    return Operation::buildNoneOperation();
-}
-}
-}
+}  // namespace fly_module
+}  // namespace firefly

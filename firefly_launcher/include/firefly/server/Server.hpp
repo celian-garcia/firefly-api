@@ -21,7 +21,7 @@
 #include "firefly/core/data/ProcessingAction.hpp"
 #include "firefly/core/data/Module.hpp"
 #include "firefly/core/data/Task.hpp"
-#include <firefly/core/utils/Operation.hpp>
+#include <firefly/core/data/Operation.hpp>
 #include <firefly/core/utils/server_types_definitions.hpp>
 #include <firefly/core/utils/QueryParameters.hpp>
 #include "firefly/core/utils/ResponseBuilder.hpp"

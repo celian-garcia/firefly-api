@@ -159,30 +159,33 @@ END
 $$;
 
 CREATE TYPE OPERATION_TYPE AS ENUM ('add', 'delete', 'nothing');
+CREATE TYPE OPERATION AS (id INTEGER, "type" OPERATION_TYPE);
 
 CREATE FUNCTION collect_operation(in_operations INTEGER [], in_from_operation INTEGER)
-  RETURNS OPERATION_TYPE
+  RETURNS OPERATION
 LANGUAGE plpgsql
 AS $$
 DECLARE
   in_operations_length  INTEGER = array_length(in_operations, 1);
   new_operations_length INTEGER;
+  last_operation_index  INTEGER;
 BEGIN
   new_operations_length := count_operations_since(in_operations, in_from_operation);
+  last_operation_index := in_operations [in_operations_length];
   IF in_operations_length = 0
-    THEN
-      RETURN 'nothing';
+  THEN
+    RETURN (last_operation_index, 'nothing'::OPERATION_TYPE);
   ELSIF new_operations_length % 2 = 0
     THEN
-      RETURN 'nothing';
+      RETURN (last_operation_index, 'nothing'::OPERATION_TYPE);
   ELSIF in_operations_length % 2 = 0
     THEN
-      RETURN 'delete';
+      RETURN (last_operation_index, 'delete'::OPERATION_TYPE);
   ELSIF in_operations_length % 2 = 1
     THEN
-      RETURN 'add';
+      RETURN (last_operation_index, 'add'::OPERATION_TYPE);
   END IF;
-  RETURN 'nothing';
+  RETURN (last_operation_index, 'nothing'::OPERATION_TYPE);
 END
 $$;
 
@@ -222,16 +225,16 @@ BEGIN
 END
 $$;
 
-CREATE TYPE OPERATION AS (op_type OPERATION_TYPE, pt_id INTEGER, pt_value POINT);
+CREATE TYPE OPERATION_WITH_ELEMENT AS (operation_id INTEGER, operation_type OPERATION_TYPE, point_id INTEGER, point_value POINT);
 
 CREATE FUNCTION collect_operations(in_task_id INTEGER, in_from_operation INTEGER)
-  RETURNS SETOF OPERATION
+  RETURNS SETOF OPERATION_WITH_ELEMENT
 LANGUAGE plpgsql
 AS $$
 DECLARE
-  tmp_op_type OPERATION_TYPE;
-  tmp_op      OPERATION;
-  r           RECORD;
+  tmp_op     OPERATION;
+  result_row OPERATION_WITH_ELEMENT;
+  r          RECORD;
 BEGIN
   FOR r IN SELECT
              id,
@@ -239,11 +242,11 @@ BEGIN
              operations
            FROM fpoint3d
            WHERE task_id = in_task_id LOOP
-    tmp_op_type := collect_operation(r.operations, in_from_operation);
-    IF NOT tmp_op_type = 'nothing'
+    tmp_op := collect_operation(r.operations, in_from_operation);
+    IF NOT tmp_op.type = 'nothing'
     THEN
-      tmp_op := (tmp_op_type, r.id, r.value);
-      RETURN NEXT tmp_op;
+      result_row := (tmp_op.id, tmp_op.type, r.id, r.value);
+      RETURN NEXT result_row;
     END IF;
 
   END LOOP;

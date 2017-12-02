@@ -50,38 +50,38 @@ SELECT is(
 -- "collect_operation" function tests
 SELECT is(
     collect_operation(ARRAY [1, 2, 3], 2),
-    'add',
-    'Collect on {1, 2, 3} with last operation==2 should return ''add'' operation');
+    ROW (3, 'add' :: OPERATION_TYPE) :: OPERATION,
+    'Collect on {1, 2, 3} with last operation==2 should return (3, ''add'') operation');
 SELECT is(
     collect_operation(ARRAY [1, 2, 3, 4], 2),
-    'nothing',
-    'Collect on {1, 2, 3, 4} with last operation==2 should return ''nothing'' operation');
+    ROW (4, 'nothing' :: OPERATION_TYPE) :: OPERATION,
+    'Collect on {1, 2, 3, 4} with last operation==2 should return (4, ''nothing'') operation');
 SELECT is(
     collect_operation(ARRAY [1, 3, 4], 3),
-    'add',
-    'Collect on {1, 3, 4} with last operation==3 should return ''add'' operation');
+    ROW(4, 'add':: OPERATION_TYPE) :: OPERATION,
+    'Collect on {1, 3, 4} with last operation==3 should return (4, ''add'') operation');
 SELECT is(
     collect_operation(ARRAY [3, 4], 3),
-    'delete',
-    'Collect on {3, 4} with last operation==3 should return ''delete'' operation');
+    ROW(4, 'delete':: OPERATION_TYPE) :: OPERATION,
+    'Collect on {3, 4} with last operation==3 should return (4, ''delete'') operation');
 SELECT is(
     collect_operation(ARRAY [1, 3, 4], 2),
-    'nothing',
-    'Collect on {1, 3, 4} with last operation==2 should return ''nothing'' operation');
+    ROW(4, 'nothing':: OPERATION_TYPE) :: OPERATION,
+    'Collect on {1, 3, 4} with last operation==2 should return (4, ''nothing'') operation');
 SELECT is(
     collect_operation(ARRAY [1, 2, 3], 0),
-    'add',
-    'Collect on {1, 2, 3} with last operation==0 should return ''add'' operation');
+    ROW(3, 'add':: OPERATION_TYPE) :: OPERATION,
+    'Collect on {1, 2, 3} with last operation==0 should return (3, ''add'') operation');
 
 -- "collect_operations" function tests
 SELECT results_eq(
     'SELECT * FROM collect_operations(0, 0)',
-    $$ VALUES ('add' :: OPERATION_TYPE, 0, POINT(0, 0)) $$,
+    $$ VALUES (3, 'add'::OPERATION_TYPE, 0, POINT(0, 0)) $$,
     'Collect operations of task 0 since operation 0 should return an add of point 0');
 
 SELECT results_eq(
     'SELECT * FROM collect_operations(0, 4)',
-    $$ VALUES ('delete'::OPERATION_TYPE, 1, POINT(1, 1)) $$,
+    $$ VALUES (7, 'delete'::OPERATION_TYPE, 1, POINT(1, 1)) $$,
     'Collect operations of task 0 since operation 4 should return a delete of point 1');
 
 SELECT is_empty(

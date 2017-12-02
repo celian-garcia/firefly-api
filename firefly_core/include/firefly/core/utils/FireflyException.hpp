@@ -8,7 +8,7 @@
 #include <string>
 #include "HtmlStatusCode.hpp"
 #include "server_types_definitions.hpp"
-#include "Operation.hpp"
+#include "firefly/core/data/Operation.hpp"
 #include "ResponseBuilder.hpp"
 
 namespace firefly {

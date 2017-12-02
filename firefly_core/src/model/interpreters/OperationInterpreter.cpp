@@ -17,11 +17,13 @@ OperationInterpreter::~OperationInterpreter() {
 
 Operation OperationInterpreter::getOperation(int row) {
     // Interpretation of the given row
-    auto id = this->interpreter->get<int>("pt_id", row);
-    auto type = OPERATION_TYPES.at(this->interpreter->get<std::string>("op_type", row));
-    auto value = this->interpreter->get<cv::Vec3f>("pt_value", row);
+    auto operation_id = this->interpreter->get<int>("operation_id", row);
+    auto operation_type = OPERATION_TYPES.at(this->interpreter->get<std::string>("operation_type", row));
+    auto point_id = this->interpreter->get<int>("point_id", row);
+    auto point_value = this->interpreter->get<cv::Vec3f>("point_value", row);
 
-    return {id, type, value};
+    // For the moment we handle uniquely points but in the future the type should be dynamically retrieved
+    return {operation_id, operation_type, {point_id, "fpoint3d", point_value}};
 }
 
 int OperationInterpreter::get_row_number() {
@@ -29,13 +31,12 @@ int OperationInterpreter::get_row_number() {
 }
 
 const std::vector<const char *> OperationInterpreter::PROPERTIES() {
-    return {"pt_id", "op_type", "pt_value"};
+    return {"operation_id", "point_id", "operation_type", "point_value"};
 }
 
 std::map<std::string, OperationType> OperationInterpreter::OPERATION_TYPES = {
-        {"add", OperationType::ADD},
-        {"delete", OperationType::DELETE},
-        {"nothing", OperationType::NONE}
+        {"add",    OperationType::ADD},
+        {"delete", OperationType::DELETE}
 };
 
-}
+}  // namespace firefly

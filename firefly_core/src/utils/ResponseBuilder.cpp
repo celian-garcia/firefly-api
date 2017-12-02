@@ -1,6 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <firefly/core/utils/Operation.hpp>
+#include <firefly/core/data/Operation.hpp>
 #include "firefly/core/utils/ResponseBuilder.hpp"
 
 namespace firefly {

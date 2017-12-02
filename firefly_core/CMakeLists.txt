@@ -46,7 +46,14 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             src/model/beans/Point3DBean.cpp
             include/firefly/core/model/beans/Point3DBean.hpp
             src/model/interpreters/Point3DInterpreter.cpp
-            include/firefly/core/model/interpreters/Point3DInterpreter.hpp src/model/OperationModel.cpp include/firefly/core/model/OperationModel.hpp src/model/interpreters/OperationInterpreter.cpp include/firefly/core/model/interpreters/OperationInterpreter.hpp)
+            include/firefly/core/model/interpreters/Point3DInterpreter.hpp
+            src/model/OperationModel.cpp
+            include/firefly/core/model/OperationModel.hpp
+            include/firefly/core/data/OperationType.hpp
+            src/model/interpreters/OperationInterpreter.cpp
+            include/firefly/core/model/interpreters/OperationInterpreter.hpp
+            include/firefly/core/data/OperationElement.hpp
+            include/firefly/core/utils/ConcurrentOperationQueue.hpp)
 
     # Fix socket issues in windows
     if (MINGW)
