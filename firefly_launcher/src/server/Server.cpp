@@ -117,10 +117,13 @@ void Server::initializeFireflyResources() {
         int client_last_op = std::stoi(request->path_match[2]);
         std::vector<Operation> operations_list = fly_module::FlyCloudPopulation::collect(task_id, client_last_op);
 
-        int last_operation_index = std::max_element(
-                operations_list.begin(),
-                operations_list.end(),
-                [](auto op1, auto op2) { return op1.getId() < op2.getId(); })->getId();
+        int last_operation_index = 0;
+        if (!operations_list.empty()) {
+            last_operation_index = std::max_element(
+                    operations_list.begin(),
+                    operations_list.end(),
+                    [](auto op1, auto op2) { return op1.getId() < op2.getId(); })->getId();
+        }
 
         json result_content = json{
                 {"lastOperationIndex", last_operation_index},
