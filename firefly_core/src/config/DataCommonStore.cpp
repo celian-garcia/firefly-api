@@ -3,17 +3,17 @@
 #include "firefly/core/config/DataCommonStore.hpp"
 
 namespace firefly {
-    void DataCommonStore::storeModule(Module& module) {
-        module.setId(int(modules.size()));
+    void DataCommonStore::storeModule(Module *module) {
+        module->setId(static_cast<int>(modules.size()));
         std::vector<ProcessingType> new_proc_types;
         int current_proc_id = 0;
-        for (auto proc : module.getProcessingTypesList()) {
+        for (auto proc : module->getProcessingTypesList()) {
             ProcessingType new_proc = proc;
             new_proc.setId(current_proc_id++);
             new_proc_types.push_back(new_proc);
         }
-        module.setProcessingTypesList(new_proc_types);
-        this->modules.push_back(module);
+        module->setProcessingTypesList(new_proc_types);
+        this->modules.push_back(*module);
     }
 
     const Module DataCommonStore::getModuleById(int id) const {
@@ -25,6 +25,6 @@ namespace firefly {
     }
 
     const ProcessingType &DataCommonStore::getProcessingTypeByIds(int module_id, int proc_id) {
-        return this->getModuleById(module_id).getProcessingTypesList().at((unsigned long long int) proc_id);
+        return this->getModuleById(module_id).getProcessingTypesList().at((unsigned int) proc_id);
     }
-}
+}  // namespace firefly

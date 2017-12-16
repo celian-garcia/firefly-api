@@ -1,7 +1,7 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_SERVER_HPP
-#define FIREFLY_SERVER_HPP
+#ifndef FIREFLY_LAUNCHER_INCLUDE_FIREFLY_SERVER_SERVER_HPP_
+#define FIREFLY_LAUNCHER_INCLUDE_FIREFLY_SERVER_SERVER_HPP_
 
 #include <string>
 #include <iostream>
@@ -9,6 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <memory>
+#include <map>
 
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -22,7 +23,6 @@
 #include "firefly/core/data/Module.hpp"
 #include "firefly/core/data/Task.hpp"
 #include <firefly/core/data/Operation.hpp>
-#include <firefly/core/utils/server_types_definitions.hpp>
 #include <firefly/core/utils/QueryParameters.hpp>
 #include "firefly/core/utils/ResponseBuilder.hpp"
 #include <firefly/core/model/TaskModel.hpp>
@@ -30,39 +30,35 @@
 
 #include <firefly/core/model/DatabaseManager.hpp>
 #include <firefly/core/config/DataCommonStore.hpp>
-
-#include <optional>
 #include <firefly/core/utils/ThreadPool.hpp>
 
 namespace firefly {
-    typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
+typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
 
-    class Server {
-    public:
+class Server {
+ public:
+    Server(unsigned short port, boost::filesystem::path resources_path, DataCommonStore dataStore);
 
-        Server(unsigned short port, boost::filesystem::path resources_path, DataCommonStore dataStore);
+    void registerModule(Module *module, ThreadPool *pool);
 
-        void registerModule(Module& module, ThreadPool* pool);
+    void initializeFireflyResources();
 
-        void initializeFireflyResources();
+    void run();
 
-        void run();
+ private:
+    HttpServer server;
+    boost::filesystem::path resources_path;
+    DataCommonStore dataStore;
+    std::map<int, firefly::ThreadPool *> thread_pool_map;
 
-    private:
-        HttpServer server;
-        boost::filesystem::path resources_path;
-        DataCommonStore dataStore;
-        std::map<int, firefly::ThreadPool*> thread_pool_map;
+    void sendDefaultResource(const std::shared_ptr<HttpServer::Response> &response,
+                             const std::shared_ptr<std::ifstream> &ifs);
 
-        void sendDefaultResource(const std::shared_ptr<HttpServer::Response> &response, const std::shared_ptr<std::ifstream> &ifs);
+    void initDefaultResource();
 
-        void initDefaultResource();
+    std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)> static buildFireflyResource(
+            const std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)> &resource);
+};
+}  // namespace firefly
 
-        std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)> static buildFireflyResource(
-                const std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)>& resource);
-
-    };
-}
-
-
-#endif //FIREFLY_SERVER_HPP
+#endif  // FIREFLY_LAUNCHER_INCLUDE_FIREFLY_SERVER_SERVER_HPP_

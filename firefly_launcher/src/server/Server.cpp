@@ -202,9 +202,9 @@ Server::sendDefaultResource(
     }
 }
 
-void Server::registerModule(Module &module, ThreadPool *pool) {
+void Server::registerModule(Module *module, ThreadPool *pool) {
     this->dataStore.storeModule(module);
-    this->thread_pool_map[module.getId()] = pool;
+    this->thread_pool_map[module->getId()] = pool;
 }
 
 }  // namespace firefly
