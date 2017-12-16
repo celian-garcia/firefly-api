@@ -4,8 +4,6 @@
 #include <firefly/server/Server.hpp>
 #include <fly_module/workers/FlyCloudPopulation.hpp>
 
-using namespace std::literals::string_literals;
-
 namespace firefly {
 
 Server::Server(unsigned short port, boost::filesystem::path resources_path, DataCommonStore dataStore) :
@@ -15,7 +13,7 @@ void Server::run() {
     this->initDefaultResource();
     this->initializeFireflyResources();
     boost::thread server_thread([this]() {
-        //Start server
+        // Start server
         this->server.start();
     });
 
@@ -23,18 +21,20 @@ void Server::run() {
 }
 
 std::function<void(
-        std::shared_ptr < SimpleWeb::ServerBase<SimpleWeb::HTTP>::Response > ,
-        std::shared_ptr < SimpleWeb::ServerBase<SimpleWeb::HTTP>::Request > )>
+        std::shared_ptr<SimpleWeb::ServerBase<SimpleWeb::HTTP>::Response>,
+        std::shared_ptr<SimpleWeb::ServerBase<SimpleWeb::HTTP>::Request>)>
 Server::buildFireflyResource(
-        const std::function<void(std::shared_ptr < SimpleWeb::ServerBase<SimpleWeb::HTTP>::Response > ,
-                                 std::shared_ptr < SimpleWeb::ServerBase<SimpleWeb::HTTP>::Request > )> &resource) {
+        const std::function<void(std::shared_ptr<SimpleWeb::ServerBase<SimpleWeb::HTTP>::Response>,
+                                 std::shared_ptr<SimpleWeb::ServerBase<SimpleWeb::HTTP>::Request>)> &resource) {
     return [resource](
             std::shared_ptr<HttpResponse> response,
-            std::shared_ptr<HttpRequest> request) {
+            std::shared_ptr<HttpRequest> request) -> void {
         try {
             resource(response, request);
         } catch (FireflyException e) {
             e.sendError(response);
+        } catch (std::exception e) {
+            std::cout << e.what() << std::endl;
         }
     };
 }
@@ -42,7 +42,7 @@ Server::buildFireflyResource(
 void Server::initializeFireflyResources() {
     this->server.resource["^/api/v1/modules$"]["GET"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
-            std::shared_ptr<HttpRequest> request) {
+            std::shared_ptr<HttpRequest> request) -> void {
         std::cout << "api/v1/modules endpoint reached\n" << std::endl;
         json result_content(this->dataStore.getModules());
         ResponseBuilder::build(result_content, response);
@@ -66,7 +66,7 @@ void Server::initializeFireflyResources() {
 
     this->server.resource["^/api/v1/tasks$"]["POST"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
-            std::shared_ptr<HttpRequest> request) {
+            std::shared_ptr<HttpRequest> request) -> void {
         TaskBuilder taskBuilder = json::parse(request->content);
         Task task = taskBuilder.buildTask(this->dataStore);
         DatabaseManager db_manager("firefly_hive");
@@ -77,8 +77,7 @@ void Server::initializeFireflyResources() {
 
     this->server.resource["^/api/v1/tasks/([0-9]+)$"]["GET"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
-            std::shared_ptr<HttpRequest> request) {
-
+            std::shared_ptr<HttpRequest> request) -> void {
         std::string task_id = request->path_match[1];
 
         DatabaseManager db_manager("firefly_hive");
@@ -93,8 +92,7 @@ void Server::initializeFireflyResources() {
 
     this->server.resource["^/api/v1/tasks/([0-9]+)/run$"]["POST"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
-            std::shared_ptr<HttpRequest> request) {
-
+            std::shared_ptr<HttpRequest> request) -> void {
         std::string task_id = request->path_match[1];
         DatabaseManager db_manager("firefly_hive");
         TaskModel taskModel(&db_manager, dataStore);
@@ -107,12 +105,11 @@ void Server::initializeFireflyResources() {
         } else {
             ResponseBuilder::build("{\"resultOk\": false}", response);
         }
-
     });
 
     this->server.resource["^/api/v1/tasks/([0-9]+)/operations/([0-9]+)$"]["GET"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
-            std::shared_ptr<HttpRequest> request) {
+            std::shared_ptr<HttpRequest> request) -> void {
         int task_id = std::stoi(request->path_match[1]);
         int client_last_op = std::stoi(request->path_match[2]);
         std::vector<Operation> operations_list = fly_module::FlyCloudPopulation::collect(task_id, client_last_op);
@@ -146,9 +143,9 @@ Server::initDefaultResource() {
             auto path = boost::filesystem::canonical(this->resources_path / request->path);
 
             // Check the path
-            long long int resources_path_len = std::distance(
+            int64 resources_path_len = std::distance(
                     this->resources_path.begin(), this->resources_path.end());
-            long long int path_len = std::distance(path.begin(), path.end());
+            int64 path_len = std::distance(path.begin(), path.end());
             if (resources_path_len > path_len ||
                 !std::equal(this->resources_path.begin(), this->resources_path.end(), path.begin()))
                 throw std::invalid_argument("path must be within root path");
@@ -190,7 +187,6 @@ void
 Server::sendDefaultResource(
         const std::shared_ptr<HttpResponse> &response,
         const std::shared_ptr<std::ifstream> &ifs) {
-
     static std::vector<char> buffer(131072);
     std::streamsize read_length;
     if ((read_length = ifs->read(&buffer[0], buffer.size()).gcount()) > 0) {
@@ -211,4 +207,4 @@ void Server::registerModule(Module &module, ThreadPool *pool) {
     this->thread_pool_map[module.getId()] = pool;
 }
 
-}
+}  // namespace firefly
