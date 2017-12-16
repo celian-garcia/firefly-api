@@ -1,9 +1,7 @@
-//
-// Created by celian on 02/12/17.
-//
+// Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_OPERATIONELEMENT_H
-#define FIREFLY_OPERATIONELEMENT_H
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONELEMENT_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONELEMENT_HPP_
 
 #include <ml.h>  // opencv import
 #include <string>
@@ -40,12 +38,9 @@ namespace nlohmann {
 template<>
 struct __attribute__((unused)) adl_serializer<cv::Vec3f> {
     static void __attribute__((unused)) to_json(json &j, const cv::Vec3f &v) {
-        std::string x_key = "x";
-        std::string y_key = "y";
-        std::string z_key = "z";
-        j = json{{x_key, v[0]},
-                 {y_key, v[1]},
-                 {z_key, v[2]}};
+        j = json{{"x", v[0]},
+                 {"y", v[1]},
+                 {"z", v[2]}};
     }
 };
 
@@ -58,4 +53,5 @@ struct __attribute__((unused)) adl_serializer<firefly::OperationElement> {
     }
 };
 }  // namespace nlohmann
-#endif //FIREFLY_OPERATIONELEMENT_H
+
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONELEMENT_HPP_

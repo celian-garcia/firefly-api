@@ -27,10 +27,8 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             include/firefly/core/data/Module.hpp
             src/data/Task.cpp
             include/firefly/core/data/Task.hpp
-            src/data/ProcessingType.cpp
+            src/data/ProcessingTypeJson.cpp
             include/firefly/core/data/ProcessingType.hpp
-            src/data/ProcessingAction.cpp
-            include/firefly/core/data/ProcessingAction.hpp
             src/model/TaskModel.cpp
             include/firefly/core/model/TaskModel.hpp
             src/config/DataCommonStore.cpp

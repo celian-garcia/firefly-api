@@ -1,17 +1,16 @@
 // Copyright 2017 <Célian Garcia>
-#ifndef INCLUDE_FIREFLY_OPERATION_HPP_
-#define INCLUDE_FIREFLY_OPERATION_HPP_
+
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATION_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATION_HPP_
 
 #include <string>
 #include <map>
 #include <opencv2/opencv.hpp>
-#include "json/json.hpp"
+#include <json/json.hpp>
 #include "OperationType.hpp"
 #include "OperationElement.hpp"
 
 namespace firefly {
-
-using json = nlohmann::json;
 
 class Operation {
  public:
@@ -50,11 +49,9 @@ class Operation {
     OperationElement m_element;
 };
 
-
-}  // end namespace firefly
+}  // namespace firefly
 
 namespace nlohmann {
-
 template<>
 struct __attribute__((unused)) adl_serializer<firefly::Operation> {
     static void __attribute__((unused)) to_json(json &j, const firefly::Operation &operation) {
@@ -65,4 +62,4 @@ struct __attribute__((unused)) adl_serializer<firefly::Operation> {
 };
 }  // namespace nlohmann
 
-#endif  // INCLUDE_FIREFLY_OPERATION_HPP_
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATION_HPP_

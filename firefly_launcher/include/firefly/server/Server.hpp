@@ -19,11 +19,9 @@
 #include <simple_web_server/server_http.hpp>
 
 #include "firefly/core/utils/server_types_definitions.hpp"
-#include "firefly/core/data/ProcessingAction.hpp"
 #include "firefly/core/data/Module.hpp"
 #include "firefly/core/data/Task.hpp"
 #include <firefly/core/data/Operation.hpp>
-#include <firefly/core/utils/QueryParameters.hpp>
 #include "firefly/core/utils/ResponseBuilder.hpp"
 #include <firefly/core/model/TaskModel.hpp>
 #include <firefly/core/data/TaskBuilder.hpp>

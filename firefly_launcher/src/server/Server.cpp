@@ -44,7 +44,7 @@ void Server::initializeFireflyResources() {
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) -> void {
         std::cout << "api/v1/modules endpoint reached\n" << std::endl;
-        json result_content(this->dataStore.getModules());
+        nlohmann::json result_content(this->dataStore.getModules());
         ResponseBuilder::build(result_content, response);
     });
 
@@ -52,7 +52,7 @@ void Server::initializeFireflyResources() {
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) {
         std::cout << "api/v1/tasks endpoint reached\n" << std::endl;
-        json result_content;
+        nlohmann::json result_content;
 
         DatabaseManager db_manager("firefly_hive");
         TaskModel taskModel(&db_manager, dataStore);
@@ -67,11 +67,11 @@ void Server::initializeFireflyResources() {
     this->server.resource["^/api/v1/tasks$"]["POST"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) -> void {
-        TaskBuilder taskBuilder = json::parse(request->content);
+        TaskBuilder taskBuilder = nlohmann::json::parse(request->content);
         Task task = taskBuilder.buildTask(this->dataStore);
         DatabaseManager db_manager("firefly_hive");
         TaskModel taskModel(&db_manager);
-        json resultTask = taskModel.insertTask(task);
+        nlohmann::json resultTask = taskModel.insertTask(task);
         ResponseBuilder::build(resultTask, response);
     });
 
@@ -84,7 +84,7 @@ void Server::initializeFireflyResources() {
         TaskModel taskModel(&db_manager, dataStore);
         const std::optional<Task> &resultTask = taskModel.getTaskById(atoi(task_id.c_str()));
         if (resultTask) {
-            ResponseBuilder::build(static_cast<json>(resultTask.value()), response);
+            ResponseBuilder::build(static_cast<nlohmann::json>(resultTask.value()), response);
         } else {
             ResponseBuilder::build("{}", response);
         }
@@ -122,7 +122,7 @@ void Server::initializeFireflyResources() {
                     [](auto op1, auto op2) { return op1.getId() < op2.getId(); })->getId();
         }
 
-        json result_content = json{
+        nlohmann::json result_content = nlohmann::json{
                 {"lastOperationIndex", last_operation_index},
                 {"operations",         operations_list}};
 
