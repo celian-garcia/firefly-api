@@ -96,4 +96,4 @@ int Point3DModel::insertOperation(Operation operation, int task_id) {
     interpreter.registerProperty(method.c_str());
     return interpreter.get<int>(method.c_str(), 0);
 }
-}
+}  // namespace firefly

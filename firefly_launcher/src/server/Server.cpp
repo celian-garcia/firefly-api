@@ -31,10 +31,10 @@ Server::buildFireflyResource(
             std::shared_ptr<HttpRequest> request) -> void {
         try {
             resource(response, request);
-        } catch (FireflyException e) {
+        } catch (const FireflyException &e) {
             e.sendError(response);
-        } catch (std::exception e) {
-            std::cout << e.what() << std::endl;
+        } catch (const std::exception &e) {
+            FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, e.what()).sendError(response);
         }
     };
 }
@@ -138,6 +138,7 @@ Server::initDefaultResource() {
     // Can for instance be used to retrieve an HTML 5 client that uses REST-resources on this server
     this->server.default_resource["GET"] = [this]
             (std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request) {
+
         try {
             // Build the absolute path from request
             auto path = boost::filesystem::canonical(this->resources_path / request->path);

@@ -1,9 +1,7 @@
-//
-// Created by celian on 26/11/17.
-//
+// Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_OPERATIONMODEL_H
-#define FIREFLY_OPERATIONMODEL_H
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_OPERATIONMODEL_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_OPERATIONMODEL_HPP_
 
 #include <vector>
 #include "DatabaseManager.hpp"
@@ -15,6 +13,6 @@ class OperationModel : public BaseModel {
 
     std::vector<Operation> getOperationsSince(int task_id, int last_operation);
 };
-}
+}  // namespace firefly
 
-#endif //FIREFLY_OPERATIONMODEL_H
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_OPERATIONMODEL_HPP_

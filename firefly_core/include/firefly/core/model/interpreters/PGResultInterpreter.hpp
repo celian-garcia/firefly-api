@@ -1,43 +1,41 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_RESULTTRANSCRIVER_HPP
-#define FIREFLY_RESULTTRANSCRIVER_HPP
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_
 
-
-#include <map>
 #include <libpq-fe.h>
+#include <map>
 #include <functional>
 #include <vector>
 #include <cstring>
 
 namespace firefly {
-    struct StrComparator : public std::binary_function<const char *, const char *, bool> {
-    public:
-        bool operator()(const char *str1, const char *str2) const { return std::strcmp(str1, str2) < 0; }
-    };
+struct StrComparator : public std::binary_function<const char *, const char *, bool> {
+ public:
+    bool operator()(const char *str1, const char *str2) const { return std::strcmp(str1, str2) < 0; }
+};
 
-    class PGResultInterpreter {
+class PGResultInterpreter {
+ public:
+    explicit PGResultInterpreter(PGresult *result);
 
-    public:
+    void registerProperty(const char *property_name);
 
-        explicit PGResultInterpreter(PGresult *result);
+    void registerProperties(std::vector<const char *> property_names);
 
-        void registerProperty(const char *property_name);
+    int get_row_number();
 
-        void registerProperties(std::vector<const char *> property_names);
+    template<class T>
+    T get(const char *property_name, int position);
 
-        int get_row_number();
+    virtual const std::vector<const char *> PROPERTIES();
 
-        template<class T>
-        T get(const char *property_name, int position);
+ private:
+    char *get_value(const char *property_name, int position);
 
-    private:
+    std::map<const char *, int, StrComparator> f_numbers_map;
+    PGresult *result;
+};
+}  // namespace firefly
 
-        char *get_value(const char *property_name, int position);
-
-        std::map<const char *, int, StrComparator> f_numbers_map;
-        PGresult *result;
-    };
-
-}
-#endif //FIREFLY_RESULTTRANSCRIVER_HPP
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_

@@ -1,6 +1,4 @@
-//
-// Created by celian on 26/11/17.
-//
+// Copyright 2017 <Célian Garcia>
 
 #include <firefly/core/model/interpreters/OperationInterpreter.hpp>
 #include "firefly/core/model/OperationModel.hpp"
@@ -27,4 +25,4 @@ std::vector<Operation> OperationModel::getOperationsSince(int task_id, int last_
     return operations_list;
 }
 
-}
+}  // namespace firefly

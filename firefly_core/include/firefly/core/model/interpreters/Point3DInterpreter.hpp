@@ -1,9 +1,7 @@
-//
-// Created by root on 14/10/17.
-//
+// Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_POINT3DINTERPRETER_H
-#define FIREFLY_POINT3DINTERPRETER_H
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_POINT3DINTERPRETER_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_POINT3DINTERPRETER_HPP_
 
 #include <libpq-fe.h>
 #include <vector>
@@ -11,23 +9,17 @@
 #include <firefly/core/model/interpreters/PGResultInterpreter.hpp>
 
 namespace firefly {
-class Point3DInterpreter {
+class Point3DInterpreter : public PGResultInterpreter {
  public:
-    explicit Point3DInterpreter(PGresult *result);
+    using PGResultInterpreter::PGResultInterpreter;
 
-    virtual ~Point3DInterpreter();
+    explicit Point3DInterpreter(PGresult *result);
 
     Point3DBean getPoint3D(int row);
 
-    int get_row_number();
-
  private:
-    static const std::vector<const char *> PROPERTIES();
-
-    PGResultInterpreter *interpreter;
-
+    const std::vector<const char *> PROPERTIES();
 };
-}
+}  // namespace firefly
 
-
-#endif //FIREFLY_POINT3DINTERPRETER_H
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_POINT3DINTERPRETER_HPP_

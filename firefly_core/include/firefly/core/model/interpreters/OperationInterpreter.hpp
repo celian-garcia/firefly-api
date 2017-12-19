@@ -1,39 +1,31 @@
-//
-// Created by celian on 26/11/17.
-//
+// Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_OPERATIONINTERPRETER_H
-#define FIREFLY_OPERATIONINTERPRETER_H
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_OPERATIONINTERPRETER_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_OPERATIONINTERPRETER_HPP_
 
-
+#include <libpq-fe.h>
 #include <vector>
 #include <map>
 #include <string>
-#include <libpq-fe.h>
 #include <firefly/core/data/Operation.hpp>
 #include "PGResultInterpreter.hpp"
 
 namespace firefly {
 
-class OperationInterpreter {
+class OperationInterpreter : public PGResultInterpreter {
  public:
-    explicit OperationInterpreter(PGresult *result);
+    using PGResultInterpreter::PGResultInterpreter;
 
-    virtual ~OperationInterpreter();
+    explicit OperationInterpreter(PGresult *result);
 
     Operation getOperation(int row);
 
-    int get_row_number();
-
  private:
-    static const std::vector<const char *> PROPERTIES();
+    const std::vector<const char *> PROPERTIES();
 
     static std::map<std::string, OperationType> OPERATION_TYPES;
-
-    PGResultInterpreter *interpreter;
 };
 
 }  // namespace firefly
 
-
-#endif //FIREFLY_OPERATIONINTERPRETER_H
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_OPERATIONINTERPRETER_HPP_
