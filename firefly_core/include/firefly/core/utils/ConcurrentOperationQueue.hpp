@@ -1,6 +1,4 @@
-//
-// Created by celian on 02/12/17.
-//
+// Copyright 2017 <Célian Garcia>
 
 #ifndef FIREFLY_CONCURRENTOPERATIONQUEUE_HPP
 #define FIREFLY_CONCURRENTOPERATIONQUEUE_HPP

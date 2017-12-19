@@ -1,4 +1,5 @@
 /// Copyright 2017 <Célian Garcia>
+
 #ifndef INCLUDE_FIREFLY_THREAD_POOL_HPP_
 #define INCLUDE_FIREFLY_THREAD_POOL_HPP_
 #include <memory>

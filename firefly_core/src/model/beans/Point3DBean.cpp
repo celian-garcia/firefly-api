@@ -1,4 +1,5 @@
 // Copyright 2017 <Célian Garcia>
+
 #include "firefly/core/model/beans/Point3DBean.hpp"
 
 namespace firefly {

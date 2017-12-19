@@ -1,6 +1,4 @@
-//
-// Created by celian on 31/10/17.
-//
+// Copyright 2017 <Célian Garcia>
 
 #include <gtest/gtest.h>
 

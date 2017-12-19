@@ -2,7 +2,6 @@
 
 #include "firefly/core/data/TaskBuilder.hpp"
 
-
 namespace firefly {
 
     Task TaskBuilder::buildTask(DataCommonStore dataStore) {

@@ -1,6 +1,4 @@
-//
-// Created by celian on 01/11/17.
-//
+// Copyright 2017 <Célian Garcia>
 
 // tests.cpp
 #include <gtest/gtest.h>

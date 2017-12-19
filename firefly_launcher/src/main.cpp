@@ -1,4 +1,5 @@
 /// Copyright 2017 <Célian Garcia>
+
 #include <firefly/server/Server.hpp>
 
 #ifdef WITH_FLY_MODULE
