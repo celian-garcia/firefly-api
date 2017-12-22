@@ -1,8 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <thread>
 #include <firefly/server/Server.hpp>
-#include <fly_module/workers/FlyCloudPopulation.hpp>
 
 namespace firefly {
 
@@ -138,7 +136,6 @@ Server::initDefaultResource() {
     // Can for instance be used to retrieve an HTML 5 client that uses REST-resources on this server
     this->server.default_resource["GET"] = [this]
             (std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request) {
-
         try {
             // Build the absolute path from request
             auto path = boost::filesystem::canonical(this->resources_path / request->path);

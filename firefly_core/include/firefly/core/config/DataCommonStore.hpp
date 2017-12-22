@@ -8,6 +8,7 @@
 #include <firefly/core/data/Module.hpp>
 
 namespace firefly {
+
 /**
  * Not thread safe class
  */
@@ -24,6 +25,7 @@ class DataCommonStore {
  private:
     std::vector<Module> modules;
 };
+
 }  // namespace firefly
 
 #endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_CONFIG_DATACOMMONSTORE_HPP_

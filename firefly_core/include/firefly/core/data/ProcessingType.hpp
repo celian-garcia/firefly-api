@@ -33,6 +33,7 @@ class ProcessingType {
 }  // namespace firefly
 
 namespace nlohmann {
+
 template<>
 struct __attribute__((unused)) adl_serializer<firefly::ProcessingType> {
     static void __attribute__((unused)) to_json(json &j, const firefly::ProcessingType &pt) {
@@ -40,6 +41,7 @@ struct __attribute__((unused)) adl_serializer<firefly::ProcessingType> {
                  {"name", pt.getName()}};
     }
 };
+
 }  // namespace nlohmann
 
 #endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_PROCESSINGTYPE_HPP_

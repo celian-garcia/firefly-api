@@ -54,4 +54,4 @@ Point3DBean::addOperationId(const int &operation_id) {
     this->m_operations_ids.push_back(operation_id);
 }
 
-}
+}  // namespace firefly

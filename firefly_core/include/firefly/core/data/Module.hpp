@@ -57,6 +57,7 @@ class Module {
 }  // namespace firefly
 
 namespace nlohmann {
+
 template<>
 struct __attribute__((unused)) adl_serializer<firefly::Module> {
     static void __attribute__((unused)) to_json(json &j, const firefly::Module &m) {
@@ -68,6 +69,7 @@ struct __attribute__((unused)) adl_serializer<firefly::Module> {
                  {"version",          m.getVersion()}};
     }
 };
+
 }  // namespace nlohmann
 
 #endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_MODULE_HPP_

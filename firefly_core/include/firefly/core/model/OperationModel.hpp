@@ -4,6 +4,7 @@
 #define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_OPERATIONMODEL_HPP_
 
 #include <vector>
+#include <firefly/core/model/interpreters/OperationInterpreter.hpp>
 #include "DatabaseManager.hpp"
 
 namespace firefly {

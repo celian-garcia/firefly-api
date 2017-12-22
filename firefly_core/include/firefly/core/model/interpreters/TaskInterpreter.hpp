@@ -11,8 +11,6 @@
 namespace firefly {
 class TaskInterpreter : public PGResultInterpreter {
  public:
-    using PGResultInterpreter::PGResultInterpreter;
-
     explicit TaskInterpreter(PGresult* result, DataCommonStore* data_store);
 
     Task getTask(int row);

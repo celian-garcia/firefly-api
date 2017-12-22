@@ -1,6 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include "firefly/core/model/interpreters/OperationInterpreter.hpp"
+#include <firefly/core/model/interpreters/OperationInterpreter.hpp>
 
 namespace firefly {
 

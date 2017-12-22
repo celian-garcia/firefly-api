@@ -1,23 +1,25 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_FLYMODULE_HPP
-#define FIREFLY_FLYMODULE_HPP
+#ifndef FIREFLY_MODULES_FLY_INCLUDE_FLY_MODULE_DATA_FLYMODULE_HPP_
+#define FIREFLY_MODULES_FLY_INCLUDE_FLY_MODULE_DATA_FLYMODULE_HPP_
 
+#include <string>
 #include <firefly/core/data/Module.hpp>
 
 namespace firefly {
-    class FlyModule : public Module {
-    private:
-        static const std::string TITLE;
-        static const std::string DESCRIPTION;
-        static const std::string IMAGE_PATH;
-        static const ProcessingType R3D_PROC_TYPE;
-        static const ProcessingType P3D_PROC_TYPE;
 
-    public:
+class FlyModule : public Module {
+ private:
+    static const std::string TITLE;
+    static const std::string DESCRIPTION;
+    static const std::string IMAGE_PATH;
+    static const ProcessingType R3D_PROC_TYPE;
+    static const ProcessingType P3D_PROC_TYPE;
 
-        FlyModule();
-    };
-}
+ public:
+    FlyModule();
+};
 
-#endif //FIREFLY_FLYMODULE_HPP
+}  // namespace firefly
+
+#endif  // FIREFLY_MODULES_FLY_INCLUDE_FLY_MODULE_DATA_FLYMODULE_HPP_

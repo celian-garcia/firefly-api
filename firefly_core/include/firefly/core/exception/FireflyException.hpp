@@ -1,7 +1,7 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef INCLUDE_FIREFLY_UTILS_FIREFLYEXCEPTION_HPP_
-#define INCLUDE_FIREFLY_UTILS_FIREFLYEXCEPTION_HPP_
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_EXCEPTION_FIREFLYEXCEPTION_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_EXCEPTION_FIREFLYEXCEPTION_HPP_
 
 #include <iostream>
 #include <exception>
@@ -9,16 +9,15 @@
 
 #include <json/json.hpp>
 
-#include "HtmlStatusCode.hpp"
-#include "server_types_definitions.hpp"
+#include "firefly/core/utils/HtmlStatusCode.hpp"
+#include "firefly/core/utils/server_types_definitions.hpp"
 #include "firefly/core/data/Operation.hpp"
-#include "ResponseBuilder.hpp"
+#include "firefly/core/utils/ResponseBuilder.hpp"
 
 namespace firefly {
 
 class FireflyException : public std::exception {
  public:
-
     FireflyException() = default;
 
     FireflyException(const HtmlStatusCode code, const std::string &content) :
@@ -41,5 +40,6 @@ class FireflyException : public std::exception {
     std::string m_content;
 };
 
-}  // end namespace firefly
-#endif  // INCLUDE_FIREFLY_UTILS_FIREFLYEXCEPTION_HPP_
+}  // namespace firefly
+
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_EXCEPTION_FIREFLYEXCEPTION_HPP_

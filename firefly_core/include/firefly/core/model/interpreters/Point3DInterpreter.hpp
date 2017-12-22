@@ -11,8 +11,6 @@
 namespace firefly {
 class Point3DInterpreter : public PGResultInterpreter {
  public:
-    using PGResultInterpreter::PGResultInterpreter;
-
     explicit Point3DInterpreter(PGresult *result);
 
     Point3DBean getPoint3D(int row);

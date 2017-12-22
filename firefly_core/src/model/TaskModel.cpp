@@ -35,12 +35,7 @@ TaskModel::updateTaskStateById(int task_id, const Task::State &state) {
     update_query << "UPDATE task SET " <<
                  "state = " << this->m_dbmanager->format(state) << " "
                          "WHERE id = " << this->m_dbmanager->format(task_id) << ";";
-    try {
-        this->m_dbmanager->execUpdateQuery(update_query.str());
-    }
-    catch (DatabaseException e) {
-        throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, e.what());
-    }
+    this->m_dbmanager->execUpdateQuery(update_query.str());
 }
 
 std::vector<Task> TaskModel::getTasks() {

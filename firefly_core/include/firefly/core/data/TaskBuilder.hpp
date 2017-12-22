@@ -9,8 +9,8 @@
 #include "Task.hpp"
 
 namespace firefly {
-class TaskBuilder {
 
+class TaskBuilder {
  public:
     TaskBuilder() = default;
 
@@ -39,6 +39,7 @@ class TaskBuilder {
     int type_id;
     int module_id;
 };
+
 }  // namespace firefly
 
 namespace nlohmann {
@@ -89,6 +90,7 @@ struct __attribute__((unused)) adl_serializer<firefly::TaskBuilder> {
         }
     }
 };
+
 }  // namespace nlohmann
 
 #endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_TASKBUILDER_HPP_

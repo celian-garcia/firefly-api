@@ -3,11 +3,15 @@
 #ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_
 #define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_
 
+#include <cxcore.h>
 #include <libpq-fe.h>
+#include <libpqtypes.h>
 #include <map>
 #include <functional>
 #include <vector>
 #include <cstring>
+#include <iostream>
+#include <boost/algorithm/string.hpp>
 
 namespace firefly {
 struct StrComparator : public std::binary_function<const char *, const char *, bool> {

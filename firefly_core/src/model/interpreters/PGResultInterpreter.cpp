@@ -1,10 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <cxcore.h>
-#include <libpqtypes.h>
-#include <iostream>
-#include <boost/algorithm/string.hpp>
-#include "firefly/core/model/interpreters/PGResultInterpreter.hpp"
+#include <firefly/core/model/interpreters/PGResultInterpreter.hpp>
 
 namespace firefly {
 PGResultInterpreter::PGResultInterpreter(PGresult *result) : result(result) {

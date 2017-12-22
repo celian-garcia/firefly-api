@@ -1,14 +1,15 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef INCLUDE_FIREFLY_MODEL_POINT3DMODEL_HPP_
-#define INCLUDE_FIREFLY_MODEL_POINT3DMODEL_HPP_
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_POINT3DMODEL_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_POINT3DMODEL_HPP_
 
+#include <libpqtypes.h>
 #include <vector>
 #include <string>
-#include "firefly/core/data/Operation.hpp"
-#include "firefly/core/model/DatabaseManager.hpp"
-#include "firefly/core/model/exceptions.hpp"
-#include "firefly/core/model/beans/Point3DBean.hpp"
+#include <firefly/core/data/Operation.hpp>
+#include <firefly/core/model/DatabaseManager.hpp>
+#include <firefly/core/model/beans/Point3DBean.hpp>
+#include <firefly/core/model/interpreters/Point3DInterpreter.hpp>
 
 namespace firefly {
 
@@ -30,4 +31,5 @@ class Point3DModel : public BaseModel {
 };
 
 }  // namespace firefly
-#endif  // INCLUDE_FIREFLY_MODEL_POINT3DMODEL_HPP_
+
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_POINT3DMODEL_HPP_

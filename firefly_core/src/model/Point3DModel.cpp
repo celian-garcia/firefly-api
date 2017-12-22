@@ -1,8 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include <libpqtypes.h>
-#include <firefly/core/model/interpreters/Point3DInterpreter.hpp>
-#include "firefly/core/model/Point3DModel.hpp"
+#include <firefly/core/model/Point3DModel.hpp>
 
 namespace firefly {
 
@@ -17,10 +15,6 @@ Point3DModel::getPointByValueAndTaskId(cv::Vec3f value, int task_id) {
             this->m_dbmanager->format(task_id);
 
     PGresult *res = this->m_dbmanager->execSelectQuery(select_query.c_str());
-
-    if (PQntuples(res) == 0) {
-        throw ObjectNotFound();
-    }
 
     // TODO(Célian) : get correctly the point from the database
     // int id_fnum = PQfnumber(res, "id");

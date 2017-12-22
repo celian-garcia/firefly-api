@@ -81,6 +81,7 @@ class Task {
 }  // namespace firefly
 
 namespace nlohmann {
+
 template<>
 struct __attribute__((unused)) adl_serializer<firefly::Task> {
     static void __attribute__((unused)) to_json(json &j, const firefly::Task &task) {
@@ -94,6 +95,7 @@ struct __attribute__((unused)) adl_serializer<firefly::Task> {
                  {"state",       task.getState()}};
     }
 };
+
 }  // namespace nlohmann
 
 #endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_TASK_HPP_

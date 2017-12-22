@@ -14,8 +14,6 @@ namespace firefly {
 
 class OperationInterpreter : public PGResultInterpreter {
  public:
-    using PGResultInterpreter::PGResultInterpreter;
-
     explicit OperationInterpreter(PGresult *result);
 
     Operation getOperation(int row);

@@ -1,6 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#include "firefly/core/model/interpreters/Point3DInterpreter.hpp"
+#include <firefly/core/model/interpreters/Point3DInterpreter.hpp>
 
 namespace firefly {
 

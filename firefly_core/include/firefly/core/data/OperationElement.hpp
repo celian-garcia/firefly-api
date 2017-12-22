@@ -32,9 +32,11 @@ class OperationElement {
     std::string type;
     cv::Vec3f value;
 };
+
 }  // namespace firefly
 
 namespace nlohmann {
+
 template<>
 struct __attribute__((unused)) adl_serializer<cv::Vec3f> {
     static void __attribute__((unused)) to_json(json &j, const cv::Vec3f &v) {
@@ -52,6 +54,7 @@ struct __attribute__((unused)) adl_serializer<firefly::OperationElement> {
                  {"value", operation.getValue()}};
     }
 };
+
 }  // namespace nlohmann
 
 #endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONELEMENT_HPP_

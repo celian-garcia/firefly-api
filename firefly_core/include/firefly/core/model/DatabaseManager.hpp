@@ -1,69 +1,60 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef INCLUDE_FIREFLY_MODEL_DATABASEMANAGER_HPP_
-#define INCLUDE_FIREFLY_MODEL_DATABASEMANAGER_HPP_
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_DATABASEMANAGER_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_DATABASEMANAGER_HPP_
 
+#include <libpq-fe.h>
+#include <libpqtypes.h>
 #include <string>
 #include <vector>
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <libpq-fe.h>
-#include "libpqtypes.h"
 #include "firefly/core/utils/HtmlStatusCode.hpp"
-#include "firefly/core/utils/FireflyException.hpp"
+#include "firefly/core/exception/FireflyException.hpp"
 
 namespace firefly {
 
-    class DatabaseException : public std::exception {
-    public:
-        explicit DatabaseException(std::string message);
+class DatabaseManager {
+ public:
+    explicit DatabaseManager(const std::string &db_name);
 
-        virtual const char *what() const throw();
+    ~DatabaseManager();
 
-    private:
-        std::string m_message;
-    };
+    void execInsertQuery(const std::string &query);
 
-    class DatabaseManager {
-    public:
-        explicit DatabaseManager(const std::string &db_name);
+    void execUpdateQuery(const std::string &query);
 
-        ~DatabaseManager();
+    PGresult *execSelectQuery(const std::string &query);
 
-        void execInsertQuery(const std::string &query);
+    void clearResult(PGresult *result);
 
-        void execUpdateQuery(const std::string &query);
+    std::string format(const int &);
 
-        PGresult *execSelectQuery(const std::string &query);
+    std::string format(const double &);
 
-        void clearResult(PGresult *result);
+    std::string format(const cv::Vec3f &);
 
-        std::string format(const int &);
+    std::string format(const std::vector<int> &);
 
-        std::string format(const double &);
+    std::string format(const std::string &);
 
-        std::string format(const cv::Vec3f &);
+ protected:
+    PGconn *m_connection;
+    // TODO(Célian): put it in configuration file
+    const std::string USER = "firefly_foreman";
+    const std::string PASSWORD = "rootbug";
+    const std::string HOST = "localhost";
+    const std::string PORT = "5432";
+};
 
-        std::string format(const std::vector<int> &);
+class BaseModel {
+ public:
+    explicit BaseModel(DatabaseManager *manager) : m_dbmanager(manager) {}
 
-        std::string format(const std::string &);
-
-    protected:
-        PGconn *m_connection;
-        // TODO(Célian): put it in configuration file
-        const std::string USER = "firefly_foreman";
-        const std::string PASSWORD = "rootbug";
-        const std::string HOST = "localhost";
-        const std::string PORT = "5432";
-    };
-
-    class BaseModel {
-    public:
-        explicit BaseModel(DatabaseManager *manager) : m_dbmanager(manager) {}
-
-    protected:
-        DatabaseManager *m_dbmanager;
-    };
+ protected:
+    DatabaseManager *m_dbmanager;
+};
 
 }  // namespace firefly
-#endif  // INCLUDE_FIREFLY_MODEL_DATABASEMANAGER_HPP_
+
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_DATABASEMANAGER_HPP_

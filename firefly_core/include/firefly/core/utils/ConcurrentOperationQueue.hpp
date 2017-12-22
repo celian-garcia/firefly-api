@@ -1,13 +1,14 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CONCURRENTOPERATIONQUEUE_HPP
-#define FIREFLY_CONCURRENTOPERATIONQUEUE_HPP
+#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_CONCURRENTOPERATIONQUEUE_HPP_
+#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_CONCURRENTOPERATIONQUEUE_HPP_
 
 #include <queue>
 #include <boost/thread.hpp>
 #include "firefly/core/data/Operation.hpp"
 
 namespace firefly {
+
 class ConcurrentOperationQueue {
  public:
     bool isEmptyAndEnded() {
@@ -43,4 +44,4 @@ class ConcurrentOperationQueue {
 
 }  // namespace firefly
 
-#endif //FIREFLY_CONCURRENTOPERATIONQUEUE_HPP
+#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_CONCURRENTOPERATIONQUEUE_HPP_

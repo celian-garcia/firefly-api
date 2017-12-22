@@ -3,6 +3,7 @@
 #include "fly_module/data/FlyModule.hpp"
 
 namespace firefly {
+
     const std::string FlyModule::TITLE = "Fly";
     const std::string FlyModule::DESCRIPTION = "Fly module description";
     const std::string FlyModule::IMAGE_PATH = "";
@@ -15,5 +16,5 @@ namespace firefly {
         this->setImagePath(FlyModule::IMAGE_PATH);
         this->setProcessingTypesList({FlyModule::R3D_PROC_TYPE, FlyModule::P3D_PROC_TYPE});
     }
-}
 
+}  // namespace firefly

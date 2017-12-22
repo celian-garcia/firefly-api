@@ -52,6 +52,7 @@ class Operation {
 }  // namespace firefly
 
 namespace nlohmann {
+
 template<>
 struct __attribute__((unused)) adl_serializer<firefly::Operation> {
     static void __attribute__((unused)) to_json(json &j, const firefly::Operation &operation) {
@@ -60,6 +61,7 @@ struct __attribute__((unused)) adl_serializer<firefly::Operation> {
                  {"element", operation.getElement()}};
     }
 };
+
 }  // namespace nlohmann
 
 #endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATION_HPP_

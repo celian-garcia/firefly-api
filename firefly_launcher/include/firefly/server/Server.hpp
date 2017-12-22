@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <memory>
 #include <map>
+#include <thread>
 
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -18,19 +19,21 @@
 
 #include <simple_web_server/server_http.hpp>
 
-#include "firefly/core/utils/server_types_definitions.hpp"
-#include "firefly/core/data/Module.hpp"
-#include "firefly/core/data/Task.hpp"
+#include <firefly/core/utils/server_types_definitions.hpp>
+#include <firefly/core/data/Module.hpp>
+#include <firefly/core/data/Task.hpp>
 #include <firefly/core/data/Operation.hpp>
-#include "firefly/core/utils/ResponseBuilder.hpp"
-#include <firefly/core/model/TaskModel.hpp>
 #include <firefly/core/data/TaskBuilder.hpp>
-
+#include <firefly/core/utils/ResponseBuilder.hpp>
+#include <firefly/core/model/TaskModel.hpp>
 #include <firefly/core/model/DatabaseManager.hpp>
 #include <firefly/core/config/DataCommonStore.hpp>
 #include <firefly/core/utils/ThreadPool.hpp>
 
+#include <fly_module/workers/FlyCloudPopulation.hpp>
+
 namespace firefly {
+
 typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
 
 class Server {
@@ -57,6 +60,7 @@ class Server {
     std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)> static buildFireflyResource(
             const std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)> &resource);
 };
+
 }  // namespace firefly
 
 #endif  // FIREFLY_LAUNCHER_INCLUDE_FIREFLY_SERVER_SERVER_HPP_
