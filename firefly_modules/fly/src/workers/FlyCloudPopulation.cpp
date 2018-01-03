@@ -42,19 +42,12 @@ void FlyCloudPopulation::stop() {
     throw FireflyException(HtmlStatusCode::NOT_IMPLEMENTED, "Stop action not yet implemented");
 }
 
-// TODO(célian): move it to firefly_core
+// TODO(Célian): use fly library here
 /**
- * Collect operations from database. We only collect the operations from the last time we collect.
- * @param task_id the id of the task we're collecting.
- * @param client_last_op index of the last operation that we performed.
- * @return operations performed from the last collect.
+ * Data Producer : <br>
+ * Produce all 3D points for consumer.
+ * @param queue Channel where we write operations we create. Red by consumer.
  */
-std::vector<Operation> FlyCloudPopulation::collect(int task_id, int client_last_op) {
-    DatabaseManager db_manager(DATABASE_NAME);
-    OperationModel operation_model(&db_manager);
-    return operation_model.getOperationsSince(task_id, client_last_op);
-}
-
 void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *queue) {
     for (int i = 0; i < 10; ++i) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -66,18 +59,24 @@ void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *queue) {
     queue->endQueue();
 }
 
+/**
+ * Data Consumer: <br>
+ * Consumes all data given by producer storing them in the database.
+ * @param task_id Still necessary to know where to store operations in database.
+ * @param queue Channel where we read operations to save in database. Written by producer.
+ */
 void FlyCloudPopulation::run_populate_thread(int task_id, ConcurrentOperationQueue *queue) {
     std::cout << "Thread starts for the task id : " << task_id << std::endl;
 
     // Trying to get task from database
     DatabaseManager db_manager(DATABASE_NAME);
     TaskModel task_model(&db_manager);
-    Point3DModel point_model(&db_manager);
+    OperationModel operation_model(&db_manager);
 
     // Save all operations in base
     while (!queue->isEmptyAndEnded()) {
         Operation operation = queue->dequeue();
-        point_model.insertOperation(operation, task_id);
+        operation_model.insertOperation(operation, task_id);
     }
 
     // Move task to FINISHED state

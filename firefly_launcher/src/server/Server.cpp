@@ -110,8 +110,13 @@ void Server::initializeFireflyResources() {
             std::shared_ptr<HttpRequest> request) -> void {
         int task_id = std::stoi(request->path_match[1]);
         int client_last_op = std::stoi(request->path_match[2]);
-        std::vector<Operation> operations_list = fly_module::FlyCloudPopulation::collect(task_id, client_last_op);
 
+        // Get the last operations since the one given by client
+        DatabaseManager db_manager("firefly_hive");
+        OperationModel operation_model(&db_manager);
+        std::vector<Operation> operations_list = operation_model.getOperationsSince(task_id, client_last_op);
+
+        // Compute the new operation index
         int last_operation_index = 0;
         if (!operations_list.empty()) {
             last_operation_index = std::max_element(

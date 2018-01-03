@@ -39,8 +39,6 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             include/firefly/core/model/interpreters/PGResultInterpreter.hpp
             src/model/interpreters/TaskInterpreter.cpp
             include/firefly/core/model/interpreters/TaskInterpreter.hpp
-            src/model/Point3DModel.cpp
-            include/firefly/core/model/Point3DModel.hpp
             src/model/beans/Point3DBean.cpp
             include/firefly/core/model/beans/Point3DBean.hpp
             src/model/interpreters/Point3DInterpreter.cpp

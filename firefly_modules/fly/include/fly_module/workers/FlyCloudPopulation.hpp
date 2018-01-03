@@ -10,7 +10,6 @@
 
 #include <firefly/core/model/DatabaseManager.hpp>
 #include <firefly/core/model/beans/Point3DBean.hpp>
-#include <firefly/core/model/Point3DModel.hpp>
 #include <firefly/core/model/TaskModel.hpp>
 #include <firefly/core/model/OperationModel.hpp>
 
@@ -26,8 +25,6 @@ class FlyCloudPopulation {
     static int start(int task_id, ThreadPool *pool);
 
     static void stop();
-
-    static std::vector<Operation> collect(int task_id, int client_last_op);
 
  private:
     static const char *DATABASE_NAME;
