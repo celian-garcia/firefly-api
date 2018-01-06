@@ -6,6 +6,9 @@
 #include <vector>
 #include <thread>
 #include <string>
+
+#include <fly/fly.hpp>
+
 #include <firefly/core/data/Operation.hpp>
 
 #include <firefly/core/model/DatabaseManager.hpp>

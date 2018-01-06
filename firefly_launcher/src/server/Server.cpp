@@ -41,7 +41,6 @@ void Server::initializeFireflyResources() {
     this->server.resource["^/api/v1/modules$"]["GET"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) -> void {
-        std::cout << "api/v1/modules endpoint reached\n" << std::endl;
         nlohmann::json result_content(this->dataStore.getModules());
         ResponseBuilder::build(result_content, response);
     });
@@ -49,7 +48,6 @@ void Server::initializeFireflyResources() {
     this->server.resource["^/api/v1/tasks$"]["GET"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) {
-        std::cout << "api/v1/tasks endpoint reached\n" << std::endl;
         nlohmann::json result_content;
 
         DatabaseManager db_manager("firefly_hive");
@@ -57,7 +55,6 @@ void Server::initializeFireflyResources() {
         for (auto task : taskModel.getTasks()) {
             result_content.push_back(task);
         }
-        std::cout << result_content << "\n" << std::endl;
 
         ResponseBuilder::build(result_content, response);
     });

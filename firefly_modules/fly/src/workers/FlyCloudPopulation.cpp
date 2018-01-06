@@ -1,6 +1,7 @@
 // Copyright 2017 <Célian Garcia>
 
 #include <fly_module/workers/FlyCloudPopulation.hpp>
+#include <fly_module/workers/CloudContainerImpl.hpp>
 
 namespace firefly {
 namespace fly_module {
@@ -23,7 +24,6 @@ int FlyCloudPopulation::start(int task_id, ThreadPool *pool) noexcept(false) {
     task_model.updateTaskStateById(task_id, Task::STARTED);
 
     auto *operations = new ConcurrentOperationQueue;
-
     pool->enqueue([operations] {
         run_compute_thread(operations);
     });
@@ -42,21 +42,17 @@ void FlyCloudPopulation::stop() {
     throw FireflyException(HtmlStatusCode::NOT_IMPLEMENTED, "Stop action not yet implemented");
 }
 
-// TODO(Célian): use fly library here
 /**
  * Data Producer : <br>
  * Produce all 3D points for consumer.
  * @param queue Channel where we write operations we create. Red by consumer.
  */
 void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *queue) {
-    for (int i = 0; i < 10; ++i) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        queue->enqueue({OperationType::ADD, {"fpoint3d", {i, i, i}}});
-        queue->enqueue({OperationType::ADD, {"fpoint3d", {i, i, i}}});
-        queue->enqueue({OperationType::DELETE, {"fpoint3d", {i, i, i}}});
-        queue->enqueue({OperationType::ADD, {"fpoint3d", {i, i, i}}});
-    }
+    CloudContainerImpl *container = new CloudContainerImpl(queue);
+    fly::CloudFiller<CloudContainerImpl> filler(container);
+    filler.random_filling(20, -10, 10);
     queue->endQueue();
+    delete container;
 }
 
 /**

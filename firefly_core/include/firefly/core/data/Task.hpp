@@ -16,7 +16,9 @@ class Task {
     enum State {
         CREATED = 0,
         STARTED,
-        FINISHED
+        PAUSED,
+        FINISHED,
+        ABORTED
     };
 
     Task() = default;

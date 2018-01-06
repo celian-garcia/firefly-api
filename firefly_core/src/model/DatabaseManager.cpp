@@ -12,7 +12,7 @@ DatabaseManager::DatabaseManager(const std::string &db_name) {
             "host=" + this->HOST + " " +
             "port=" + this->PORT + " ";
 
-    std::cout << "Connecting to database with the following connection string : " + conn_str << std::endl;
+//    std::cout << "Connecting to database with the following connection string : " + conn_str << std::endl;
 
     this->m_connection = PQconnectdb(conn_str.c_str());
 
@@ -30,7 +30,7 @@ DatabaseManager::~DatabaseManager() {
 
 void
 DatabaseManager::execInsertQuery(const std::string &query) {
-    std::cout << "Insert/Update query execution: " << query << std::endl;
+//    std::cout << "Insert/Update query execution: " << query << std::endl;
     PGresult *res = PQexec(this->m_connection, query.c_str());
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
         std::string errMessage = PQresultErrorMessage(res);
@@ -48,7 +48,7 @@ DatabaseManager::execUpdateQuery(const std::string &query) {
 
 PGresult *
 DatabaseManager::execSelectQuery(const std::string &query) {
-    std::cout << "Select query execution: " << query << std::endl;
+//    std::cout << "Select query execution: " << query << std::endl;
     PGresult *res = PQexec(this->m_connection, query.c_str());
 
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
