@@ -94,8 +94,9 @@ void Server::initializeFireflyResources() {
         const std::optional<Task> &resultTask = taskModel.getTaskById(atoi(task_id.c_str()));
         if (resultTask) {
             Task task = resultTask.value();
+            ProcessingType task_type = task.getType();
             int module_id = task.getModule().getId();
-            fly_module::FlyCloudPopulation::start(task.getIdentifier(), thread_pool_map[module_id]);
+            fly_module::FlyCloudPopulation::start(task.getIdentifier(), thread_pool_map[module_id], task_type);
             ResponseBuilder::build("{\"resultOk\": true}", response);
         } else {
             ResponseBuilder::build("{\"resultOk\": false}", response);

@@ -25,14 +25,14 @@ namespace fly_module {
 
 class FlyCloudPopulation {
  public:
-    static int start(int task_id, ThreadPool *pool);
+    static int start(int task_id, ThreadPool *pool, ProcessingType type);
 
     static void stop();
 
  private:
     static const char *DATABASE_NAME;
 
-    static void run_compute_thread(ConcurrentOperationQueue *queue);
+    static void run_compute_thread(ConcurrentOperationQueue *queue, ProcessingType type);
 
     static void run_populate_thread(int cloud_id, ConcurrentOperationQueue *queue);
 };
