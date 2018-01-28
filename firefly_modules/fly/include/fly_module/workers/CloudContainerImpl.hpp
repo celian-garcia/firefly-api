@@ -13,7 +13,7 @@ namespace fly_module {
 
 class CloudContainerImpl : public fly::CloudContainer {
  public:
-    using CloudContainer::add_point;
+    using fly::CloudContainer::add_point;
 
     explicit CloudContainerImpl(ConcurrentOperationQueue *m_queue) : m_queue(m_queue) {}
 
