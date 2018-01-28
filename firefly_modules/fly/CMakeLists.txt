@@ -6,6 +6,10 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
     find_package(OpenCV REQUIRED)
     find_library(Fly NAMES fly)
 
+    message(STATUS ${Fly_LIBRARY_DIRS})
+    message(STATUS ${Fly_LIBRARIES})
+    message(STATUS ${Fly_INCLUDE_DIRS})
+
     link_directories(${Fly_LIBRARY_DIRS})
 
     # Get FIREFLY CORE include directories
