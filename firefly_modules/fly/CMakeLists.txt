@@ -3,8 +3,9 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
     message(STATUS "=========== START OF '${FLY_MODULE_TARGET}' target configuration ==============")
 
     ## Dependencies ## ====================================================================
+    find_package(PkgConfig REQUIRED)
     find_package(OpenCV REQUIRED)
-    find_library(Fly NAMES fly)
+    pkg_check_modules(Fly REQUIRED fly)
 
     message(STATUS ${Fly_FOUND})
     message(STATUS ${Fly_LIBRARY_DIRS})
