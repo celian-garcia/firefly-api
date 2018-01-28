@@ -5,7 +5,7 @@ COPY . .
 
 RUN pkg-config --version \
     && ls -l /usr/local/lib/libfly* \
-    && ls -l /usr/local/include/*
+    && ls -l /usr/local/include/* \
     && cat /usr/local/share/pkgconfig/fly.pc
 
 RUN rm -rf build \
