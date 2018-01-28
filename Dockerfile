@@ -3,7 +3,10 @@ FROM celiangarcia/firefly-server:0.5
 WORKDIR /firefly
 COPY . .
 
-RUN pkg-config --version
+RUN pkg-config --version \
+    && ls -l /usr/local/lib/libfly* \
+    && ls -l /usr/local/include/*
+    && cat /usr/local/share/pkgconfig/fly.pc
 
 RUN rm -rf build \
     && mkdir build \
