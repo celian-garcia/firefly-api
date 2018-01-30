@@ -1,5 +1,5 @@
 | Quality | Build & deploy | License |
-| ------- | -------------- | ------- |
+| :------ | :------------- | :------ |
 | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b129025453c047129aeb1b418c49b7bf)](https://www.codacy.com/app/celiangarcia/firefly-api?utm_source=github.com&utm_medium=referral&utm_content=celian-garcia/firefly-api&utm_campaign=badger) [![Documentation](https://codedocs.xyz/celian-garcia/firefly.svg)](https://codedocs.xyz/celian-garcia/firefly/) | [![CircleCI](https://circleci.com/gh/celian-garcia/firefly-api.svg?style=shield)](https://circleci.com/gh/celian-garcia/firefly-api) | [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) |
 
 ## Firefly
