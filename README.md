@@ -3,7 +3,7 @@
 [![Documentation](https://codedocs.xyz/celian-garcia/firefly.svg)](https://codedocs.xyz/celian-garcia/firefly/)
 
 **Build**<br>
-[![CircleCI](https://circleci.com/gh/celian-garcia/firefly-api.svg?style=svg)](https://circleci.com/gh/celian-garcia/firefly-api)
+[![CircleCI](https://circleci.com/gh/celian-garcia/firefly-api.svg?style=shield)](https://circleci.com/gh/celian-garcia/firefly-api)
 
 ## Firefly
 C++ and Angular2 Web Application to have remote access to Fly library functionalities.
