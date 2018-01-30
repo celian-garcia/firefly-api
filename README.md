@@ -1,12 +1,6 @@
-**Quality**<br> 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b129025453c047129aeb1b418c49b7bf)](https://www.codacy.com/app/celiangarcia/firefly-api?utm_source=github.com&utm_medium=referral&utm_content=celian-garcia/firefly-api&utm_campaign=badger)
-[![Documentation](https://codedocs.xyz/celian-garcia/firefly.svg)](https://codedocs.xyz/celian-garcia/firefly/)
-
-**Build & deploy**<br>
-[![CircleCI](https://circleci.com/gh/celian-garcia/firefly-api.svg?style=shield)](https://circleci.com/gh/celian-garcia/firefly-api)
-
-**License**<br>
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+| Quality | Build & deploy | License |
+| ------- | -------------- | ------- |
+| [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b129025453c047129aeb1b418c49b7bf)](https://www.codacy.com/app/celiangarcia/firefly-api?utm_source=github.com&utm_medium=referral&utm_content=celian-garcia/firefly-api&utm_campaign=badger) [![Documentation](https://codedocs.xyz/celian-garcia/firefly.svg)](https://codedocs.xyz/celian-garcia/firefly/) | [![CircleCI](https://circleci.com/gh/celian-garcia/firefly-api.svg?style=shield)](https://circleci.com/gh/celian-garcia/firefly-api) | [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) |
 
 ## Firefly
 C++ and Angular2 Web Application to have remote access to Fly library functionalities.
@@ -34,6 +28,3 @@ Larger purpose would be to have access to high level OpenCV features.
 - [User documentation](../../wiki/User-documentation)
     - [API interface definition](../../wiki/User-documentation#api-interface-definition)
     - [Installation](../../wiki/User-documentation#installation)
-
-#### Licence 
-[GNU GPL v3](./LICENCE.txt)
