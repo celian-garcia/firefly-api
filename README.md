@@ -5,6 +5,9 @@
 **Build & deploy**<br>
 [![CircleCI](https://circleci.com/gh/celian-garcia/firefly-api.svg?style=shield)](https://circleci.com/gh/celian-garcia/firefly-api)
 
+**License**<br>
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 ## Firefly
 C++ and Angular2 Web Application to have remote access to Fly library functionalities.
 Larger purpose would be to have access to high level OpenCV features.
