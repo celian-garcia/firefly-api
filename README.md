@@ -1,5 +1,5 @@
 **Quality**<br> 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b129025453c047129aeb1b418c49b7bf)](https://www.codacy.com/app/celiangarcia/firefly-server?utm_source=github.com&utm_medium=referral&utm_content=celian-garcia/firefly-server&utm_campaign=badger)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b129025453c047129aeb1b418c49b7bf)](https://www.codacy.com/app/celiangarcia/firefly-api?utm_source=github.com&utm_medium=referral&utm_content=celian-garcia/firefly-api&utm_campaign=badger)
 [![Documentation](https://codedocs.xyz/celian-garcia/firefly.svg)](https://codedocs.xyz/celian-garcia/firefly/)
 
 **Build & deploy**<br>
