@@ -39,7 +39,7 @@ jobs:
             mkdir build
             cd build
             cmake -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgresql ..
-            build-wrapper-linux-x86-64 --out-dir wrapper-output  make -j12
+            build-wrapper --out-dir wrapper-output  make -j12
       - run:
           name: Run sonar with maven
           command: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=celian-garcia-github -Dsonar.login=$SONAR_LOGIN -Dsonar.cfamily.build-wrapper-output=./build/wrapper-output
