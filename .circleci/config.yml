@@ -36,7 +36,8 @@ jobs:
       - run:
           name: Build app using sonar's build wrapper
           command: |
-            mkdir -p build
+            mkdir build
+            cd build
             cmake -DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgresql ..
             build-wrapper-linux-x86-64 --out-dir wrapper-output  make -j12
       - run:
