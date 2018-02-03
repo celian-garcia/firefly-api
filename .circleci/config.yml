@@ -42,7 +42,7 @@ jobs:
             build-wrapper --out-dir wrapper-output  make -j12
       - run:
           name: Run sonar with maven
-          command: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=celian-garcia-github -Dsonar.login=$SONAR_LOGIN -Dsonar.cfamily.build-wrapper-output=./build/wrapper-output -Dsonar.jproperties.sourceEncoding=UTF-8
+          command: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=celian-garcia-github -Dsonar.login=$SONAR_LOGIN -Dsonar.cfamily.build-wrapper-output=./build/wrapper-output -Dsonar.sourceEncoding=UTF-8
 
 workflows:
   version: 2
