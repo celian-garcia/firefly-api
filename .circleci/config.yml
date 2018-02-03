@@ -44,7 +44,7 @@ jobs:
           name: Run sonar with maven
           command: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=celian-garcia-github -Dsonar.login=$SONAR_LOGIN -Dsonar.cfamily.build-wrapper-output=./build/wrapper-output -Dsonar.sourceEncoding=UTF-8 -Dsonar.cpp.std=c++17
           environment:
-            SONAR_RUNNER_OPTS: -Xmx3062m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=128m
+            SONAR_RUNNER_OPTS: "-Xmx3062m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=128m"
 
 workflows:
   version: 2
