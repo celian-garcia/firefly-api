@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>firefly</groupId>
+  <artifactId>firefly-api-sonar-runner</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cxx-maven-plugin</artifactId>
+        <version>0.0.5</version>
+        <configuration>
+          <!-- All of the sub configuration nodes following are needed by sonar-cxx plugin -->
+          <!-- This sample provided values are default values. -->
+          <!-- So you can simple remove all of it if you provide reports in the right places -->
+          <xunit>
+            <directory>${basedir}/reports/xunit-reports</directory>
+            <includes>
+              <include>**/xunit-result-*.xml</include>
+            </includes>
+          </xunit>
+          <gcovr>
+            <directory>${basedir}/reports/gcovr-reports</directory>
+            <includes>
+              <include>**/gcovr-reports-*.xml</include>
+            </includes>
+          </gcovr>
+          <cppcheck>
+            <directory>${basedir}/reports/cppcheck-reports</directory>
+            <includes>
+              <include>**/cppcheck-result-*.xml</include>
+            </includes>
+            <reportsIncludeSourcePath>
+              <include>..</include>
+            </reportsIncludeSourcePath>
+          </cppcheck>
+          <cppncss>
+            <directory>${basedir}/reports/cppncss-reports</directory>
+            <includes>
+              <include>**/cppncss-result-*.xml</include>
+            </includes>
+            <reportsIncludeSourcePath>
+              <include>..</include>
+            </reportsIncludeSourcePath>
+          </cppncss>
+          <veraxx>
+            <directory>${basedir}/reports/vera++-reports</directory>
+            <includes>
+              <include>**/vera++-result-*.xml</include>
+            </includes>
+            <reportsIncludeSourcePath>
+              <include>..</include>
+            </reportsIncludeSourcePath>
+          </veraxx>
+          <valgrind>
+            <directory>${basedir}/reports/valgrind-reports</directory>
+            <includes>
+              <include>**/valgrind-result-*.xml</include>
+            </includes>
+            <reportsIncludeSourcePath>
+              <include>..</include>
+            </reportsIncludeSourcePath>
+          </valgrind>
+        </configuration>
+      </plugin>
+    </plugins>  
+  </build>
+  <properties>
+    <!--<sonar.language>cpp</sonar.language>-->
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.sources>${basedir}</sonar.sources>
+    <sonar.exclusions>docs/**,build/**,pom.xml</sonar.exclusions>
+    <sonar.cxx.cppcheck.reportPath>cppcheck-reports/cppcheck-result-*.xml</sonar.cxx.cppcheck.reportPath>
+    <sonar.cxx.coverage.reportPath>gcovr-reports/gcovr-result-*.xml</sonar.cxx.coverage.reportPath>
+    <sonar.cxx.coverage.itReportPath>gcovr-reports/gcovr-result-*.xml</sonar.cxx.coverage.itReportPath>
+    <sonar.cxx.coverage.overallReportPath>gcovr-reports/gcovr-result-*.xml</sonar.cxx.coverage.overallReportPath>
+    <sonar.cxx.rats.reportPath>rats-reports/rats-result-*.xml</sonar.cxx.rats.reportPath>
+    <sonar.cxx.vera.reportPath>vera++-reports/vera++-result-*.xml</sonar.cxx.vera.reportPath>
+    <sonar.cxx.xunit.reportPath>xunit-reports/xunit-result-*.xml</sonar.cxx.xunit.reportPath>
+
+    <sonar.cxx.defines>Q_OBJECT, Q_SLOTS</sonar.cxx.defines>
+    
+    <!-- <sonar.cxx.suffixes.sources></sonar.cxx.suffixes.sources> -->
+    <!-- <sonar.cxx.suffixes.headers></sonar.cxx.suffixes.headers> -->
+    <!-- <sonar.cxx.xunit.xsltURL></sonar.cxx.xunit.xsltURL> -->
+    <!-- <sonar.cxx.valgrind.reportPath></sonar.cxx.valgrind.reportPath> -->
+  </properties>
+</project>
