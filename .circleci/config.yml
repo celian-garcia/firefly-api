@@ -43,4 +43,10 @@ jobs:
           name: Run sonar with maven
           command: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=celian-garcia-github -Dsonar.login=$SONAR_LOGIN -Dsonar.cfamily.build-wrapper-output=./build/wrapper-output
 
-      
+workflows:
+  version: 2
+  all:
+    jobs:
+      - build
+      - analysis
+
