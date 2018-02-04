@@ -37,11 +37,12 @@ workflows:
   version: 2
   all:
     jobs:
+      - analysis
       - build:
+        requires:
+          - analysis
         filters:
           branches:
             only: master
           tags:
             only: /.*/
-      - analysis
-
