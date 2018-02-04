@@ -1,6 +1,8 @@
 // Copyright 2017 <Célian Garcia>
 
 #include <firefly/core/model/interpreters/PGResultInterpreter.hpp>
+#include <regex>
+#include <firefly/core/exception/FireflyException.hpp>
 
 namespace firefly {
 PGResultInterpreter::PGResultInterpreter(PGresult *result) : result(result) {
@@ -46,10 +48,23 @@ std::vector<int> PGResultInterpreter::get<std::vector<int>>(const char *property
 
 template<>
 cv::Vec3f PGResultInterpreter::get<cv::Vec3f>(const char *property_name, int position) {
-    PGpoint pt;
-    PQgetf(this->result, position, "%point", this->f_numbers_map[property_name], &pt);
-    cv::Vec3f point(static_cast<float>(pt.x), static_cast<float>(pt.y));
-    return point;
+    char *pt_str = this->get_value(property_name, position);
+    std::string regex_str = "POINT Z \\((\\S+) (\\S+) (\\S+)\\)";
+    std::regex regex(regex_str);
+    std::cmatch m;    // same as std::match_results<const char*> cm;
+    if (std::regex_match(pt_str, m, regex)) {
+        cv::Vec3f result;
+        for (unsigned i = 1; i < m.size(); ++i) {
+            result[i - 1] = std::stof(m[i].str());
+        }
+        std::cout << result << std::endl;
+        return result;
+
+    } else {
+        std::string err_message = "The PostGIS's Point Z : " + std::string(pt_str) +
+                " do not match the regex " + regex_str;
+        throw FireflyException(HtmlStatusCode::INTERNAL_SERVER_ERROR, err_message);
+    }
 }
 
 char *PGResultInterpreter::get_value(const char *property_name, int position) {

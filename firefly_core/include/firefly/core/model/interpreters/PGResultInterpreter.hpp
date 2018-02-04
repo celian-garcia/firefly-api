@@ -5,7 +5,6 @@
 
 #include <cxcore.h>
 #include <libpq-fe.h>
-#include <libpqtypes.h>
 #include <map>
 #include <functional>
 #include <vector>
