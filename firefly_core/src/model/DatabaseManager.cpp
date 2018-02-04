@@ -77,8 +77,7 @@ DatabaseManager::format(const double &obj) {
 
 std::string
 DatabaseManager::format(const cv::Vec3f &obj) {
-    return std::string(
-            "\'(" + std::to_string(obj[0]) + ", " + std::to_string(obj[1]) + ")\'");
+    return "ST_Makepoint(" + format(obj[0]) + ", " + format(obj[1]) + ", " + format(obj[2]) + ")";
 }
 
 std::string

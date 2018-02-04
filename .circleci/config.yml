@@ -2,8 +2,8 @@ version: 2
 jobs:
   build:
     machine: true
-#    docker:
-#      - image: circleci/ubuntu-server:latest
+    environment:
+      - IMAGE: "firefly-api"
     steps:
       - checkout
       - run: 
@@ -11,23 +11,10 @@ jobs:
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: 
           name: Build image from Dockerfile
-          command: docker build -t $DOCKER_USER/firefly-api:0.1 .
+          command: docker build -t $DOCKER_USER/$IMAGE:`git describe --abbrev=0 --tags | tr -d v` .
       - run:
           name: Push image to docker hub
-          command: docker push $DOCKER_USER/firefly-api:0.1
-#      - run:
-#          name: Install Docker Compose
-#          command: |
-#            set -x
-#            curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-#            chmod +x /usr/local/bin/docker-compose
-     
-#      - setup_remote_docker
-#      - run:
-#          name: Start container and verify it's working
-#          command: |
-#            set -x
-#            docker-compose up -d
+          command: docker push $DOCKER_USER/$IMAGE:`git describe --abbrev=0 --tags | tr -d v`
   analysis:
     docker:
       - image: celiangarcia/firefly-api-base-sonar:0.1
@@ -50,6 +37,11 @@ workflows:
   version: 2
   all:
     jobs:
-      - build
+      - build:
+        filters:
+          branches:
+            only: master
+          tags:
+            only: /.*/
       - analysis
 
