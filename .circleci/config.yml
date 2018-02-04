@@ -39,10 +39,10 @@ workflows:
     jobs:
       - analysis
       - build:
-        requires:
-          - analysis
-        filters:
-          branches:
-            only: master
-          tags:
-            only: /.*/
+          requires:
+            - analysis
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /.*/
