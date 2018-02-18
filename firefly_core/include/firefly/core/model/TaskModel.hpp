@@ -26,6 +26,8 @@ class TaskModel : public BaseModel {
 
     std::optional<Task> getTaskById(int task_id);
 
+    std::vector<Task> clearAllTasks();
+
  private:
     DataCommonStore data_store;
 };
