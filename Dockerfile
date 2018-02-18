@@ -1,4 +1,4 @@
-FROM celiangarcia/firefly-api-base:0.1
+FROM celiangarcia/firefly-api-base:0.2
 
 WORKDIR /firefly
 COPY . .

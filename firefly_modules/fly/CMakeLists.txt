@@ -18,9 +18,7 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
             src/workers/FlyCloudPopulation.cpp
             include/fly_module/workers/FlyCloudPopulation.hpp
             src/data/FlyModule.cpp
-            include/fly_module/data/FlyModule.hpp
-            src/workers/CloudContainerImpl.cpp
-            include/fly_module/workers/CloudContainerImpl.hpp)
+            include/fly_module/data/FlyModule.hpp)
 
     target_link_libraries(${FLY_MODULE_TARGET}
             ${FIREFLY_CORE_TARGET}

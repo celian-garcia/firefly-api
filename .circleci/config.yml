@@ -6,18 +6,29 @@ jobs:
       - IMAGE: "firefly-api"
     steps:
       - checkout
-      - run: 
+      - run:
+          name: Check build from the Dockerfile
+          command: docker build -t $IMAGE:`cat VERSION.txt` .
+
+  deploy:
+    machine: true
+    environment:
+      - IMAGE: "firefly-api"
+    steps:
+      - checkout
+      - run:
           name: Log in to docker hub
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: 
+      - run:
           name: Build image from Dockerfile
-          command: docker build -t $DOCKER_USER/$IMAGE:`git describe --abbrev=0 --tags | tr -d v` .
+          command: docker build -t $DOCKER_USER/$IMAGE:`cat VERSION.txt` .
       - run:
           name: Push image to docker hub
-          command: docker push $DOCKER_USER/$IMAGE:`git describe --abbrev=0 --tags | tr -d v`
+          command: docker push $DOCKER_USER/$IMAGE:`cat VERSION.txt`
+
   analysis:
     docker:
-      - image: celiangarcia/firefly-api-base-sonar:0.1
+      - image: celiangarcia/firefly-api-base-sonar:0.2
     steps:
       - checkout
       - run:
@@ -29,7 +40,11 @@ jobs:
             build-wrapper --out-dir wrapper-output  make -j12
       - run:
           name: Run sonar with maven
-          command: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=celian-garcia-github -Dsonar.login=$SONAR_LOGIN -Dsonar.cfamily.build-wrapper-output=build/wrapper-output
+          command: mvn sonar:sonar
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.organization=celian-garcia-github
+            -Dsonar.login=$SONAR_LOGIN
+            -Dsonar.cfamily.build-wrapper-output=build/wrapper-output
           environment:
             MAVEN_OPTS: "-Xmx3062m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=128m"
 
@@ -38,8 +53,10 @@ workflows:
   all:
     jobs:
       - analysis
-      - build:
+      - build
+      - deploy:
           requires:
+            - build
             - analysis
           filters:
             branches:

@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
 #include <fly_module/workers/FlyCloudPopulation.hpp>
-#include <fly_module/workers/CloudContainerImpl.hpp>
 
 namespace firefly {
 namespace fly_module {
@@ -48,8 +47,12 @@ void FlyCloudPopulation::stop() {
  * @param queue Channel where we write operations we create. Red by consumer.
  */
 void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *queue, ProcessingType type) {
-    CloudContainerImpl *container = new CloudContainerImpl(queue);
-    fly::CloudFiller<CloudContainerImpl> filler(container);
+    fly::CloudFiller filler;
+    filler.register_observer([queue](float x, float y, float z){
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        queue->enqueue({OperationType::ADD, {"fpoint3d", {x, y, z}}});
+    });
+
     if (type.getAliases()[0] == "P3D") {
         filler.random_filling(20, -10, 10);
     } else if (type.getAliases()[0] == "P3Dr") {
@@ -58,7 +61,6 @@ void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *queue, Pro
         filler.diamond_filling(5, 4, 5, 4, 3, {0, 0, 0});
     }
     queue->endQueue();
-    delete container;
 }
 
 /**
