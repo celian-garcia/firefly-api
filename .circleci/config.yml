@@ -28,7 +28,7 @@ jobs:
 
   analysis:
     docker:
-      - image: celiangarcia/firefly-api-base-sonar:`cat VERSION-base.txt`
+      - image: celiangarcia/firefly-api-base-sonar:0.2
     steps:
       - checkout
       - run:
