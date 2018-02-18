@@ -70,4 +70,19 @@ TaskModel::TaskModel(DatabaseManager *db_manager, const DataCommonStore &data_st
     this->data_store = data_store;
 }
 
+std::vector<Task> TaskModel::clearAllTasks() {
+    std::string query = "DELETE FROM task RETURNING *;";
+    PGresult *res = this->m_dbmanager->execSelectQuery(query);
+    TaskInterpreter interpreter(res, &this->data_store);
+
+    // Get the task list
+    std::vector<Task> tasks_list;
+    for (int row = 0; row < interpreter.get_row_number(); row++) {
+        // Get the task from row
+        tasks_list.push_back(interpreter.getTask(row));
+    }
+
+    return tasks_list;
+}
+
 }  // namespace firefly

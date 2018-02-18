@@ -59,6 +59,18 @@ void Server::initializeFireflyResources() {
         ResponseBuilder::build(result_content, response);
     });
 
+    this->server.resource["^/api/v1/tasks$"]["DELETE"] = buildFireflyResource([this](
+            std::shared_ptr<HttpResponse> response,
+            std::shared_ptr<HttpRequest> request) {
+        nlohmann::json result_content;
+
+        DatabaseManager db_manager("firefly_hive");
+        TaskModel taskModel(&db_manager, dataStore);
+        result_content = taskModel.clearAllTasks();
+
+        ResponseBuilder::build(result_content, response);
+    });
+
     this->server.resource["^/api/v1/tasks$"]["POST"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) -> void {
