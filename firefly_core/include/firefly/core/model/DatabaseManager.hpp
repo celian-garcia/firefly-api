@@ -41,9 +41,9 @@ class DatabaseManager {
  protected:
     PGconn *m_connection;
     // TODO(Célian): put it in configuration file
-    const std::string USER = "firefly_foreman";
-    const std::string PASSWORD = "rootbug";
-    const std::string HOST = "localhost";
+    const std::string USER = "postgres";
+    const std::string PASSWORD = "postgres";
+    const std::string HOST = "database";
     const std::string PORT = "5432";
 };
 
