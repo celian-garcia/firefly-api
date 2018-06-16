@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_TASKMODEL_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_TASKMODEL_HPP_
+#pragma once
 
 #include <optional>
 #include <vector>
@@ -33,5 +32,3 @@ class TaskModel : public BaseModel {
 };
 
 }  // namespace firefly
-
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_TASKMODEL_HPP_

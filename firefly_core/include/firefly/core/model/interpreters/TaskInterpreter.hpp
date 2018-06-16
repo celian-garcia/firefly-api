@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_TASKINTERPRETER_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_TASKINTERPRETER_HPP_
+#pragma once
 
 #include <vector>
 #include <firefly/core/data/Task.hpp>
@@ -21,4 +20,3 @@ class TaskInterpreter : public PGResultInterpreter {
     DataCommonStore *m_data_store;
 };
 }  // namespace firefly
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_TASKINTERPRETER_HPP_

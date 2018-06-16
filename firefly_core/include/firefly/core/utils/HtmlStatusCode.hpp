@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_HTMLSTATUSCODE_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_HTMLSTATUSCODE_HPP_
+#pragma once
 
 namespace firefly {
 
@@ -98,4 +97,3 @@ enum HtmlStatusCode {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_HTMLSTATUSCODE_HPP_

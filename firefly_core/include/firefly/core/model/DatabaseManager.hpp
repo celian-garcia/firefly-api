@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_DATABASEMANAGER_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_DATABASEMANAGER_HPP_
+#pragma once
 
 #include <libpq-fe.h>
 #include <libpqtypes.h>
@@ -56,5 +55,3 @@ class BaseModel {
 };
 
 }  // namespace firefly
-
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_DATABASEMANAGER_HPP_

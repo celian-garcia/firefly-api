@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_PROCESSINGTYPE_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_PROCESSINGTYPE_HPP_
+#pragma once
 
 #include <string>
 #include <vector>
@@ -44,4 +43,3 @@ struct __attribute__((unused)) adl_serializer<firefly::ProcessingType> {
 
 }  // namespace nlohmann
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_PROCESSINGTYPE_HPP_

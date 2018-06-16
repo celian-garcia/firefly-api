@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_TASKBUILDER_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_TASKBUILDER_HPP_
+#pragma once
 
 #include <string>
 #include <json/json.hpp>
@@ -93,4 +92,3 @@ struct __attribute__((unused)) adl_serializer<firefly::TaskBuilder> {
 
 }  // namespace nlohmann
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_TASKBUILDER_HPP_
