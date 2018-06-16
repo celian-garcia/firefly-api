@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_BEANS_POINT3DBEAN_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_BEANS_POINT3DBEAN_HPP_
+#pragma once
 
 #include <vector>
 #include <opencv2/opencv.hpp>
@@ -42,4 +41,3 @@ class Point3DBean {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_BEANS_POINT3DBEAN_HPP_

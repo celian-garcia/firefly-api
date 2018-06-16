@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_TASK_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_TASK_HPP_
+#pragma once
 
 #include <string>
 
@@ -100,4 +99,3 @@ struct __attribute__((unused)) adl_serializer<firefly::Task> {
 
 }  // namespace nlohmann
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_TASK_HPP_

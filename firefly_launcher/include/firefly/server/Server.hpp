@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_LAUNCHER_INCLUDE_FIREFLY_SERVER_SERVER_HPP_
-#define FIREFLY_LAUNCHER_INCLUDE_FIREFLY_SERVER_SERVER_HPP_
+#pragma once
 
 #include <string>
 #include <iostream>
@@ -63,4 +62,3 @@ class Server {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_LAUNCHER_INCLUDE_FIREFLY_SERVER_SERVER_HPP_

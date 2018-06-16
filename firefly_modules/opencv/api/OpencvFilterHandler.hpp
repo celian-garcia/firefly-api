@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef INCLUDE_FIREFLY_MODULES_OPENCV_API_OPENCVFILTERHANDLER_HPP_
-#define INCLUDE_FIREFLY_MODULES_OPENCV_API_OPENCVFILTERHANDLER_HPP_
+#pragma once
 
 #include <string>
 #include "firefly/api/IModuleHandler.hpp"
@@ -25,4 +24,3 @@ namespace module_cv {
     };
 
 }  // end namespace module_cv
-#endif  // INCLUDE_FIREFLY_MODULES_OPENCV_API_OPENCVFILTERHANDLER_HPP_

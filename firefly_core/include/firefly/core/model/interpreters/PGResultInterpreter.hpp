@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_
+#pragma once
 
 #include <cxcore.h>
 #include <libpq-fe.h>
@@ -41,4 +40,3 @@ class PGResultInterpreter {
 };
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_

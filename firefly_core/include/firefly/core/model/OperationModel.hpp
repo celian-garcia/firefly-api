@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_OPERATIONMODEL_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_OPERATIONMODEL_HPP_
+#pragma once
 
 #include <vector>
 #include <firefly/core/model/interpreters/OperationInterpreter.hpp>
@@ -20,4 +19,3 @@ class OperationModel : public BaseModel {
 };
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_OPERATIONMODEL_HPP_

@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_EXCEPTION_FIREFLYEXCEPTION_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_EXCEPTION_FIREFLYEXCEPTION_HPP_
+#pragma once
 
 #include <iostream>
 #include <exception>
@@ -42,4 +41,3 @@ class FireflyException : public std::exception {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_EXCEPTION_FIREFLYEXCEPTION_HPP_
