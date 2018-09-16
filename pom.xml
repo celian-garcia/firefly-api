@@ -73,7 +73,7 @@
     <sonar.sources>${basedir}</sonar.sources>
     <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
     <sonar.cpp.std>c++17</sonar.cpp.std>
-    <sonar.exclusions>docs/**,build/**,pom.xml</sonar.exclusions>
+    <sonar.exclusions>docs/**,build/**,pom.xml, lib/**</sonar.exclusions>
     <sonar.cxx.cppcheck.reportPath>cppcheck-reports/cppcheck-result-*.xml</sonar.cxx.cppcheck.reportPath>
     <sonar.cxx.coverage.reportPath>gcovr-reports/gcovr-result-*.xml</sonar.cxx.coverage.reportPath>
     <sonar.cxx.coverage.itReportPath>gcovr-reports/gcovr-result-*.xml</sonar.cxx.coverage.itReportPath>
