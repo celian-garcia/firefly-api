@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   server:
     build: .
@@ -6,9 +6,7 @@ services:
      - "8080:8080"
     command: /firefly/build/bin/FIREFLY_LAUNCHER 8080 /firefly/resources 5
   database:
-    image: postgres
-    volumes:
-        - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    image: "celiangarcia/firefly-database:0.2.0"
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=firefly_hive
