@@ -10,7 +10,7 @@ jobs:
           name: Check build from the Dockerfile
           command: docker build -t $IMAGE:`cat VERSION.txt` .
 
-  deploy-snapshot:
+  "deploy-snapshot":
     machine: true
       environment:
         - IMAGE: "firefly-api"
@@ -26,7 +26,7 @@ jobs:
             name: Push snapshot image to docker hub
             command: docker push $DOCKER_USER/$IMAGE:`cat VERSION.txt`-SNAPSHOT
 
-  deploy-release:
+  "deploy-release":
     machine: true
     environment:
       - IMAGE: "firefly-api"
@@ -70,14 +70,14 @@ workflows:
     jobs:
       - analysis
       - build
-      - deploy-snapshot:
+      - "deploy-snapshot":
           requires:
             - build
             - analysis
           filters:
             branches:
               only: develop
-      - deploy-release:
+      - "deploy-release":
           requires:
             - build
             - analysis
