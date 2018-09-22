@@ -70,14 +70,14 @@ workflows:
     jobs:
       - analysis
       - build
-      - deploy-snapshot:
+      - deploy-snapshot
           requires:
             - build
             - analysis
           filters:
             branches:
               only: develop
-      - deploy-release:
+      - deploy-release
           requires:
             - build
             - analysis
