@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 #include <opencv2/opencv.hpp>
-#include <json/json.hpp>
+#include <nlohmann/json.hpp>
 #include "OperationType.hpp"
 #include "OperationElement.hpp"
 

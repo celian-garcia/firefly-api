@@ -4,7 +4,7 @@
 
 #include <string>
 
-#include <json/json.hpp>
+#include <nlohmann/json.hpp>
 
 #include "ProcessingType.hpp"
 #include "Module.hpp"

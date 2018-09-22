@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include <cxcore.h>
 #include <libpq-fe.h>
 #include <map>
 #include <functional>
 #include <vector>
 #include <cstring>
 #include <iostream>
+#include <opencv2/core.hpp>
 #include <boost/algorithm/string.hpp>
 
 namespace firefly {

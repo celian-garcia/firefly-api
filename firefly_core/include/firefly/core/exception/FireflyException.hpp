@@ -6,7 +6,7 @@
 #include <exception>
 #include <string>
 
-#include <json/json.hpp>
+#include <nlohmann/json.hpp>
 
 #include "firefly/core/utils/HtmlStatusCode.hpp"
 #include "firefly/core/utils/server_types_definitions.hpp"

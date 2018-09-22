@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <ml.h>  // opencv import
 #include <string>
-#include <json/json.hpp>
+#include <opencv2/core.hpp>  // opencv import
+#include <nlohmann/json.hpp>
 
 namespace firefly {
 

@@ -3,7 +3,8 @@
 #pragma once
 
 #include <string>
-#include <json/json.hpp>
+#include <iostream>
+#include <nlohmann/json.hpp>
 #include <firefly/core/config/DataCommonStore.hpp>
 #include "Task.hpp"
 
@@ -49,42 +50,42 @@ struct __attribute__((unused)) adl_serializer<firefly::TaskBuilder> {
     static void __attribute__((unused)) from_json(const json &j, firefly::TaskBuilder &taskBuilder) {
         try {
             taskBuilder.setState(j.at("state").get<firefly::Task::State>());
-        } catch (std::out_of_range &e) {
+        } catch (json::out_of_range &e) {
             std::cout << "No field state in task json" << std::endl;
         }
         try {
             taskBuilder.setIdentifier(j.at("id").get<int>());
-        } catch (std::out_of_range &e) {
+        } catch (json::out_of_range &e) {
             std::cout << "No field id in task json" << std::endl;
         }
         try {
             taskBuilder.setDescription(j.at("description").get<std::string>());
-        } catch (std::out_of_range &e) {
+        } catch (json::out_of_range &e) {
             std::cout << "No field description in task json" << std::endl;
         }
         try {
             taskBuilder.setName(j.at("name").get<std::string>());
-        } catch (std::out_of_range &e) {
+        } catch (json::out_of_range &e) {
             std::cout << "No field name in task json" << std::endl;
         }
         try {
             taskBuilder.setType(j.at("type").get<int>());
-        } catch (std::out_of_range &e) {
+        } catch (json::out_of_range &e) {
             std::cout << "No field type in task json" << std::endl;
         }
         try {
             taskBuilder.setModule(j.at("module").get<int>());
-        } catch (std::out_of_range &e) {
+        } catch (json::out_of_range &e) {
             std::cout << "No field module in task json" << std::endl;
         }
         try {
             taskBuilder.setUserName(j.at("user_name").get<std::string>());
-        } catch (std::out_of_range &e) {
+        } catch (json::out_of_range &e) {
             std::cout << "No field user_name in task json" << std::endl;
         }
         try {
             taskBuilder.setDate(j.at("date").get<std::string>());
-        } catch (std::out_of_range &e) {
+        } catch (json::out_of_range &e) {
             std::cout << "No field date in task json" << std::endl;
         }
     }

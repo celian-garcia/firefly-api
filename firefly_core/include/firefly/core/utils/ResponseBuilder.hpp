@@ -3,7 +3,7 @@
 #pragma once
 
 #include <string>
-#include <json/json.hpp>
+#include <nlohmann/json.hpp>
 #include <firefly/core/utils/server_types_definitions.hpp>
 #include <firefly/core/data/Operation.hpp>
 
