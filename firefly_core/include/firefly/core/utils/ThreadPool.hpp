@@ -1,7 +1,6 @@
 /// Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_THREADPOOL_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_THREADPOOL_HPP_
+#pragma once
 
 #include <memory>
 #include <boost/asio.hpp>
@@ -39,4 +38,3 @@ struct ThreadPool {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_THREADPOOL_HPP_

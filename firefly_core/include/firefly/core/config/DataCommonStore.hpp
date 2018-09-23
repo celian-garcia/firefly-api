@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_CONFIG_DATACOMMONSTORE_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_CONFIG_DATACOMMONSTORE_HPP_
+#pragma once
 
 #include <atomic>
 #include <vector>
@@ -28,4 +27,3 @@ class DataCommonStore {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_CONFIG_DATACOMMONSTORE_HPP_

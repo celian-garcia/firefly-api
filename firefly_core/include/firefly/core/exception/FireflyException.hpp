@@ -1,13 +1,12 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_EXCEPTION_FIREFLYEXCEPTION_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_EXCEPTION_FIREFLYEXCEPTION_HPP_
+#pragma once
 
 #include <iostream>
 #include <exception>
 #include <string>
 
-#include <json/json.hpp>
+#include <nlohmann/json.hpp>
 
 #include "firefly/core/utils/HtmlStatusCode.hpp"
 #include "firefly/core/utils/server_types_definitions.hpp"
@@ -42,4 +41,3 @@ class FireflyException : public std::exception {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_EXCEPTION_FIREFLYEXCEPTION_HPP_

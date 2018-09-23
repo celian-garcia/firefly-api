@@ -48,7 +48,7 @@ void Server::initializeFireflyResources() {
     this->server.resource["^/api/v1/tasks$"]["GET"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) {
-        nlohmann::json result_content;
+        nlohmann::json result_content = nlohmann::json::array();
 
         DatabaseManager db_manager("firefly_hive");
         TaskModel taskModel(&db_manager, dataStore);

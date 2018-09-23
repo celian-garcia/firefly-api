@@ -1,11 +1,10 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_MODULE_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_MODULE_HPP_
+#pragma once
 
 #include <string>
 #include <vector>
-#include <json/json.hpp>
+#include <nlohmann/json.hpp>
 #include "ProcessingType.hpp"
 
 namespace firefly {
@@ -72,4 +71,3 @@ struct __attribute__((unused)) adl_serializer<firefly::Module> {
 
 }  // namespace nlohmann
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_MODULE_HPP_

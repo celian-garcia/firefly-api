@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_MODULES_FLY_INCLUDE_FLY_MODULE_WORKERS_FLYCLOUDPOPULATION_HPP_
-#define FIREFLY_MODULES_FLY_INCLUDE_FLY_MODULE_WORKERS_FLYCLOUDPOPULATION_HPP_
+#pragma once
 
 #include <vector>
 #include <thread>
@@ -40,4 +39,3 @@ class FlyCloudPopulation {
 }  // namespace fly_module
 }  // namespace firefly
 
-#endif  // FIREFLY_MODULES_FLY_INCLUDE_FLY_MODULE_WORKERS_FLYCLOUDPOPULATION_HPP_

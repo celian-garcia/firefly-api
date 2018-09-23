@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_POINT3DINTERPRETER_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_POINT3DINTERPRETER_HPP_
+#pragma once
 
 #include <libpq-fe.h>
 #include <vector>
@@ -20,4 +19,3 @@ class Point3DInterpreter : public PGResultInterpreter {
 };
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_POINT3DINTERPRETER_HPP_

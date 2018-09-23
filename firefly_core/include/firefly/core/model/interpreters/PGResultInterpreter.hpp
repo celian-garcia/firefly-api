@@ -1,15 +1,14 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_
+#pragma once
 
-#include <cxcore.h>
 #include <libpq-fe.h>
 #include <map>
 #include <functional>
 #include <vector>
 #include <cstring>
 #include <iostream>
+#include <opencv2/core.hpp>
 #include <boost/algorithm/string.hpp>
 
 namespace firefly {
@@ -41,4 +40,3 @@ class PGResultInterpreter {
 };
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_MODEL_INTERPRETERS_PGRESULTINTERPRETER_HPP_

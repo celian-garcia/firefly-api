@@ -1,11 +1,10 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONELEMENT_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONELEMENT_HPP_
+#pragma once
 
-#include <ml.h>  // opencv import
 #include <string>
-#include <json/json.hpp>
+#include <opencv2/core.hpp>  // opencv import
+#include <nlohmann/json.hpp>
 
 namespace firefly {
 
@@ -57,4 +56,3 @@ struct __attribute__((unused)) adl_serializer<firefly::OperationElement> {
 
 }  // namespace nlohmann
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONELEMENT_HPP_

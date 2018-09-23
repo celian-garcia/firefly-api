@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_CONCURRENTOPERATIONQUEUE_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_CONCURRENTOPERATIONQUEUE_HPP_
+#pragma once
 
 #include <queue>
 #include <boost/thread.hpp>
@@ -44,4 +43,3 @@ class ConcurrentOperationQueue {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_CONCURRENTOPERATIONQUEUE_HPP_

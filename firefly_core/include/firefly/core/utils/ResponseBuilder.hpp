@@ -1,10 +1,9 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_RESPONSEBUILDER_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_RESPONSEBUILDER_HPP_
+#pragma once
 
 #include <string>
-#include <json/json.hpp>
+#include <nlohmann/json.hpp>
 #include <firefly/core/utils/server_types_definitions.hpp>
 #include <firefly/core/data/Operation.hpp>
 
@@ -21,4 +20,3 @@ class ResponseBuilder {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_UTILS_RESPONSEBUILDER_HPP_

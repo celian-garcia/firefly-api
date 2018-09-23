@@ -18,7 +18,7 @@ Task::Task(const int &identifier, const std::string &name, const std::string &de
            const ProcessingType &type, const Module &module, const State &state, const std::string &userName,
            const std::string &date) :
         identifier(identifier), name(name), description(description),
-        type(type), module(module), state(state), userName(userName), date(date) {}
+        type(type), module(module), userName(userName), state(state), date(date) {}
 
 const int &Task::getIdentifier() const {
     return identifier;

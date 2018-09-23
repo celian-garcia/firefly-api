@@ -1,9 +1,8 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONTYPE_HPP_
-#define FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONTYPE_HPP_
+#pragma once
 
-#include <json/json.hpp>
+#include <nlohmann/json.hpp>
 
 namespace firefly {
 
@@ -24,4 +23,3 @@ struct __attribute__((unused)) adl_serializer<firefly::OperationType> {
 
 }  // namespace nlohmann
 
-#endif  // FIREFLY_CORE_INCLUDE_FIREFLY_CORE_DATA_OPERATIONTYPE_HPP_

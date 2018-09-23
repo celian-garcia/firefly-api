@@ -1,7 +1,6 @@
 // Copyright (c) 2014-2016 Ole Christian Eidheim :
 // Copyright 2017 <Célian Garcia>
-#ifndef SERVER_HTTP_HPP_
-#define SERVER_HTTP_HPP_
+#pragma once
 
 #include <unordered_map>
 #include <functional>
@@ -429,4 +428,3 @@ protected:
 
 };
 }  // end namespace SimpleWeb
-#endif  // SERVER_HTTP_HPP_

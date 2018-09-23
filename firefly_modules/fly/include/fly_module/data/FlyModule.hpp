@@ -1,7 +1,6 @@
 // Copyright 2017 <Célian Garcia>
 
-#ifndef FIREFLY_MODULES_FLY_INCLUDE_FLY_MODULE_DATA_FLYMODULE_HPP_
-#define FIREFLY_MODULES_FLY_INCLUDE_FLY_MODULE_DATA_FLYMODULE_HPP_
+#pragma once
 
 #include <string>
 #include <firefly/core/data/Module.hpp>
@@ -24,4 +23,3 @@ class FlyModule : public Module {
 
 }  // namespace firefly
 
-#endif  // FIREFLY_MODULES_FLY_INCLUDE_FLY_MODULE_DATA_FLYMODULE_HPP_
