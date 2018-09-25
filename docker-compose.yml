@@ -3,8 +3,10 @@ services:
   server:
     build: .
     ports:
-     - "9080:9080"
-    command: /firefly/build/bin/FIREFLY_LAUNCHER 9080 /firefly/resources 5
+      - "9080:9080"
+    volumes:
+      - "./config/dev-docker.toml:/etc/firefly/config.toml"
+    command: /usr/bin/FIREFLY_LAUNCHER /etc/firefly/config.toml
   database:
     image: "celiangarcia/firefly-database:0.2.0"
     environment:

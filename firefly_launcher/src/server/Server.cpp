@@ -4,8 +4,8 @@
 
 namespace firefly {
 
-Server::Server(unsigned short port, boost::filesystem::path resources_path, DataCommonStore dataStore) :
-        server(port, 1), resources_path(resources_path), dataStore(dataStore) {}
+Server::Server(const ServerConfig& srv_config, const DatabaseConfig& db_config, const DataCommonStore& data_store) :
+        server(srv_config.port, 1), srv_config(srv_config), db_config(db_config), data_store(data_store) {}
 
 void Server::run() {
     this->initDefaultResource();
@@ -41,7 +41,7 @@ void Server::initializeFireflyResources() {
     this->server.resource["^/api/v1/modules$"]["GET"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) -> void {
-        nlohmann::json result_content(this->dataStore.getModules());
+        nlohmann::json result_content(this->data_store.getModules());
         ResponseBuilder::build(result_content, response);
     });
 
@@ -50,12 +50,14 @@ void Server::initializeFireflyResources() {
             std::shared_ptr<HttpRequest> request) {
         nlohmann::json result_content = nlohmann::json::array();
 
-        DatabaseManager db_manager("firefly_hive");
-        TaskModel taskModel(&db_manager, dataStore);
+        DatabaseManager* db_manager = buildDatabaseManager();
+        TaskModel taskModel(db_manager, data_store);
+
         for (auto task : taskModel.getTasks()) {
             result_content.push_back(task);
         }
 
+        delete db_manager;
         ResponseBuilder::build(result_content, response);
     });
 
@@ -64,10 +66,11 @@ void Server::initializeFireflyResources() {
             std::shared_ptr<HttpRequest> request) {
         nlohmann::json result_content;
 
-        DatabaseManager db_manager("firefly_hive");
-        TaskModel taskModel(&db_manager, dataStore);
+        DatabaseManager* db_manager = buildDatabaseManager();
+        TaskModel taskModel(db_manager, data_store);
         result_content = taskModel.clearAllTasks();
 
+        delete db_manager;
         ResponseBuilder::build(result_content, response);
     });
 
@@ -75,10 +78,13 @@ void Server::initializeFireflyResources() {
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) -> void {
         TaskBuilder taskBuilder = nlohmann::json::parse(request->content);
-        Task task = taskBuilder.buildTask(this->dataStore);
-        DatabaseManager db_manager("firefly_hive");
-        TaskModel taskModel(&db_manager);
+        Task task = taskBuilder.buildTask(this->data_store);
+
+        DatabaseManager* db_manager = buildDatabaseManager();
+        TaskModel taskModel(db_manager);
         nlohmann::json resultTask = taskModel.insertTask(task);
+
+        delete db_manager;
         ResponseBuilder::build(resultTask, response);
     });
 
@@ -87,9 +93,11 @@ void Server::initializeFireflyResources() {
             std::shared_ptr<HttpRequest> request) -> void {
         std::string task_id = request->path_match[1];
 
-        DatabaseManager db_manager("firefly_hive");
-        TaskModel taskModel(&db_manager, dataStore);
+        DatabaseManager* db_manager = buildDatabaseManager();
+        TaskModel taskModel(db_manager, data_store);
         const std::optional<Task> &resultTask = taskModel.getTaskById(atoi(task_id.c_str()));
+
+        delete db_manager;
         if (resultTask) {
             ResponseBuilder::build(static_cast<nlohmann::json>(resultTask.value()), response);
         } else {
@@ -101,14 +109,18 @@ void Server::initializeFireflyResources() {
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) -> void {
         std::string task_id = request->path_match[1];
-        DatabaseManager db_manager("firefly_hive");
-        TaskModel taskModel(&db_manager, dataStore);
+        DatabaseManager* db_manager = buildDatabaseManager();
+        TaskModel taskModel(db_manager, data_store);
         const std::optional<Task> &resultTask = taskModel.getTaskById(atoi(task_id.c_str()));
+
+        delete db_manager;
         if (resultTask) {
             Task task = resultTask.value();
             ProcessingType task_type = task.getType();
             int module_id = task.getModule().getId();
-            fly_module::FlyCloudPopulation::start(task.getIdentifier(), thread_pool_map[module_id], task_type);
+            fly_module::FlyCloudPopulation action(this->db_config.host, this->db_config.port,
+                    this->db_config.database, this->db_config.user, this->db_config.password);
+            action.start(task.getIdentifier(), thread_pool_map[module_id], task_type);
             ResponseBuilder::build("{\"resultOk\": true}", response);
         } else {
             ResponseBuilder::build("{\"resultOk\": false}", response);
@@ -122,9 +134,10 @@ void Server::initializeFireflyResources() {
         int client_last_op = std::stoi(request->path_match[2]);
 
         // Get the last operations since the one given by client
-        DatabaseManager db_manager("firefly_hive");
-        OperationModel operation_model(&db_manager);
+        DatabaseManager* db_manager = buildDatabaseManager();
+        OperationModel operation_model(db_manager);
         std::vector<Operation> operations_list = operation_model.getOperationsSince(task_id, client_last_op);
+        delete db_manager;
 
         // Compute the new operation index
         int last_operation_index = 0;
@@ -153,14 +166,15 @@ Server::initDefaultResource() {
             (std::shared_ptr<HttpResponse> response, std::shared_ptr<HttpRequest> request) {
         try {
             // Build the absolute path from request
-            auto path = boost::filesystem::canonical(this->resources_path / request->path);
+            auto path = boost::filesystem::canonical(this->srv_config.resources_path / request->path);
 
             // Check the path
             int64 resources_path_len = std::distance(
-                    this->resources_path.begin(), this->resources_path.end());
+                    this->srv_config.resources_path.begin(), this->srv_config.resources_path.end());
             int64 path_len = std::distance(path.begin(), path.end());
             if (resources_path_len > path_len ||
-                !std::equal(this->resources_path.begin(), this->resources_path.end(), path.begin()))
+                !std::equal(this->srv_config.resources_path.begin(),
+                        this->srv_config.resources_path.end(), path.begin()))
                 throw std::invalid_argument("path must be within root path");
             if (boost::filesystem::is_directory(path))
                 path /= "index.html";
@@ -216,8 +230,13 @@ Server::sendDefaultResource(
 }
 
 void Server::registerModule(Module *module, ThreadPool *pool) {
-    this->dataStore.storeModule(module);
+    this->data_store.storeModule(module);
     this->thread_pool_map[module->getId()] = pool;
+}
+
+DatabaseManager *Server::buildDatabaseManager() {
+    return new DatabaseManager(this->db_config.host, this->db_config.port, this->db_config.database,
+                               this->db_config.user, this->db_config.password);
 }
 
 }  // namespace firefly

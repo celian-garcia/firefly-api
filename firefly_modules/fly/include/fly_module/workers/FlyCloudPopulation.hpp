@@ -24,16 +24,24 @@ namespace fly_module {
 
 class FlyCloudPopulation {
  public:
-    static int start(int task_id, ThreadPool *pool, ProcessingType type);
 
-    static void stop();
+    FlyCloudPopulation(const std::string &host, int16_t port, const std::string &database, const std::string &user,
+                       const std::string &password);
+
+    int start(int task_id, ThreadPool *pool, ProcessingType type);
+
+    void stop();
 
  private:
-    static const char *DATABASE_NAME;
+    std::string host;
+    int16_t port;
+    std::string database;
+    std::string user;
+    std::string password;
 
-    static void run_compute_thread(ConcurrentOperationQueue *queue, ProcessingType type);
+    void run_compute_thread(ConcurrentOperationQueue *queue, ProcessingType type);
 
-    static void run_populate_thread(int cloud_id, ConcurrentOperationQueue *queue);
+    void run_populate_thread(int cloud_id, ConcurrentOperationQueue *queue);
 };
 
 }  // namespace fly_module

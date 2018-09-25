@@ -1,0 +1,7 @@
+.git
+.gitignore
+.circleci
+.github
+config
+docs
+.codedocs

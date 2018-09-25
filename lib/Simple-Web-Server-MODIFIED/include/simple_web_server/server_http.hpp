@@ -95,10 +95,10 @@ class ServerBase {
     class Config {
         friend class ServerBase<socket_type>;
 
-        Config(unsigned short port, size_t num_threads): num_threads(num_threads), port(port), reuse_address(true) {}
+        Config(int16_t port, size_t num_threads): num_threads(num_threads), port(port), reuse_address(true) {}
         size_t num_threads;
     public:
-        unsigned short port;
+        int16_t port;
         /// IPv4 address in dotted decimal form or IPv6 address in hexadecimal notation.
         /// If empty, the address will be any address.
         std::string address;
@@ -205,7 +205,7 @@ protected:
     long timeout_request;
     long timeout_content;
 
-    ServerBase(unsigned short port, size_t num_threads, long timeout_request, long timeout_send_or_receive) :
+    ServerBase(int16_t port, size_t num_threads, long timeout_request, long timeout_send_or_receive) :
             config(port, num_threads), timeout_request(timeout_request), timeout_content(timeout_send_or_receive) {}
 
     virtual void accept()=0;
@@ -403,7 +403,7 @@ typedef boost::asio::ip::tcp::socket HTTP;
 template<>
 class Server<HTTP> : public ServerBase<HTTP> {
 public:
-    Server(unsigned short port, size_t num_threads=1, long timeout_request=5, long timeout_content=300) :
+    Server(int16_t port, size_t num_threads=1, long timeout_request=5, long timeout_content=300) :
             ServerBase<HTTP>::ServerBase(port, num_threads, timeout_request, timeout_content) {}
 
 protected:

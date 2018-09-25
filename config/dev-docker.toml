@@ -1,0 +1,11 @@
+[server]
+    port = 9080
+    threads_count = 5
+    resources = "/srv/firefly/www"
+
+[database]
+    host = "database"
+    port = 5432
+    database = "firefly_hive"
+    user = "postgres"
+    password = "postgres"

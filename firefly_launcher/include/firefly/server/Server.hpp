@@ -28,6 +28,8 @@
 #include <firefly/core/model/DatabaseManager.hpp>
 #include <firefly/core/config/DataCommonStore.hpp>
 #include <firefly/core/utils/ThreadPool.hpp>
+#include <firefly/config/ServerConfig.hpp>
+#include <firefly/config/DatabaseConfig.hpp>
 
 #include <fly_module/workers/FlyCloudPopulation.hpp>
 
@@ -37,7 +39,7 @@ typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
 
 class Server {
  public:
-    Server(unsigned short port, boost::filesystem::path resources_path, DataCommonStore dataStore);
+    Server(const ServerConfig& srv_config, const DatabaseConfig& db_config, const DataCommonStore& dataStore);
 
     void registerModule(Module *module, ThreadPool *pool);
 
@@ -47,14 +49,17 @@ class Server {
 
  private:
     HttpServer server;
-    boost::filesystem::path resources_path;
-    DataCommonStore dataStore;
+    ServerConfig srv_config;
+    DatabaseConfig db_config;
+    DataCommonStore data_store;
     std::map<int, firefly::ThreadPool *> thread_pool_map;
 
     void sendDefaultResource(const std::shared_ptr<HttpServer::Response> &response,
                              const std::shared_ptr<std::ifstream> &ifs);
 
     void initDefaultResource();
+
+    DatabaseManager* buildDatabaseManager();
 
     std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)> static buildFireflyResource(
             const std::function<void(std::shared_ptr<HttpResponse>, std::shared_ptr<HttpRequest>)> &resource);

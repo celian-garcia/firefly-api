@@ -15,7 +15,8 @@ namespace firefly {
 
 class DatabaseManager {
  public:
-    explicit DatabaseManager(const std::string &db_name);
+    explicit DatabaseManager(const std::string &host, int64_t port, const std::string &db_name,
+                             const std::string &user, const std::string &password);
 
     ~DatabaseManager();
 
@@ -39,11 +40,6 @@ class DatabaseManager {
 
  protected:
     PGconn *m_connection;
-    // TODO(Célian): put it in configuration file
-    const std::string USER = "postgres";
-    const std::string PASSWORD = "postgres";
-    const std::string HOST = "database";
-    const std::string PORT = "5432";
 };
 
 class BaseModel {
