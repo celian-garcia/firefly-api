@@ -13,6 +13,10 @@ find_package(Threads REQUIRED) # Required for GTest
 add_executable(${FIREFLY_CORE_TARGET}_test
         OperationSaver.cpp
         main_test.cpp)
+
+# Installation
+install(TARGETS ${FIREFLY_CORE_TARGET}_test DESTINATION bin)
+
 target_link_libraries(${FIREFLY_CORE_TARGET}_test
         ${CMAKE_THREAD_LIBS_INIT}
         ${GTEST_LIBRARIES}

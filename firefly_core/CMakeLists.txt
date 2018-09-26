@@ -51,6 +51,10 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
             include/firefly/core/data/OperationElement.hpp
             include/firefly/core/utils/ConcurrentOperationQueue.hpp)
 
+    # Installation
+    install(TARGETS ${FIREFLY_CORE_TARGET} DESTINATION lib)
+    install(DIRECTORY include/ DESTINATION include)
+
     # Fix socket issues in windows
     if (MINGW)
         target_link_libraries(${FIREFLY_CORE_TARGET} ws2_32 wsock32)
@@ -73,7 +77,7 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
     ## ================ ## ====================================================================
 
     ## Target tests ## ================================================================
-    add_subdirectory(test)
+#    add_subdirectory(test)
     ## ============ ## ====================================================================
 
     ## 3rd party dependencies ## ====================================================================

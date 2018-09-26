@@ -31,6 +31,10 @@ if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
             include/firefly/config/ServerConfig.hpp
             include/firefly/config/DatabaseConfig.hpp include/firefly/config/DatabaseConfig.hpp)
 
+    # Installation
+    install(TARGETS ${FIREFLY_LAUNCHER_TARGET} DESTINATION bin)
+    install(DIRECTORY include/ DESTINATION include)
+
     # Fix socket issues in windows
     if (MINGW)
         target_link_libraries(${FIREFLY_LAUNCHER_TARGET} ws2_32 wsock32)

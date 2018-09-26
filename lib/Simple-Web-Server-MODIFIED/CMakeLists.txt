@@ -4,6 +4,10 @@ if (NOT TARGET ${SIMPLE_WEB_SERVER_TARGET})
     add_library(${SIMPLE_WEB_SERVER_TARGET}
             ${CMAKE_CURRENT_SOURCE_DIR}/include/simple_web_server/server_http.hpp)
 
+    # Installation
+    install(TARGETS ${SIMPLE_WEB_SERVER_TARGET} DESTINATION lib)
+    install(DIRECTORY include/ DESTINATION include)
+
     set_target_properties(${SIMPLE_WEB_SERVER_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
 
     target_include_directories(${SIMPLE_WEB_SERVER_TARGET}
