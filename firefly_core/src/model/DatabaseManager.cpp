@@ -4,15 +4,14 @@
 
 namespace firefly {
 
-DatabaseManager::DatabaseManager(const std::string &db_name) {
+DatabaseManager::DatabaseManager(const std::string &host, int64_t port, const std::string &db_name,
+                                 const std::string &user, const std::string &password) {
     std::string conn_str =
-            "user=" + this->USER + " " +
-            "password=" + this->PASSWORD + " " +
+            "user=" + user + " " +
+            "password=" + password + " " +
             "dbname=" + db_name + " " +
-            "host=" + this->HOST + " " +
-            "port=" + this->PORT + " ";
-
-//    std::cout << "Connecting to database with the following connection string : " + conn_str << std::endl;
+            "host=" + host + " " +
+            "port=" + std::to_string(port) + " ";
 
     this->m_connection = PQconnectdb(conn_str.c_str());
 

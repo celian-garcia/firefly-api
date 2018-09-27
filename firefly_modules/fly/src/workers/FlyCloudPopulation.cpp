@@ -5,7 +5,9 @@
 namespace firefly {
 namespace fly_module {
 
-const char *FlyCloudPopulation::DATABASE_NAME = "firefly_hive";
+FlyCloudPopulation::FlyCloudPopulation(const std::string &host, int16_t port, const std::string &database,
+                                       const std::string &user, const std::string &password) :
+        host(host), port(port), database(database), user(user), password(password) {}
 
 /**
  * - Initiate database connection;
@@ -18,17 +20,19 @@ const char *FlyCloudPopulation::DATABASE_NAME = "firefly_hive";
  */
 int FlyCloudPopulation::start(int task_id, ThreadPool *pool, ProcessingType type) noexcept(false) {
     // Move task to STARTED state
-    DatabaseManager db_manager(DATABASE_NAME);
-    TaskModel task_model(&db_manager);
-    task_model.updateTaskStateById(task_id, Task::STARTED);
+    auto db_manager = new DatabaseManager(this->host, this->port, this->database, this->user, this->password);
+    auto task_model = new TaskModel(db_manager);
+    task_model->updateTaskStateById(task_id, Task::STARTED);
+    delete task_model;
+    delete db_manager;
 
     auto *operations = new ConcurrentOperationQueue;
-    pool->enqueue([operations, type] {
-        run_compute_thread(operations, type);
+    pool->enqueue([this, operations, type] {
+        this->run_compute_thread(operations, type);
     });
 
-    pool->enqueue([task_id, operations] {
-        run_populate_thread(task_id, operations);
+    pool->enqueue([this, task_id, operations] {
+        this->run_populate_thread(task_id, operations);
     });
 
     return task_id;
@@ -48,7 +52,7 @@ void FlyCloudPopulation::stop() {
  */
 void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *queue, ProcessingType type) {
     fly::CloudFiller filler;
-    filler.register_observer([queue](float x, float y, float z){
+    filler.register_observer([queue](float x, float y, float z) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         queue->enqueue({OperationType::ADD, {"fpoint3d", {x, y, z}}});
     });
@@ -72,20 +76,24 @@ void FlyCloudPopulation::run_compute_thread(ConcurrentOperationQueue *queue, Pro
 void FlyCloudPopulation::run_populate_thread(int task_id, ConcurrentOperationQueue *queue) {
     std::cout << "Thread starts for the task id : " << task_id << std::endl;
 
-    // Trying to get task from database
-    DatabaseManager db_manager(DATABASE_NAME);
-    TaskModel task_model(&db_manager);
-    OperationModel operation_model(&db_manager);
+    // Initiate database manager
+    auto db_manager = new DatabaseManager(this->host, this->port, this->database, this->user, this->password);
 
-    // Save all operations in base
+    // Save progressively all operations in base
+    auto operation_model = new OperationModel(db_manager);
+
     while (!queue->isEmptyAndEnded()) {
         Operation operation = queue->dequeue();
-        operation_model.insertOperation(operation, task_id);
+        operation_model->insertOperation(operation, task_id);
     }
+    delete operation_model;
 
-    // Move task to FINISHED state
-    task_model.updateTaskStateById(task_id, Task::FINISHED);
+    // When operations are done, we move task to FINISHED state
+    auto task_model = new TaskModel(db_manager);
+    task_model->updateTaskStateById(task_id, Task::FINISHED);
+    delete task_model;
 
+    delete db_manager;
     std::cout << "Thread have finished the work for the task of id : " << task_id << std::endl;
 }
 

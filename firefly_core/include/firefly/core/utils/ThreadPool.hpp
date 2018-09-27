@@ -11,8 +11,8 @@ namespace firefly {
 struct ThreadPool {
     typedef std::unique_ptr<boost::asio::io_service::work> asio_worker;
 
-    // TODO : find a way to not have cpplint error on element_type
-    explicit ThreadPool(int threads) : service(), service_worker(new asio_worker::element_type(service)) {
+    // TODO(Célian) : find a way to not have cpplint error on element_type
+    explicit ThreadPool(int16_t threads) : service(), service_worker(new asio_worker::element_type(service)) {
         for (int i = 0; i < threads; ++i) {
             auto worker = [this] { return service.run(); };
             grp.add_thread(new boost::thread(worker));

@@ -20,6 +20,10 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
             src/data/FlyModule.cpp
             include/fly_module/data/FlyModule.hpp)
 
+    # Installation
+    install(TARGETS ${FLY_MODULE_TARGET} DESTINATION lib)
+    install(DIRECTORY include/ DESTINATION include)
+
     target_link_libraries(${FLY_MODULE_TARGET}
             ${FIREFLY_CORE_TARGET}
             ${OpenCV_LIBS}
@@ -34,7 +38,7 @@ if (NOT TARGET ${FLY_MODULE_TARGET})
     ## ============ ## ====================================================================
 
     ## Target tests ## ================================================================
-    add_subdirectory(test)
+#    add_subdirectory(test)
     ## ============ ## ====================================================================
 
     ## FIREFLY CORE target dependency ## ================================================================

@@ -24,10 +24,16 @@ if (NOT TARGET ${FIREFLY_LAUNCHER_TARGET})
 
 
     ## Target definition ## ====================================================================
-    # TODO : list explicitly all used files
-    file(GLOB_RECURSE FIREFLY_LAUNCHER_FILES *.cpp *.hpp)
     add_executable(${FIREFLY_LAUNCHER_TARGET}
-            ${FIREFLY_LAUNCHER_FILES})
+            src/main.cpp
+            src/server/Server.cpp
+            include/firefly/server/Server.hpp
+            include/firefly/config/ServerConfig.hpp
+            include/firefly/config/DatabaseConfig.hpp include/firefly/config/DatabaseConfig.hpp)
+
+    # Installation
+    install(TARGETS ${FIREFLY_LAUNCHER_TARGET} DESTINATION bin)
+    install(DIRECTORY include/ DESTINATION include)
 
     # Fix socket issues in windows
     if (MINGW)

@@ -13,6 +13,10 @@ find_package(Threads REQUIRED) # Required for GTest
 add_executable(${FLY_MODULE_TARGET}_test
         SimpleTest.cpp
         main_test.cpp)
+
+# Installation
+install(TARGETS ${FLY_MODULE_TARGET}_test DESTINATION bin)
+
 target_link_libraries(${FLY_MODULE_TARGET}_test
         ${CMAKE_THREAD_LIBS_INIT}
         ${GTEST_LIBRARIES}
