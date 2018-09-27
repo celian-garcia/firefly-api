@@ -44,7 +44,7 @@ jobs:
 
   analysis:
     docker:
-      - image: celiangarcia/firefly-api-base-sonar:0.3
+      - image: celiangarcia/firefly-api-base-sonar:0.4
     steps:
       - checkout
       - run:
