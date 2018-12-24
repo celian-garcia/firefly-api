@@ -2,11 +2,12 @@
 | :------ | :------------- | :------ |
 | [![Documentation](https://codedocs.xyz/celian-garcia/firefly.svg)](https://codedocs.xyz/celian-garcia/firefly/) <br> [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=firefly:firefly-api-sonar-runner&metric=alert_status)](https://sonarcloud.io/dashboard/index/firefly:firefly-api-sonar-runner) [![Technical Debt Ratio](https://sonarcloud.io/api/project_badges/measure?project=firefly%3Afirefly-api-sonar-runner&metric=sqale_index)](https://sonarcloud.io/dashboard/index/firefly:firefly-api-sonar-runner) | [![CircleCI](https://circleci.com/gh/celian-garcia/firefly-api.svg?style=shield)](https://circleci.com/gh/celian-garcia/firefly-api) | [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) |
 
-## Firefly
-C++ and Angular2 Web Application to have remote access to Fly library functionalities.
+## Firefly (Work in progress)
+C++ and Angular Web Application to have remote access to Fly library functionalities.
 Larger purpose would be to have access to high level OpenCV features.
+With firefly, we can easily run some image processing tasks asynchronously and see the results progressively in the browser.
 
-<img src="./docs/images/firefly_worker.png" width="200" />
+<img src="./docs/images/overall_arch.png" />
 
 #### Contributors
 - Célian Garcia 
