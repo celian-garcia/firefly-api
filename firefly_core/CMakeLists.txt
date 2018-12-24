@@ -9,7 +9,7 @@ if (NOT TARGET ${FIREFLY_CORE_TARGET})
     ## Dependencies ## ====================================================================
     # External libraries initialization
     find_package(OpenCV REQUIRED)
-    find_package(Boost 1.62.0 COMPONENTS system thread filesystem date_time regex REQUIRED)
+    find_package(Boost 1.65.0 COMPONENTS system thread filesystem date_time REQUIRED)
     find_package(PostgreSQL REQUIRED)
     find_package(nlohmann_json CONFIG REQUIRED)
     find_library(PQTYPES_LIB NAMES pqtypes)
