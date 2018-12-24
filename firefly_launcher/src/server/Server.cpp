@@ -61,6 +61,7 @@ void Server::initializeFireflyResources() {
         ResponseBuilder::build(result_content, response);
     });
 
+    // Delete all tasks
     this->server.resource["^/api/v1/tasks$"]["DELETE"] = buildFireflyResource([this](
             std::shared_ptr<HttpResponse> response,
             std::shared_ptr<HttpRequest> request) {
@@ -102,6 +103,31 @@ void Server::initializeFireflyResources() {
             ResponseBuilder::build(static_cast<nlohmann::json>(resultTask.value()), response);
         } else {
             ResponseBuilder::build("{}", response);
+        }
+    });
+
+    // Delete one task by its id
+    this->server.resource["^/api/v1/tasks/([0-9]+)$"]["DELETE"] = buildFireflyResource([this](
+            std::shared_ptr<HttpResponse> response,
+            std::shared_ptr<HttpRequest> request) -> void {
+        std::string task_id = request->path_match[1];
+
+        DatabaseManager* db_manager = buildDatabaseManager();
+        TaskModel taskModel(db_manager, data_store);
+        const std::optional<Task> &resultTask = taskModel.getTaskById(atoi(task_id.c_str()));
+
+        delete db_manager;
+        if (resultTask) {
+            Task task = resultTask.value();
+            if (task.getState() == Task::State::STARTED) {
+                ResponseBuilder::build("{\"resultOk\": false, \"message\": \"Impossible to delete a running task\"}", response);
+            }
+            else {
+                // TODO: delete the task
+                ResponseBuilder::build("{\"resultOk\": true, \"message\": \"Task deleted\"}", response);
+            }
+        } else {
+            ResponseBuilder::build("{\"resultOk\": false, \"message\": \"Unexisting task\"}", response);
         }
     });
 
